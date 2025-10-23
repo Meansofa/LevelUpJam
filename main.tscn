@@ -7,17 +7,17 @@
 [ext_resource type="Resource" uid="uid://bg0scmb60ole" path="res://Pieces/rook.tres" id="5_7mycd"]
 [ext_resource type="Resource" uid="uid://ccijcv8lt06pm" path="res://Pieces/bishop.tres" id="6_272bh"]
 [ext_resource type="Theme" uid="uid://buamt54f6ol74" path="res://Themes/main.tres" id="7_4c57u"]
-[ext_resource type="Script" uid="uid://cuy3fw8c4ffs2" path="res://button_1.gd" id="8_efxa6"]
+[ext_resource type="Script" uid="uid://cuy3fw8c4ffs2" path="res://select_cards.gd" id="8_efxa6"]
 [ext_resource type="Texture2D" uid="uid://b7p6t2p2k55ny" path="res://Art/Pieces/PawnOutline.png" id="8_kek77"]
 [ext_resource type="Texture2D" uid="uid://bnw64uj26d4r6" path="res://Art/Pieces/heart.png" id="10_efxa6"]
 [ext_resource type="Texture2D" uid="uid://jtgyxukmqidc" path="res://Art/Pieces/sword.png" id="11_efxa6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dg77c"]
 bg_color = Color(0.94367486, 0.546395, 0.08269244, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
 border_color = Color(1, 0.6784314, 0.3882353, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -26,9 +26,9 @@ corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ycdy4"]
 bg_color = Color(0.9254902, 0.49411765, 0.07058824, 1)
-border_width_left = 2
-border_width_right = 2
-border_width_bottom = 2
+border_width_left = 1
+border_width_right = 1
+border_width_bottom = 1
 border_color = Color(0.9999996, 0.59655017, 0.1596281, 1)
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
@@ -354,7 +354,7 @@ rotation = -0.2727861
 pivot_offset = Vector2(32, 96)
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dg77c")
-script = ExtResource("8_efxa6")
+metadata/_edit_lock_ = true
 
 [node name="Button6" type="Panel" parent="Choices/Cards"]
 custom_minimum_size = Vector2(48, 96)
@@ -366,7 +366,7 @@ offset_bottom = 99.0
 pivot_offset = Vector2(32, 96)
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dg77c")
-script = ExtResource("8_efxa6")
+metadata/_edit_lock_ = true
 
 [node name="Panel" type="Panel" parent="Choices/Cards/Button6"]
 layout_mode = 1
@@ -380,7 +380,67 @@ grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ycdy4")
 metadata/_edit_lock_ = true
 
-[node name="Panel2" type="Panel" parent="Choices/Cards/Button6"]
+[node name="Button7" type="Panel" parent="Choices/Cards"]
+custom_minimum_size = Vector2(48, 96)
+layout_mode = 0
+offset_left = 0.04809451
+offset_top = 6.066259
+offset_right = 64.048096
+offset_bottom = 102.06626
+pivot_offset = Vector2(32, 96)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dg77c")
+metadata/_edit_lock_ = true
+
+[node name="Panel" type="Panel" parent="Choices/Cards/Button7"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -45.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ycdy4")
+metadata/_edit_lock_ = true
+
+[node name="Button8" type="Panel" parent="Choices/Cards"]
+custom_minimum_size = Vector2(48, 96)
+layout_mode = 0
+offset_left = -1.4537606
+offset_top = 7.7228913
+offset_right = 62.546238
+offset_bottom = 103.72289
+pivot_offset = Vector2(32, 96)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dg77c")
+metadata/_edit_lock_ = true
+
+[node name="Panel" type="Panel" parent="Choices/Cards/Button8"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -45.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ycdy4")
+metadata/_edit_lock_ = true
+
+[node name="Button9" type="Panel" parent="Choices/Cards"]
+custom_minimum_size = Vector2(48, 96)
+layout_mode = 0
+offset_left = -1.0295677
+offset_top = 9.918355
+offset_right = 62.970432
+offset_bottom = 105.91836
+pivot_offset = Vector2(32, 96)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dg77c")
+metadata/_edit_lock_ = true
+
+[node name="Panel" type="Panel" parent="Choices/Cards/Button9"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -433,6 +493,7 @@ offset_left = 1.0
 offset_top = 7.0
 offset_right = 63.0
 offset_bottom = 36.0
+mouse_filter = 2
 theme_override_colors/default_color = Color(1, 0.6784314, 0.3882353, 1)
 theme_override_colors/font_outline_color = Color(0.22745098, 0.15686275, 0.007843138, 1)
 theme_override_constants/outline_size = 1
@@ -453,6 +514,7 @@ offset_left = 7.0
 offset_top = 78.0
 offset_right = 77.0
 offset_bottom = 104.0
+mouse_filter = 2
 theme_override_colors/font_outline_color = Color(1, 0.015686275, 0.039215688, 1)
 bbcode_enabled = true
 text = "[b]3"
@@ -472,6 +534,7 @@ offset_left = 52.0
 offset_top = 76.5
 offset_right = 92.0
 offset_bottom = 102.5
+mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0.22745098, 0.15686275, 0.007843138, 1)
 bbcode_enabled = true
 text = "[b]2"
@@ -482,10 +545,10 @@ metadata/_edit_lock_ = true
 [node name="Button2" type="Panel" parent="Choices"]
 custom_minimum_size = Vector2(48, 96)
 layout_mode = 0
-offset_left = 87.0
-offset_top = 541.0
-offset_right = 151.0
-offset_bottom = 637.0
+offset_left = 89.0
+offset_top = 539.0
+offset_right = 153.0
+offset_bottom = 635.0
 pivot_offset = Vector2(32, 96)
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_efxa6")
@@ -520,6 +583,7 @@ offset_left = 1.0
 offset_top = 7.0
 offset_right = 63.0
 offset_bottom = 36.0
+mouse_filter = 2
 theme_override_colors/default_color = Color(1, 0.6784314, 0.3882353, 1)
 theme_override_colors/font_outline_color = Color(0.22745098, 0.15686275, 0.007843138, 1)
 theme_override_constants/outline_size = 1
@@ -540,6 +604,7 @@ offset_left = 7.0
 offset_top = 78.0
 offset_right = 77.0
 offset_bottom = 104.0
+mouse_filter = 2
 theme_override_colors/font_outline_color = Color(1, 0.015686275, 0.039215688, 1)
 bbcode_enabled = true
 text = "[b]3"
@@ -559,6 +624,7 @@ offset_left = 52.0
 offset_top = 76.5
 offset_right = 92.0
 offset_bottom = 102.5
+mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0.22745098, 0.15686275, 0.007843138, 1)
 bbcode_enabled = true
 text = "[b]2"
@@ -570,9 +636,9 @@ metadata/_edit_lock_ = true
 custom_minimum_size = Vector2(48, 96)
 layout_mode = 0
 offset_left = 160.0
-offset_top = 541.0
+offset_top = 538.0
 offset_right = 224.0
-offset_bottom = 637.0
+offset_bottom = 634.0
 pivot_offset = Vector2(32, 96)
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_efxa6")
@@ -607,6 +673,7 @@ offset_left = 1.0
 offset_top = 7.0
 offset_right = 63.0
 offset_bottom = 36.0
+mouse_filter = 2
 theme_override_colors/default_color = Color(1, 0.6784314, 0.3882353, 1)
 theme_override_colors/font_outline_color = Color(0.22745098, 0.15686275, 0.007843138, 1)
 theme_override_constants/outline_size = 1
@@ -627,6 +694,7 @@ offset_left = 7.0
 offset_top = 78.0
 offset_right = 77.0
 offset_bottom = 104.0
+mouse_filter = 2
 theme_override_colors/font_outline_color = Color(1, 0.015686275, 0.039215688, 1)
 bbcode_enabled = true
 text = "[b]3"
@@ -646,6 +714,7 @@ offset_left = 52.0
 offset_top = 76.5
 offset_right = 92.0
 offset_bottom = 102.5
+mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0.22745098, 0.15686275, 0.007843138, 1)
 bbcode_enabled = true
 text = "[b]2"
@@ -656,10 +725,10 @@ metadata/_edit_lock_ = true
 [node name="Button4" type="Panel" parent="Choices"]
 custom_minimum_size = Vector2(48, 96)
 layout_mode = 0
-offset_left = 232.0
-offset_top = 541.0
-offset_right = 296.0
-offset_bottom = 637.0
+offset_left = 231.0
+offset_top = 539.0
+offset_right = 295.0
+offset_bottom = 635.0
 pivot_offset = Vector2(32, 96)
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_efxa6")
@@ -694,6 +763,7 @@ offset_left = 1.0
 offset_top = 7.0
 offset_right = 63.0
 offset_bottom = 36.0
+mouse_filter = 2
 theme_override_colors/default_color = Color(1, 0.6784314, 0.3882353, 1)
 theme_override_colors/font_outline_color = Color(0.22745098, 0.15686275, 0.007843138, 1)
 theme_override_constants/outline_size = 1
@@ -714,6 +784,7 @@ offset_left = 7.0
 offset_top = 78.0
 offset_right = 77.0
 offset_bottom = 104.0
+mouse_filter = 2
 theme_override_colors/font_outline_color = Color(1, 0.015686275, 0.039215688, 1)
 bbcode_enabled = true
 text = "[b]3"
@@ -733,6 +804,7 @@ offset_left = 52.0
 offset_top = 76.5
 offset_right = 92.0
 offset_bottom = 102.5
+mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0.22745098, 0.15686275, 0.007843138, 1)
 bbcode_enabled = true
 text = "[b]2"

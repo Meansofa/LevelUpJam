@@ -7,6 +7,8 @@ var board := []
 
 @export var rook_tres : piece
 @export var bishop_tres : piece
+
+var player_cards = []
 #var player_piece := "P"
 #var opponent_piece := "E"
 
