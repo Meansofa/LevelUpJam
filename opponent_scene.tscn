@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0qpjsiu58e47"]
+
+[ext_resource type="Texture2D" uid="uid://cosfisv3mpfiq" path="res://icon.svg" id="1_1ji24"]
+
+[node name="OpponentScene" type="Node2D"]
+
+[node name="Icon" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(732, 265)
+texture = ExtResource("1_1ji24")
+
+[node name="health_bar" type="RichTextLabel" parent="."]
+offset_left = 702.0
+offset_top = 171.0
+offset_right = 742.0
+offset_bottom = 211.0
+bbcode_enabled = true
+text = "100"
+fit_content = true
+autowrap_mode = 2

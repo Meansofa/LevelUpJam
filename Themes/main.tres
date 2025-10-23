@@ -1,0 +1,11 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://buamt54f6ol74"]
+
+[ext_resource type="FontFile" uid="uid://bke4uhr2sqeg2" path="res://Themes/Fonts/Daydream DEMO.otf" id="1_dn4vi"]
+[ext_resource type="FontFile" uid="uid://cl3qphtvrey5h" path="res://Themes/Fonts/Minecraftia-Regular.ttf" id="2_dn4vi"]
+
+[resource]
+RichTextLabel/constants/outline_size = 3
+RichTextLabel/font_sizes/bold_font_size = 12
+RichTextLabel/font_sizes/normal_font_size = 12
+RichTextLabel/fonts/bold_font = ExtResource("1_dn4vi")
+RichTextLabel/fonts/normal_font = ExtResource("2_dn4vi")

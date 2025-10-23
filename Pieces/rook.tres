@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="piece" load_steps=2 format=3 uid="uid://bg0scmb60ole"]
+
+[ext_resource type="Script" uid="uid://b857rlbbl7w2n" path="res://Pieces/base_piece.gd" id="1_m0jp5"]
+
+[resource]
+script = ExtResource("1_m0jp5")
+health = 5
+metadata/_custom_type_script = "uid://b857rlbbl7w2n"
