@@ -3,20 +3,42 @@ extends Node2D
 const rows := 6
 const cols := 4
 
-var board := []
+var board : Array = []
+
+@export var pick_card : PackedScene
 
 @export var rook_tres : piece
 @export var bishop_tres : piece
 
 var player_cards = []
-#var player_piece := "P"
-#var opponent_piece := "E"
+
+func place_piece(slot : int, card : Area2D):
+	player_move()
+	#card.position += Vector2(100, 100)
+	var rook = rook_tres.duplicate()
+	rook.team = piece.teams.player #assign piece to player
+	board[rows - 1][slot] = rook
+	view_board()
+
+func simulate():
+	for x in range(rows):
+		for y in range(cols):
+			var square = %Board.get_node("Square" + str((x*cols) + y))
+			if typeof(board[x][y]) != TYPE_INT:
+				var card = board[x][y]
+				square.visible = true #show the card
+				square.change_health(card.health)
+				square.change_damage(card.damage)
+			else:
+				square.visible = false
 
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if board == []:
 			return
+		if Input.is_key_pressed(KEY_A):
+			simulate()
 		if Input.is_key_pressed(KEY_Q):
 			player_move()
 			opponent_move()
@@ -48,13 +70,10 @@ func player_move():
 				
 				if board[x - 1][y] is piece: #check if forward is a piece(this will decide if pawn will move forward)
 					var unknown_piece = board[x - 1][y]
-					print("unknown_piece: ", unknown_piece)
 					if unknown_piece.team  == piece.teams.player:
-						print(player_piece.health, " asvs ", unknown_piece.health)
 						board[x][y] = player_piece
 					elif unknown_piece.team  == piece.teams.opponent:
 						unknown_piece.health -= player_piece.damage
-						print(player_piece.health, " vs ", unknown_piece.health)
 						if unknown_piece.health > 0: #if the piece in the front is still alive after attacking then dont move
 							continue #skip the next lines of code and move to the next loop
 				
@@ -73,17 +92,15 @@ func opponent_move():
 		for y in range(cols):
 			var reverse_x = rows - (x + 1) #first index(0) becomes last index(23)
 			var reverse_y = cols - (y + 1) #first index(0) becomes last index(23)
-			#print("reverse_x, reverse_y", reverse_x, " ", reverse_y, " ", board[reverse_x][reverse_y])
 			if board[reverse_x][reverse_y] is piece and board[reverse_x][reverse_y].team == piece.teams.opponent:
 				var opponent_piece = board[reverse_x][reverse_y]
-				
 				if board[reverse_x + 1][reverse_y] is piece: #check if forward is a piece 
 					var unknown_piece = board[reverse_x + 1][reverse_y]
 					if unknown_piece.team  == piece.teams.opponent:
 						board[reverse_x][reverse_y] = opponent_piece
 					elif unknown_piece.team  == piece.teams.player:
+						print("ppoop")
 						unknown_piece.health -= opponent_piece.damage
-						print(opponent_piece.health, " vs ", unknown_piece.health)
 						if unknown_piece.health > 0: #if the piece in the front is still alive after attacking then dont move
 							continue #skip the next lines of code and move to the next loop
 				
@@ -96,7 +113,6 @@ func opponent_move():
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print("board: ", board)
 	instantiate_board()
 
 func instantiate_board():

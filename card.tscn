@@ -1,0 +1,85 @@
+[gd_scene load_steps=7 format=3 uid="uid://q3epd7gwh8wv"]
+
+[ext_resource type="Script" uid="uid://x6qjxb1tisg2" path="res://card.gd" id="1_e484p"]
+[ext_resource type="Texture2D" uid="uid://b7p6t2p2k55ny" path="res://Art/Pieces/PawnOutline.png" id="2_1i5pp"]
+[ext_resource type="Texture2D" uid="uid://bnw64uj26d4r6" path="res://Art/Pieces/heart.png" id="4_b4rk6"]
+[ext_resource type="Texture2D" uid="uid://jtgyxukmqidc" path="res://Art/Pieces/sword.png" id="5_6lcat"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_efxa6"]
+size = Vector2(128, 193)
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_5vw27"]
+
+[node name="Card" type="Area2D" groups=["Card"]]
+monitoring = false
+monitorable = false
+script = ExtResource("1_e484p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(2, -2.5)
+shape = SubResource("RectangleShape2D_efxa6")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+offset_left = -61.0
+offset_top = -99.0
+offset_right = 67.0
+offset_bottom = 93.0
+mouse_filter = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_5vw27")
+texture_normal = ExtResource("2_1i5pp")
+stretch_mode = 5
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(-45, 62)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("4_b4rk6")
+metadata/_edit_lock_ = true
+
+[node name="health_label" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+offset_left = -56.0
+offset_top = 44.0
+offset_right = 14.0
+offset_bottom = 89.0
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0.5137255, 0.19215687, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/bold_font_size = 32
+bbcode_enabled = true
+text = "[b]3"
+fit_content = true
+scroll_active = false
+
+[node name="Sprite2D4" type="Sprite2D" parent="."]
+position = Vector2(48, 64)
+scale = Vector2(3, 3)
+texture = ExtResource("5_6lcat")
+
+[node name="Sprite2D5" type="Sprite2D" parent="."]
+position = Vector2(48, 64)
+scale = Vector2(3, 3)
+texture = ExtResource("5_6lcat")
+flip_h = true
+
+[node name="damage_label" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+offset_left = 35.0
+offset_top = 42.0
+offset_right = 75.0
+offset_bottom = 87.0
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0.22745098, 0.15686275, 0.007843138, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/bold_font_size = 32
+bbcode_enabled = true
+text = "[b]2"
+fit_content = true
+scroll_active = false
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
