@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://1ii02qh8q237"]
+[gd_scene load_steps=18 format=3 uid="uid://1ii02qh8q237"]
 
 [ext_resource type="Script" uid="uid://cnxb5wywldhy3" path="res://main.gd" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://bac0wa6usgxao" path="res://player_scene.tscn" id="2_0xm2m"]
@@ -35,6 +35,19 @@ border_width_bottom = 1
 border_color = Color(0.3620207, 0.19325233, 1.2032687e-07, 1)
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+
+[sub_resource type="Animation" id="Animation_dg77c"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_efxa6"]
+resource_name = "give_player"
+step = 0.0333333
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ycdy4"]
+_data = {
+&"RESET": SubResource("Animation_dg77c"),
+&"give_player": SubResource("Animation_efxa6")
+}
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_ig7tw")
@@ -275,47 +288,87 @@ size_flags_vertical = 0
 mouse_filter = 2
 disabled = true
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Control/VBoxContainer"]
+[node name="PlayerSlots" type="HBoxContainer" parent="Control/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 metadata/_edit_lock_ = true
 
-[node name="Button" type="Button" parent="Control/VBoxContainer/HBoxContainer2"]
+[node name="Slot" type="Button" parent="Control/VBoxContainer/PlayerSlots"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 focus_mode = 0
+button_mask = 0
 script = ExtResource("8_dg77c")
 
-[node name="card_detector" type="Area2D" parent="Control/VBoxContainer/HBoxContainer2/Button" groups=["Slot"]]
+[node name="card_detector" type="Area2D" parent="Control/VBoxContainer/PlayerSlots/Slot" groups=["Slot"]]
 position = Vector2(60, 80)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/VBoxContainer/HBoxContainer2/Button/card_detector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/VBoxContainer/PlayerSlots/Slot/card_detector"]
 position = Vector2(4, 0)
 shape = SubResource("RectangleShape2D_ycdy4")
 debug_color = Color(0.739724, 0.4672796, 0, 0.41960785)
 
-[node name="card" type="Marker2D" parent="Control/VBoxContainer/HBoxContainer2/Button"]
+[node name="card" type="Marker2D" parent="Control/VBoxContainer/PlayerSlots/Slot"]
 position = Vector2(60, 80)
 
-[node name="Button2" type="Button" parent="Control/VBoxContainer/HBoxContainer2"]
+[node name="Slot2" type="Button" parent="Control/VBoxContainer/PlayerSlots"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 focus_mode = 0
+button_mask = 0
+script = ExtResource("8_dg77c")
 
-[node name="Button3" type="Button" parent="Control/VBoxContainer/HBoxContainer2"]
-custom_minimum_size = Vector2(128, 160)
-layout_mode = 2
-size_flags_vertical = 0
-focus_mode = 0
+[node name="card_detector" type="Area2D" parent="Control/VBoxContainer/PlayerSlots/Slot2" groups=["Slot"]]
+position = Vector2(60, 80)
 
-[node name="Button4" type="Button" parent="Control/VBoxContainer/HBoxContainer2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/VBoxContainer/PlayerSlots/Slot2/card_detector"]
+position = Vector2(4, 0)
+shape = SubResource("RectangleShape2D_ycdy4")
+debug_color = Color(0.739724, 0.4672796, 0, 0.41960785)
+
+[node name="card" type="Marker2D" parent="Control/VBoxContainer/PlayerSlots/Slot2"]
+position = Vector2(60, 80)
+
+[node name="Slot3" type="Button" parent="Control/VBoxContainer/PlayerSlots"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 focus_mode = 0
+button_mask = 0
+script = ExtResource("8_dg77c")
+
+[node name="card_detector" type="Area2D" parent="Control/VBoxContainer/PlayerSlots/Slot3" groups=["Slot"]]
+position = Vector2(60, 80)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/VBoxContainer/PlayerSlots/Slot3/card_detector"]
+position = Vector2(4, 0)
+shape = SubResource("RectangleShape2D_ycdy4")
+debug_color = Color(0.739724, 0.4672796, 0, 0.41960785)
+
+[node name="card" type="Marker2D" parent="Control/VBoxContainer/PlayerSlots/Slot3"]
+position = Vector2(60, 80)
+
+[node name="Slot4" type="Button" parent="Control/VBoxContainer/PlayerSlots"]
+custom_minimum_size = Vector2(128, 160)
+layout_mode = 2
+size_flags_vertical = 0
+focus_mode = 0
+button_mask = 0
+script = ExtResource("8_dg77c")
+
+[node name="card_detector" type="Area2D" parent="Control/VBoxContainer/PlayerSlots/Slot4" groups=["Slot"]]
+position = Vector2(60, 80)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/VBoxContainer/PlayerSlots/Slot4/card_detector"]
+position = Vector2(4, 0)
+shape = SubResource("RectangleShape2D_ycdy4")
+debug_color = Color(0.739724, 0.4672796, 0, 0.41960785)
+
+[node name="card" type="Marker2D" parent="Control/VBoxContainer/PlayerSlots/Slot4"]
+position = Vector2(60, 80)
 
 [node name="Choices" type="Control" parent="."]
 custom_minimum_size = Vector2(360, 100)
@@ -330,6 +383,7 @@ theme = ExtResource("7_4c57u")
 metadata/_edit_lock_ = true
 
 [node name="Cards" type="Panel" parent="Choices"]
+visible = false
 custom_minimum_size = Vector2(48, 96)
 layout_mode = 0
 offset_left = 611.0
@@ -352,7 +406,6 @@ offset_bottom = 195.0
 pivot_offset = Vector2(32, 96)
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dg77c")
-metadata/_edit_lock_ = true
 
 [node name="Panel" type="Panel" parent="Choices/Cards/Button6"]
 layout_mode = 1
@@ -417,10 +470,8 @@ metadata/_edit_lock_ = true
 [node name="Button9" type="Panel" parent="Choices/Cards"]
 custom_minimum_size = Vector2(48, 96)
 layout_mode = 0
-offset_left = -1.0295677
-offset_top = 9.918355
-offset_right = 126.97043
-offset_bottom = 201.91835
+offset_right = 128.0
+offset_bottom = 192.0
 pivot_offset = Vector2(32, 96)
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dg77c")
@@ -437,8 +488,43 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ycdy4")
 
+[node name="GiveCard" type="Panel" parent="Choices/Cards"]
+custom_minimum_size = Vector2(48, 96)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 192.0
+pivot_offset = Vector2(32, 96)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dg77c")
+metadata/_edit_lock_ = true
+
+[node name="Panel" type="Panel" parent="Choices/Cards/GiveCard"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -96.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ycdy4")
+
 [node name="PickCard" parent="Choices" instance=ExtResource("9_kek77")]
-position = Vector2(120, 1128)
+position = Vector2(80, 1160)
+
+[node name="PickCard2" parent="Choices" instance=ExtResource("9_kek77")]
+position = Vector2(216, 1160)
+
+[node name="PickCard3" parent="Choices" instance=ExtResource("9_kek77")]
+position = Vector2(352, 1160)
+
+[node name="PickCard4" parent="Choices" instance=ExtResource("9_kek77")]
+position = Vector2(488, 1160)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Choices"]
+libraries = {
+&"": SubResource("AnimationLibrary_ycdy4")
+}
 
 [node name="GamePlay" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -525,5 +611,11 @@ position = Vector2(402, 800)
 
 [connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Join" to="." method="_on_join_pressed"]
-[connection signal="area_entered" from="Control/VBoxContainer/HBoxContainer2/Button/card_detector" to="Control/VBoxContainer/HBoxContainer2/Button" method="_on_card_detector_area_entered"]
-[connection signal="area_exited" from="Control/VBoxContainer/HBoxContainer2/Button/card_detector" to="Control/VBoxContainer/HBoxContainer2/Button" method="_on_card_detector_area_exited"]
+[connection signal="area_entered" from="Control/VBoxContainer/PlayerSlots/Slot/card_detector" to="Control/VBoxContainer/PlayerSlots/Slot" method="_on_card_detector_area_entered"]
+[connection signal="area_exited" from="Control/VBoxContainer/PlayerSlots/Slot/card_detector" to="Control/VBoxContainer/PlayerSlots/Slot" method="_on_card_detector_area_exited"]
+[connection signal="area_entered" from="Control/VBoxContainer/PlayerSlots/Slot2/card_detector" to="Control/VBoxContainer/PlayerSlots/Slot2" method="_on_card_detector_area_entered"]
+[connection signal="area_exited" from="Control/VBoxContainer/PlayerSlots/Slot2/card_detector" to="Control/VBoxContainer/PlayerSlots/Slot2" method="_on_card_detector_area_exited"]
+[connection signal="area_entered" from="Control/VBoxContainer/PlayerSlots/Slot3/card_detector" to="Control/VBoxContainer/PlayerSlots/Slot3" method="_on_card_detector_area_entered"]
+[connection signal="area_exited" from="Control/VBoxContainer/PlayerSlots/Slot3/card_detector" to="Control/VBoxContainer/PlayerSlots/Slot3" method="_on_card_detector_area_exited"]
+[connection signal="area_entered" from="Control/VBoxContainer/PlayerSlots/Slot4/card_detector" to="Control/VBoxContainer/PlayerSlots/Slot4" method="_on_card_detector_area_entered"]
+[connection signal="area_exited" from="Control/VBoxContainer/PlayerSlots/Slot4/card_detector" to="Control/VBoxContainer/PlayerSlots/Slot4" method="_on_card_detector_area_exited"]

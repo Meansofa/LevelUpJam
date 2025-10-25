@@ -10,3 +10,4 @@ enum teams {player, opponent}
 enum directions {forward, down, left, right}
 @export var attack_direction: directions = directions.forward
 @export var attack_range : int = 1
+@export var attack_mode : bool

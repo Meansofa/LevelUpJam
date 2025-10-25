@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://q3epd7gwh8wv"]
+[gd_scene load_steps=12 format=3 uid="uid://q3epd7gwh8wv"]
 
 [ext_resource type="Script" uid="uid://x6qjxb1tisg2" path="res://card.gd" id="1_e484p"]
 [ext_resource type="Texture2D" uid="uid://b7p6t2p2k55ny" path="res://Art/Pieces/PawnOutline.png" id="2_1i5pp"]
@@ -10,6 +10,95 @@ size = Vector2(128, 193)
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_5vw27"]
 
+[sub_resource type="Animation" id="Animation_fpac0"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pawn:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pawn:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_1i5pp"]
+resource_name = "as"
+step = 0.0333333
+
+[sub_resource type="Animation" id="Animation_pjytt"]
+resource_name = "attack_player"
+step = 0.0333333
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("pawn:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pawn:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -15.5, -0.25, 0, 0.25, 0, 144, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.6333333, 1)
+}
+
+[sub_resource type="Animation" id="Animation_e484p"]
+resource_name = "attack_opponent"
+step = 0.0333333
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("pawn:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pawn:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 15.5, -0.25, 0, 0.25, 0, -144, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.6333333, 1)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1i5pp"]
+_data = {
+&"RESET": SubResource("Animation_fpac0"),
+&"as": SubResource("Animation_1i5pp"),
+&"attack_opponent": SubResource("Animation_e484p"),
+&"attack_player": SubResource("Animation_pjytt")
+}
+
 [node name="Card" type="Area2D" groups=["Card"]]
 monitoring = false
 monitorable = false
@@ -20,7 +109,9 @@ visible = false
 position = Vector2(2, -2.5)
 shape = SubResource("RectangleShape2D_efxa6")
 
-[node name="TextureButton" type="TextureButton" parent="."]
+[node name="pawn" type="CanvasGroup" parent="."]
+
+[node name="TextureButton" type="TextureButton" parent="pawn"]
 offset_left = -61.0
 offset_top = -99.0
 offset_right = 67.0
@@ -32,13 +123,13 @@ texture_normal = ExtResource("2_1i5pp")
 stretch_mode = 5
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D3" type="Sprite2D" parent="."]
+[node name="Sprite2D3" type="Sprite2D" parent="pawn"]
 position = Vector2(-45, 62)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("4_b4rk6")
 metadata/_edit_lock_ = true
 
-[node name="health_label" type="RichTextLabel" parent="."]
+[node name="health_label" type="RichTextLabel" parent="pawn"]
 unique_name_in_owner = true
 offset_left = -56.0
 offset_top = 44.0
@@ -53,18 +144,18 @@ text = "[b]3"
 fit_content = true
 scroll_active = false
 
-[node name="Sprite2D4" type="Sprite2D" parent="."]
+[node name="Sprite2D4" type="Sprite2D" parent="pawn"]
 position = Vector2(48, 64)
 scale = Vector2(3, 3)
 texture = ExtResource("5_6lcat")
 
-[node name="Sprite2D5" type="Sprite2D" parent="."]
+[node name="Sprite2D5" type="Sprite2D" parent="pawn"]
 position = Vector2(48, 64)
 scale = Vector2(3, 3)
 texture = ExtResource("5_6lcat")
 flip_h = true
 
-[node name="damage_label" type="RichTextLabel" parent="."]
+[node name="damage_label" type="RichTextLabel" parent="pawn"]
 unique_name_in_owner = true
 offset_left = 35.0
 offset_top = 42.0
@@ -78,6 +169,46 @@ bbcode_enabled = true
 text = "[b]2"
 fit_content = true
 scroll_active = false
+
+[node name="CanvasGroup2" type="CanvasGroup" parent="."]
+visible = false
+modulate = Color(1, 0, 0, 0.43137255)
+position = Vector2(0, 160)
+
+[node name="TextureButton" type="TextureButton" parent="CanvasGroup2"]
+offset_left = -61.0
+offset_top = -99.0
+offset_right = 67.0
+offset_bottom = 93.0
+mouse_filter = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_5vw27")
+texture_normal = ExtResource("2_1i5pp")
+stretch_mode = 5
+metadata/_edit_lock_ = true
+
+[node name="CanvasGroup3" type="CanvasGroup" parent="."]
+visible = false
+modulate = Color(1, 0, 0, 0.43137255)
+position = Vector2(0, -160)
+
+[node name="TextureButton" type="TextureButton" parent="CanvasGroup3"]
+offset_left = -61.0
+offset_top = -99.0
+offset_right = 67.0
+offset_bottom = 93.0
+mouse_filter = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_5vw27")
+texture_normal = ExtResource("2_1i5pp")
+stretch_mode = 5
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_1i5pp")
+}
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]

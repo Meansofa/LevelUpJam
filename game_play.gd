@@ -12,23 +12,59 @@ var board : Array = []
 
 var player_cards = []
 
+func calculate_index(x:int, y:int) -> int:
+	return (x*cols) + y
+
 func attack():
 	for x in range(rows):
 		for y in range(cols):
-			var square = %Board.get_node("Square" + str((x*cols) + y))
-			if board[x][y] is piece:
-				var unknown_piece = board[x][y]
-				if board[x][y].team  == piece.teams.player:
-					var player_piece = unknown_piece
-					var front_square = board[x + player_piece.attack_range][y]
-					if front_square is piece and front_square.team == piece.teams.opponent:
-						pass
-				var card = board[x][y]
-				square.visible = true #show the card
-				square.change_health(card.health)
-				square.change_damage(card.damage)
+			var pawn = board[x][y]
+			var square : Area2D = %Board.get_node("Square" + str(calculate_index(x, y))) #the node in game corresponding to an index in the board
+			if pawn is piece and pawn.team  == piece.teams.player:
+				var front_piece = board[x - pawn.attack_range][y]
+				var front_square : Area2D = %Board.get_node("Square" + str(calculate_index(x - pawn.attack_range, y))) #the node in game corresponding to an index in the board
+				if front_piece is piece:
+					if front_piece.team == piece.teams.opponent:
+						if pawn.attack_mode:
+							await square.attack_opponent()
+							front_piece.health -= pawn.damage
+							update_visuals(front_square, front_piece)
+						else:
+							pawn.attack_mode = true
+					else: 
+						pawn.attack_mode = false
+			elif pawn is piece and pawn.team  == piece.teams.opponent:
+				var front_piece = board[x + pawn.attack_range][y]
+				var front_square : Area2D = %Board.get_node("Square" + str(calculate_index(x + pawn.attack_range, y))) #the node in game corresponding to an index in the board
+				if front_piece is piece:
+					if front_piece.team == piece.teams.player:
+						if pawn.attack_mode:
+							await square.attack_player()
+							front_piece.health -= pawn.damage
+							update_visuals(front_square, front_piece)
+						else:
+							pawn.attack_mode = true
+					else: 
+						pawn.attack_mode = false
+
+func update_visuals(square: Area2D, pawn : piece):
+	square.change_health(pawn.health)
+	square.change_damage(pawn.damage)
+
+func simulate():
+	attack()
+	for x in range(rows):
+		for y in range(cols):
+			var pawn = board[x][y]
+			var index := (x*cols) + y
+			var square : Area2D = %Board.get_node("Square" + str(index)) #the node in game corresponding to an index in the board
+			if pawn is piece:
+				square.visible = true #show the pawn
+				
+				update_visuals(square, pawn) #should always be last
 			else:
 				square.visible = false
+	
 
 func place_piece(slot : int, card : Area2D):
 	player_move()
@@ -37,19 +73,6 @@ func place_piece(slot : int, card : Area2D):
 	rook.team = piece.teams.player #assign piece to player
 	board[rows - 1][slot] = rook
 	view_board()
-
-func simulate():
-	for x in range(rows):
-		for y in range(cols):
-			var square = %Board.get_node("Square" + str((x*cols) + y))
-			if typeof(board[x][y]) != TYPE_INT:
-				var card = board[x][y]
-				square.visible = true #show the card
-				square.change_health(card.health)
-				square.change_damage(card.damage)
-			else:
-				square.visible = false
-
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
@@ -60,6 +83,7 @@ func _input(event: InputEvent) -> void:
 		if Input.is_key_pressed(KEY_Q):
 			player_move()
 			opponent_move()
+			simulate()
 		if Input.is_key_pressed(KEY_1):
 			player_move()
 			var rook = rook_tres.duplicate()
@@ -72,6 +96,9 @@ func _input(event: InputEvent) -> void:
 			board[rows - 1][1] = rook
 		if Input.is_key_pressed(KEY_5):
 			opponent_move()
+			#var rook = rook_tres.duplicate()
+			#rook.team = piece.teams.opponent #assign piece to player
+			#board[0][0] = rook
 			var bishop = bishop_tres.duplicate()
 			bishop.team = piece.teams.opponent #assign piece to oppoonent
 			board[0][0] = bishop
@@ -85,12 +112,6 @@ func player_move():
 				var player_piece = board[x][y]
 				
 				if board[x - 1][y] is piece: #check if forward is a piece(this will decide if pawn will move forward)
-					#var unknown_piece = board[x - 1][y]
-					#if unknown_piece.team  == piece.teams.player:
-						#board[x][y] = player_piece
-					#elif unknown_piece.team  == piece.teams.opponent:
-						#unknown_piece.health -= player_piece.damage
-						#if unknown_piece.health > 0: #if the piece in the front is still alive after attacking then dont move
 					continue #skip the next lines of code and move to the next loop
 				
 				move_forward(x , y, player_piece)
@@ -105,7 +126,6 @@ func move_forward(x : int, y: int, square : piece):
 func opponent_move():
 	#since the 0 index is at the top and last index is at the bottom, if the piece goes down it will keep on going down 
 	#we gotta start from the last index to the top to not counter this logical bug
-	
 	for x in range(rows):
 		for y in range(cols):
 			var reverse_x = rows - (x + 1) #first index(0) becomes last index(23)
@@ -113,13 +133,7 @@ func opponent_move():
 			if board[reverse_x][reverse_y] is piece and board[reverse_x][reverse_y].team == piece.teams.opponent:
 				var opponent_piece = board[reverse_x][reverse_y]
 				if board[reverse_x + 1][reverse_y] is piece: #check if forward is a piece 
-					#var unknown_piece = board[reverse_x + 1][reverse_y]
-					#if unknown_piece.team  == piece.teams.opponent:#if it's your ally blocking the way don't move
-						#board[reverse_x][reverse_y] = opponent_piece
-					#elif unknown_piece.team  == piece.teams.player: #if it's an enemy don't move
-						#if unknown_piece.health > 0: #if the piece in the front is still alive after attacking then dont move
 					continue #skip the next lines of code and move to the next loop
-
 				#Move if possible
 				move_downward(reverse_x, reverse_y, opponent_piece) 
 
@@ -144,10 +158,10 @@ func instantiate_board():
 	view_board()
 	
 func view_board():
-	print("-------------------")
+	#print("-------------------")
 	for x in range(rows):
 		var line := ""
 		for y in range(cols):
 			line += str(board[x][y]) + " "
-		print(line)
-	print("-------------------")
+		#print(line)
+	#print("-------------------")

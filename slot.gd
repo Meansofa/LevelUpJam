@@ -5,6 +5,7 @@ extends Button
 
 var card : Area2D #the card on it's slot
 
+
 func _on_card_detector_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Card"):
 		card = area #set the area node as the card 
@@ -17,7 +18,7 @@ func _on_card_detector_area_exited(area: Area2D) -> void:
 
 func _place_card(is_dragging : bool):
 	if is_dragging == false:
-		card.position = card_parent.global_position
+		#card.position = card_parent.global_position
 		%GamePlay.place_piece(slot, card) #place the card
 		_disconnect_card() #since the card has already been placed in the slot
 
