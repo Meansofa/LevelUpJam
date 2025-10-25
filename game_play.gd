@@ -21,8 +21,8 @@ func attack():
 			var pawn = board[x][y]
 			var square : Area2D = %Board.get_node("Square" + str(calculate_index(x, y))) #the node in game corresponding to an index in the board
 			if pawn is piece and pawn.team  == piece.teams.player:
-				var front_piece = board[x - pawn.attack_range][y]
-				var front_square : Area2D = %Board.get_node("Square" + str(calculate_index(x - pawn.attack_range, y))) #the node in game corresponding to an index in the board
+				var front_piece = board[x - pawn.attack_direction][y]
+				var front_square : Area2D = %Board.get_node("Square" + str(calculate_index(x - pawn.attack_direction, y))) #the node in game corresponding to an index in the board
 				if front_piece is piece:
 					if front_piece.team == piece.teams.opponent:
 						if pawn.attack_mode:
@@ -34,8 +34,8 @@ func attack():
 					else: 
 						pawn.attack_mode = false
 			elif pawn is piece and pawn.team  == piece.teams.opponent:
-				var front_piece = board[x + pawn.attack_range][y]
-				var front_square : Area2D = %Board.get_node("Square" + str(calculate_index(x + pawn.attack_range, y))) #the node in game corresponding to an index in the board
+				var front_piece = board[x + pawn.attack_direction][y]
+				var front_square : Area2D = %Board.get_node("Square" + str(calculate_index(x + pawn.attack_direction, y))) #the node in game corresponding to an index in the board
 				if front_piece is piece:
 					if front_piece.team == piece.teams.player:
 						if pawn.attack_mode:
@@ -52,6 +52,11 @@ func update_visuals(square: Area2D, pawn : piece):
 	square.change_damage(pawn.damage)
 
 func simulate():
+	player_move()
+	opponent_move()
+	update_simulation()
+
+func update_simulation():
 	attack()
 	for x in range(rows):
 		for y in range(cols):
@@ -64,26 +69,22 @@ func simulate():
 				update_visuals(square, pawn) #should always be last
 			else:
 				square.visible = false
-	
 
-func place_piece(slot : int, card : Area2D):
-	player_move()
-	#card.position += Vector2(100, 100)
-	var rook = rook_tres.duplicate()
-	rook.team = piece.teams.player #assign piece to player
-	board[rows - 1][slot] = rook
-	view_board()
+func place_piece(slot_number : int, card : piece):
+	card.team = piece.teams.player #assign piece to player
+	board[rows - 1][slot_number] = card
+	update_simulation()
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if board == []:
 			return
 		if Input.is_key_pressed(KEY_A):
-			simulate()
+			update_simulation()
 		if Input.is_key_pressed(KEY_Q):
 			player_move()
 			opponent_move()
-			simulate()
+			update_simulation()
 		if Input.is_key_pressed(KEY_1):
 			player_move()
 			var rook = rook_tres.duplicate()
@@ -146,6 +147,7 @@ func move_downward(x:int, y:int, square:piece):
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	%EndTurn.connect("pressed", simulate)
 	instantiate_board()
 
 func instantiate_board():
@@ -162,6 +164,9 @@ func view_board():
 	for x in range(rows):
 		var line := ""
 		for y in range(cols):
-			line += str(board[x][y]) + " "
+			if board[x][y]is piece:
+				line += board[x][y].name + " "
+			else:
+				line += str(board[x][y]) + " "
 		#print(line)
 	#print("-------------------")

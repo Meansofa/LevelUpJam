@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://1ii02qh8q237"]
+[gd_scene load_steps=15 format=3 uid="uid://1ii02qh8q237"]
 
 [ext_resource type="Script" uid="uid://cnxb5wywldhy3" path="res://main.gd" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://bac0wa6usgxao" path="res://player_scene.tscn" id="2_0xm2m"]
@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://bd3kqdjnuomn3" path="res://board.gd" id="11_efxa6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ycdy4"]
-size = Vector2(120, 160)
+size = Vector2(16, 32)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dg77c"]
 bg_color = Color(0.94367486, 0.546395, 0.08269244, 1)
@@ -35,19 +35,6 @@ border_width_bottom = 1
 border_color = Color(0.3620207, 0.19325233, 1.2032687e-07, 1)
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
-
-[sub_resource type="Animation" id="Animation_dg77c"]
-length = 0.001
-
-[sub_resource type="Animation" id="Animation_efxa6"]
-resource_name = "give_player"
-step = 0.0333333
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ycdy4"]
-_data = {
-&"RESET": SubResource("Animation_dg77c"),
-&"give_player": SubResource("Animation_efxa6")
-}
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_ig7tw")
@@ -303,15 +290,11 @@ button_mask = 0
 script = ExtResource("8_dg77c")
 
 [node name="card_detector" type="Area2D" parent="Control/VBoxContainer/PlayerSlots/Slot" groups=["Slot"]]
-position = Vector2(60, 80)
+position = Vector2(60, 32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Control/VBoxContainer/PlayerSlots/Slot/card_detector"]
-position = Vector2(4, 0)
 shape = SubResource("RectangleShape2D_ycdy4")
 debug_color = Color(0.739724, 0.4672796, 0, 0.41960785)
-
-[node name="card" type="Marker2D" parent="Control/VBoxContainer/PlayerSlots/Slot"]
-position = Vector2(60, 80)
 
 [node name="Slot2" type="Button" parent="Control/VBoxContainer/PlayerSlots"]
 custom_minimum_size = Vector2(128, 160)
@@ -320,17 +303,14 @@ size_flags_vertical = 0
 focus_mode = 0
 button_mask = 0
 script = ExtResource("8_dg77c")
+slot_number = 1
 
 [node name="card_detector" type="Area2D" parent="Control/VBoxContainer/PlayerSlots/Slot2" groups=["Slot"]]
-position = Vector2(60, 80)
+position = Vector2(60, 32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Control/VBoxContainer/PlayerSlots/Slot2/card_detector"]
-position = Vector2(4, 0)
 shape = SubResource("RectangleShape2D_ycdy4")
 debug_color = Color(0.739724, 0.4672796, 0, 0.41960785)
-
-[node name="card" type="Marker2D" parent="Control/VBoxContainer/PlayerSlots/Slot2"]
-position = Vector2(60, 80)
 
 [node name="Slot3" type="Button" parent="Control/VBoxContainer/PlayerSlots"]
 custom_minimum_size = Vector2(128, 160)
@@ -339,17 +319,14 @@ size_flags_vertical = 0
 focus_mode = 0
 button_mask = 0
 script = ExtResource("8_dg77c")
+slot_number = 2
 
 [node name="card_detector" type="Area2D" parent="Control/VBoxContainer/PlayerSlots/Slot3" groups=["Slot"]]
-position = Vector2(60, 80)
+position = Vector2(60, 32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Control/VBoxContainer/PlayerSlots/Slot3/card_detector"]
-position = Vector2(4, 0)
 shape = SubResource("RectangleShape2D_ycdy4")
 debug_color = Color(0.739724, 0.4672796, 0, 0.41960785)
-
-[node name="card" type="Marker2D" parent="Control/VBoxContainer/PlayerSlots/Slot3"]
-position = Vector2(60, 80)
 
 [node name="Slot4" type="Button" parent="Control/VBoxContainer/PlayerSlots"]
 custom_minimum_size = Vector2(128, 160)
@@ -358,17 +335,14 @@ size_flags_vertical = 0
 focus_mode = 0
 button_mask = 0
 script = ExtResource("8_dg77c")
+slot_number = 3
 
 [node name="card_detector" type="Area2D" parent="Control/VBoxContainer/PlayerSlots/Slot4" groups=["Slot"]]
-position = Vector2(60, 80)
+position = Vector2(60, 32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Control/VBoxContainer/PlayerSlots/Slot4/card_detector"]
-position = Vector2(4, 0)
 shape = SubResource("RectangleShape2D_ycdy4")
 debug_color = Color(0.739724, 0.4672796, 0, 0.41960785)
-
-[node name="card" type="Marker2D" parent="Control/VBoxContainer/PlayerSlots/Slot4"]
-position = Vector2(60, 80)
 
 [node name="Choices" type="Control" parent="."]
 custom_minimum_size = Vector2(360, 100)
@@ -382,8 +356,7 @@ mouse_filter = 2
 theme = ExtResource("7_4c57u")
 metadata/_edit_lock_ = true
 
-[node name="Cards" type="Panel" parent="Choices"]
-visible = false
+[node name="DesignCards" type="Panel" parent="Choices"]
 custom_minimum_size = Vector2(48, 96)
 layout_mode = 0
 offset_left = 611.0
@@ -396,7 +369,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dg77c")
 metadata/_edit_lock_ = true
 
-[node name="Button6" type="Panel" parent="Choices/Cards"]
+[node name="Button6" type="Panel" parent="Choices/DesignCards"]
 custom_minimum_size = Vector2(48, 96)
 layout_mode = 0
 offset_left = -2.0
@@ -407,7 +380,7 @@ pivot_offset = Vector2(32, 96)
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dg77c")
 
-[node name="Panel" type="Panel" parent="Choices/Cards/Button6"]
+[node name="Panel" type="Panel" parent="Choices/DesignCards/Button6"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -419,7 +392,7 @@ grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ycdy4")
 metadata/_edit_lock_ = true
 
-[node name="Button7" type="Panel" parent="Choices/Cards"]
+[node name="Button7" type="Panel" parent="Choices/DesignCards"]
 custom_minimum_size = Vector2(48, 96)
 layout_mode = 0
 offset_left = 0.04809451
@@ -431,7 +404,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dg77c")
 metadata/_edit_lock_ = true
 
-[node name="Panel" type="Panel" parent="Choices/Cards/Button7"]
+[node name="Panel" type="Panel" parent="Choices/DesignCards/Button7"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -443,7 +416,7 @@ grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ycdy4")
 metadata/_edit_lock_ = true
 
-[node name="Button8" type="Panel" parent="Choices/Cards"]
+[node name="Button8" type="Panel" parent="Choices/DesignCards"]
 custom_minimum_size = Vector2(48, 96)
 layout_mode = 0
 offset_left = -1.4537606
@@ -455,7 +428,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dg77c")
 metadata/_edit_lock_ = true
 
-[node name="Panel" type="Panel" parent="Choices/Cards/Button8"]
+[node name="Panel" type="Panel" parent="Choices/DesignCards/Button8"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -467,7 +440,7 @@ grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ycdy4")
 metadata/_edit_lock_ = true
 
-[node name="Button9" type="Panel" parent="Choices/Cards"]
+[node name="Button9" type="Panel" parent="Choices/DesignCards"]
 custom_minimum_size = Vector2(48, 96)
 layout_mode = 0
 offset_right = 128.0
@@ -477,7 +450,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dg77c")
 metadata/_edit_lock_ = true
 
-[node name="Panel" type="Panel" parent="Choices/Cards/Button9"]
+[node name="Panel" type="Panel" parent="Choices/DesignCards/Button9"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -488,7 +461,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ycdy4")
 
-[node name="GiveCard" type="Panel" parent="Choices/Cards"]
+[node name="GiveCard" type="Panel" parent="Choices/DesignCards"]
 custom_minimum_size = Vector2(48, 96)
 layout_mode = 0
 offset_right = 128.0
@@ -498,7 +471,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dg77c")
 metadata/_edit_lock_ = true
 
-[node name="Panel" type="Panel" parent="Choices/Cards/GiveCard"]
+[node name="Panel" type="Panel" parent="Choices/DesignCards/GiveCard"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -509,22 +482,24 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ycdy4")
 
-[node name="PickCard" parent="Choices" instance=ExtResource("9_kek77")]
-position = Vector2(80, 1160)
+[node name="SelectCards" type="HBoxContainer" parent="Choices"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+theme_override_constants/separation = 154
 
-[node name="PickCard2" parent="Choices" instance=ExtResource("9_kek77")]
-position = Vector2(216, 1160)
+[node name="PickCard5" parent="Choices/SelectCards" instance=ExtResource("9_kek77")]
+position = Vector2(96, 1144)
 
-[node name="PickCard3" parent="Choices" instance=ExtResource("9_kek77")]
-position = Vector2(352, 1160)
+[node name="PickCard6" parent="Choices/SelectCards" instance=ExtResource("9_kek77")]
+position = Vector2(248, 1144)
 
-[node name="PickCard4" parent="Choices" instance=ExtResource("9_kek77")]
-position = Vector2(488, 1160)
+[node name="PickCard7" parent="Choices/SelectCards" instance=ExtResource("9_kek77")]
+position = Vector2(400, 1144)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Choices"]
-libraries = {
-&"": SubResource("AnimationLibrary_ycdy4")
-}
+[node name="PickCard8" parent="Choices/SelectCards" instance=ExtResource("9_kek77")]
+position = Vector2(552, 1144)
 
 [node name="GamePlay" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -532,82 +507,116 @@ script = ExtResource("4_1bvp3")
 pick_card = ExtResource("5_4c57u")
 rook_tres = ExtResource("5_7mycd")
 bishop_tres = ExtResource("6_272bh")
+metadata/_edit_lock_ = true
 
 [node name="Board" type="Marker2D" parent="GamePlay"]
 unique_name_in_owner = true
 position = Vector2(128, 72)
 script = ExtResource("11_efxa6")
+metadata/_edit_lock_ = true
 
 [node name="Square0" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
+metadata/_edit_lock_ = true
 
 [node name="Square1" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(134, 0)
+metadata/_edit_lock_ = true
 
 [node name="Square2" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(268, 0)
+metadata/_edit_lock_ = true
 
 [node name="Square3" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(402, 0)
+metadata/_edit_lock_ = true
 
 [node name="Square4" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(0, 160)
+metadata/_edit_lock_ = true
 
 [node name="Square5" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(134, 160)
+metadata/_edit_lock_ = true
 
 [node name="Square6" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(268, 160)
+metadata/_edit_lock_ = true
 
 [node name="Square7" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(402, 160)
+metadata/_edit_lock_ = true
 
 [node name="Square8" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(0, 320)
+metadata/_edit_lock_ = true
 
 [node name="Square9" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(134, 320)
+metadata/_edit_lock_ = true
 
 [node name="Square10" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(268, 320)
+metadata/_edit_lock_ = true
 
 [node name="Square11" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(402, 320)
+metadata/_edit_lock_ = true
 
 [node name="Square12" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(0, 480)
+metadata/_edit_lock_ = true
 
 [node name="Square13" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(134, 480)
+metadata/_edit_lock_ = true
 
 [node name="Square14" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(268, 480)
+metadata/_edit_lock_ = true
 
 [node name="Square15" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(402, 480)
+metadata/_edit_lock_ = true
 
 [node name="Square16" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(0, 640)
+metadata/_edit_lock_ = true
 
 [node name="Square17" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(134, 640)
+metadata/_edit_lock_ = true
 
 [node name="Square18" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(268, 640)
+metadata/_edit_lock_ = true
 
 [node name="Square19" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(402, 640)
+metadata/_edit_lock_ = true
 
 [node name="Square20" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(0, 800)
+metadata/_edit_lock_ = true
 
 [node name="Square21" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(134, 800)
+metadata/_edit_lock_ = true
 
 [node name="Square22" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(268, 800)
+metadata/_edit_lock_ = true
 
 [node name="Square23" parent="GamePlay/Board" instance=ExtResource("5_4c57u")]
 position = Vector2(402, 800)
+metadata/_edit_lock_ = true
+
+[node name="EndTurn" type="Button" parent="."]
+unique_name_in_owner = true
+offset_left = 632.0
+offset_top = 1024.0
+offset_right = 710.0
+offset_bottom = 1055.0
+text = "End Turn"
 
 [connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Join" to="." method="_on_join_pressed"]

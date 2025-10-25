@@ -2,7 +2,7 @@ extends Area2D
 
 var dragging := false #if the card is getting dragged
 var in_area := false #if mouse is hovering in the card
-var draggable := true #if the card can be dragged
+var draggable := false #if the card can be dragged
 
 signal is_dragging
 
@@ -10,6 +10,27 @@ signal is_dragging
 var in_slot : bool #if the card is released on top of a slot
 var slots := [] #area2d of the slot
 var nearest_slot : Area2D
+
+@export var cards: Array[piece]
+var card : piece
+
+func _ready() -> void:
+	start()
+	
+	card = cards[randi_range(0, cards.size() - 1)]
+	update_visual()
+
+func start():
+	%AnimationPlayer.play("return")
+	await %AnimationPlayer.animation_finished
+	draggable = true
+
+func reset():
+	pass
+
+func update_visual():
+	%health_label.text = "[b]" + str(card.health)
+	%damage_label.text = "[b]" + str(card.damage)
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -31,16 +52,27 @@ func _input(event):
 #check where to put the card after releasing
 func _release_card():
 	dragging = false
-	emit_signal("is_dragging", false)
+	emit_signal("is_dragging", dragging)
+	
 	scale.x = 1
 	scale.y = 1
 	z_index = 0
 
 	if in_slot == false:  #if the card was released and is not near a slot return to hand
 		position = spawn_position
-	else:
+	else: #Place the card in the slot ------------------------------------------
 		self.global_position = nearest_slot.global_position
 		disable_monitoring()
+		
+		%AnimationPlayer.play("dissolve")
+		await %AnimationPlayer.animation_finished
+		
+		position = spawn_position
+		
+		%AnimationPlayer.play("return")
+		await %AnimationPlayer.animation_finished
+		enable_monitoring()
+
 
 func disable_monitoring():
 	in_area = false
@@ -48,6 +80,17 @@ func disable_monitoring():
 	set_deferred("monitorable", false)
 	set_deferred("input_pickable", false)
 	draggable = false
+
+func enable_monitoring():
+	set_deferred("monitoring", true)
+	set_deferred("monitorable", true)
+	set_deferred("input_pickable", true)
+	draggable = true
+
+func play_dissolve() -> bool:
+	%AnimationPlayer.play("dissolve")
+	await %AnimationPlayer.animation_finished
+	return true
 
 func _process(_delta):
 	#print("dragging: ", dragging)
@@ -67,10 +110,6 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Slot"):
 		slots.append(area)
 		in_slot = true
-		var i = 1
-		for slot in slots:
-			print("slot, ", i, ": ", slot)
-			i += 1
 
 func _on_area_exited(area: Area2D) -> void:
 	if area.is_in_group("Slot"):

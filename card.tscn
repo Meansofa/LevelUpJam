@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://q3epd7gwh8wv"]
+[gd_scene load_steps=11 format=3 uid="uid://q3epd7gwh8wv"]
 
 [ext_resource type="Script" uid="uid://x6qjxb1tisg2" path="res://card.gd" id="1_e484p"]
 [ext_resource type="Texture2D" uid="uid://b7p6t2p2k55ny" path="res://Art/Pieces/PawnOutline.png" id="2_1i5pp"]
@@ -35,9 +35,31 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0)
 }
 
-[sub_resource type="Animation" id="Animation_1i5pp"]
-resource_name = "as"
+[sub_resource type="Animation" id="Animation_e484p"]
+resource_name = "attack_opponent"
 step = 0.0333333
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("pawn:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pawn:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 15.5, -0.25, 0, 0.25, 0, -144, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.6333333, 1)
+}
 
 [sub_resource type="Animation" id="Animation_pjytt"]
 resource_name = "attack_player"
@@ -65,36 +87,9 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.6333333, 1)
 }
 
-[sub_resource type="Animation" id="Animation_e484p"]
-resource_name = "attack_opponent"
-step = 0.0333333
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = false
-tracks/0/path = NodePath("pawn:position:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("pawn:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 15.5, -0.25, 0, 0.25, 0, -144, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.6333333, 1)
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1i5pp"]
 _data = {
 &"RESET": SubResource("Animation_fpac0"),
-&"as": SubResource("Animation_1i5pp"),
 &"attack_opponent": SubResource("Animation_e484p"),
 &"attack_player": SubResource("Animation_pjytt")
 }
