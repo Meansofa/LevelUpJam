@@ -12,6 +12,24 @@ var board : Array = []
 
 var player_cards = []
 
+func attack():
+	for x in range(rows):
+		for y in range(cols):
+			var square = %Board.get_node("Square" + str((x*cols) + y))
+			if board[x][y] is piece:
+				var unknown_piece = board[x][y]
+				if board[x][y].team  == piece.teams.player:
+					var player_piece = unknown_piece
+					var front_square = board[x + player_piece.attack_range][y]
+					if front_square is piece and front_square.team == piece.teams.opponent:
+						pass
+				var card = board[x][y]
+				square.visible = true #show the card
+				square.change_health(card.health)
+				square.change_damage(card.damage)
+			else:
+				square.visible = false
+
 func place_piece(slot : int, card : Area2D):
 	player_move()
 	#card.position += Vector2(100, 100)
@@ -60,8 +78,6 @@ func _input(event: InputEvent) -> void:
 		
 		view_board()
 
-
-
 func player_move():
 	for x in range(rows):
 		for y in range(cols):
@@ -69,20 +85,22 @@ func player_move():
 				var player_piece = board[x][y]
 				
 				if board[x - 1][y] is piece: #check if forward is a piece(this will decide if pawn will move forward)
-					var unknown_piece = board[x - 1][y]
-					if unknown_piece.team  == piece.teams.player:
-						board[x][y] = player_piece
-					elif unknown_piece.team  == piece.teams.opponent:
-						unknown_piece.health -= player_piece.damage
-						if unknown_piece.health > 0: #if the piece in the front is still alive after attacking then dont move
-							continue #skip the next lines of code and move to the next loop
+					#var unknown_piece = board[x - 1][y]
+					#if unknown_piece.team  == piece.teams.player:
+						#board[x][y] = player_piece
+					#elif unknown_piece.team  == piece.teams.opponent:
+						#unknown_piece.health -= player_piece.damage
+						#if unknown_piece.health > 0: #if the piece in the front is still alive after attacking then dont move
+					continue #skip the next lines of code and move to the next loop
 				
-				#Move Forward-----------------------------------
-				board[x][y] = (x * cols) + y #return the index number
-				if x - 1 < 0: #if piece is at the edge
-					board[x][y] = "Q"
-				else: #if not on edge move forward
-					board[x - 1][y] = player_piece #move up by reducing x axis
+				move_forward(x , y, player_piece)
+
+func move_forward(x : int, y: int, square : piece):
+	board[x][y] = (x * cols) + y #return the index number
+	if x - 1 < 0: #if piece is at the edge
+		board[x][y] = "Q"
+	else: #if not on edge move forward
+		board[x - 1][y] = square #move up by reducing x axis
 
 func opponent_move():
 	#since the 0 index is at the top and last index is at the bottom, if the piece goes down it will keep on going down 
@@ -95,21 +113,22 @@ func opponent_move():
 			if board[reverse_x][reverse_y] is piece and board[reverse_x][reverse_y].team == piece.teams.opponent:
 				var opponent_piece = board[reverse_x][reverse_y]
 				if board[reverse_x + 1][reverse_y] is piece: #check if forward is a piece 
-					var unknown_piece = board[reverse_x + 1][reverse_y]
-					if unknown_piece.team  == piece.teams.opponent:
-						board[reverse_x][reverse_y] = opponent_piece
-					elif unknown_piece.team  == piece.teams.player:
-						print("ppoop")
-						unknown_piece.health -= opponent_piece.damage
-						if unknown_piece.health > 0: #if the piece in the front is still alive after attacking then dont move
-							continue #skip the next lines of code and move to the next loop
-				
-				#Move Forward-----------------------------------
-				board[reverse_x][reverse_y] = (x * cols) + y #return the index number
-				if reverse_x + 1 > rows - 1:
-					board[reverse_x][reverse_y] = "B"
-				else:
-					board[reverse_x + 1][reverse_y] = opponent_piece #move down by reducing x axis
+					#var unknown_piece = board[reverse_x + 1][reverse_y]
+					#if unknown_piece.team  == piece.teams.opponent:#if it's your ally blocking the way don't move
+						#board[reverse_x][reverse_y] = opponent_piece
+					#elif unknown_piece.team  == piece.teams.player: #if it's an enemy don't move
+						#if unknown_piece.health > 0: #if the piece in the front is still alive after attacking then dont move
+					continue #skip the next lines of code and move to the next loop
+
+				#Move if possible
+				move_downward(reverse_x, reverse_y, opponent_piece) 
+
+func move_downward(x:int, y:int, square:piece):
+	board[x][y] = (x * cols) + y #return the index number
+	if x + 1 >= rows - 1 :
+		board[x + 1][y] = "B"
+	else:
+		board[x + 1][y] = square #move down by reducing x axis
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

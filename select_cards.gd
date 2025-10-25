@@ -36,7 +36,6 @@ func disable_monitoring():
 	set_deferred("monitorable", false)
 	set_deferred("input_pickable", false)
 	draggable = false
-	
 
 func _process(_delta):
 	#print("dragging: ", dragging)
