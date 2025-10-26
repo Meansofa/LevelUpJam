@@ -7,6 +7,7 @@ enum teams {player, opponent}
 
 @export var health := 1
 @export var damage := 1
+@export var elixer := 1
 
 #enum directions {forward, down, left, right}
 #@export var attack_direction: directions = directions.forward

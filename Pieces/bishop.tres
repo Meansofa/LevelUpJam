@@ -7,4 +7,5 @@ script = ExtResource("1_i1x1e")
 name = "Bishop"
 health = 2
 damage = 3
+elixer = 3
 metadata/_custom_type_script = "uid://b857rlbbl7w2n"

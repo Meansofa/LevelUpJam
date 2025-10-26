@@ -1,10 +1,14 @@
 extends Area2D
 
+@export var elixer_texture : CompressedTexture2D
+
+signal place_card
+
 var dragging := false #if the card is getting dragged
 var in_area := false #if mouse is hovering in the card
 var draggable := false #if the card can be dragged
 
-signal is_dragging
+
 
 @onready var spawn_position = self.position
 var in_slot : bool #if the card is released on top of a slot
@@ -31,13 +35,16 @@ func reset():
 func update_visual():
 	%health_label.text = "[b]" + str(card.health)
 	%damage_label.text = "[b]" + str(card.damage)
+	for elixer in range(card.elixer):
+		var textureRect = TextureRect.new()
+		textureRect.texture = elixer_texture
+		%elixer.add_child(textureRect)
 
 func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and draggable:
 			if event.pressed and in_area: #if player's mouse is in the collision of this area and player is holding left click 
 				dragging = true
-				emit_signal("is_dragging", true)
 			else: #if player released the left click
 				_release_card()
 
@@ -52,15 +59,15 @@ func _input(event):
 #check where to put the card after releasing
 func _release_card():
 	dragging = false
-	emit_signal("is_dragging", dragging)
 	
 	scale.x = 1
 	scale.y = 1
 	z_index = 0
-
-	if in_slot == false:  #if the card was released and is not near a slot return to hand
+	
+	if in_slot == false or %Elixer.enough_elixer(card.elixer) == false: #if the card was released and is not near a slot return to hand
 		position = spawn_position
 	else: #Place the card in the slot ------------------------------------------
+		emit_signal("place_card")
 		self.global_position = nearest_slot.global_position
 		disable_monitoring()
 		

@@ -1,6 +1,6 @@
-[gd_scene load_steps=18 format=3 uid="uid://b4x0sflvtqalj"]
+[gd_scene load_steps=19 format=3 uid="uid://b4x0sflvtqalj"]
 
-[ext_resource type="Script" uid="uid://cuy3fw8c4ffs2" path="res://select_cards.gd" id="1_h87mr"]
+[ext_resource type="Script" uid="uid://cuy3fw8c4ffs2" path="res://pick_card.gd" id="1_h87mr"]
 [ext_resource type="Texture2D" uid="uid://b7p6t2p2k55ny" path="res://Art/Pieces/PawnOutline.png" id="2_aa7bi"]
 [ext_resource type="Script" uid="uid://b857rlbbl7w2n" path="res://Pieces/base_piece.gd" id="2_lokbd"]
 [ext_resource type="Theme" uid="uid://buamt54f6ol74" path="res://Themes/main.tres" id="3_pm4o3"]
@@ -9,6 +9,7 @@
 [ext_resource type="Resource" uid="uid://bg0scmb60ole" path="res://Pieces/rook.tres" id="4_pr708"]
 [ext_resource type="Resource" uid="uid://ccijcv8lt06pm" path="res://Pieces/bishop.tres" id="5_4l4qd"]
 [ext_resource type="Texture2D" uid="uid://jtgyxukmqidc" path="res://Art/Pieces/sword.png" id="5_lokbd"]
+[ext_resource type="Texture2D" uid="uid://cqcjqxj2r8q3q" path="res://Art/Pieces/elixer.png" id="8_uge2j"]
 
 [sub_resource type="Animation" id="Animation_uge2j"]
 length = 0.001
@@ -297,6 +298,7 @@ corner_radius_bottom_left = 10
 [node name="PickCard" type="Area2D" groups=["Card"]]
 z_index = 1
 script = ExtResource("1_h87mr")
+elixer_texture = ExtResource("8_uge2j")
 cards = Array[ExtResource("2_lokbd")]([ExtResource("3_uge2j"), ExtResource("4_pr708"), ExtResource("5_4l4qd")])
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -376,6 +378,22 @@ text = "[center]Pawn"
 fit_content = true
 scroll_active = false
 metadata/_edit_lock_ = true
+
+[node name="elixer" type="HBoxContainer" parent="card"]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -121.0
+offset_right = 68.999985
+offset_bottom = -89.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = -16
+alignment = 1
 
 [node name="heart" type="Sprite2D" parent="card"]
 position = Vector2(-45, 62)

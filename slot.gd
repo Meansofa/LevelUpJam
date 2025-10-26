@@ -13,7 +13,7 @@ func _on_card_detector_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Card"):
 		select_card = area #set the area node as the select_card 
 		card = select_card.card
-		select_card.connect("is_dragging", _place_card) #connect to the dragging signal of the select_card to emit when dragging is changed
+		select_card.connect("place_card", _place_card) #connect to the dragging signal of the select_card to emit when dragging is changed
 
 func _on_card_detector_area_exited(area: Area2D) -> void:
 	if area.is_in_group("Card"):
@@ -21,10 +21,9 @@ func _on_card_detector_area_exited(area: Area2D) -> void:
 			_disconnect_card() #since select_card is not in the collision anymore
 
 #while select_card is in the card_detector area and select_card stops dragging
-func _place_card(is_dragging : bool):
-	if is_dragging == false:
-		%GamePlay.place_piece(slot_number, card) #place the card
-		stop_detection()
+func _place_card():
+	%GamePlay.place_piece(slot_number, card) #place the card
+	stop_detection()
 
 func stop_detection():
 	_disconnect_card() #since the select_card has already been placed in the slot_number
@@ -38,5 +37,5 @@ func enable_detection():
 	card_detector.visible = true
 
 func _disconnect_card():
-	select_card.disconnect("is_dragging", _place_card) #disconnect the signal dragging from the card
+	select_card.disconnect("place_card", _place_card) #disconnect the signal dragging from the card
 	select_card = null #erase the card
