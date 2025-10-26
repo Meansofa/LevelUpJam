@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="piece" load_steps=2 format=3 uid="uid://ccijcv8lt06pm"]
+[gd_resource type="Resource" script_class="piece" load_steps=3 format=3 uid="uid://ccijcv8lt06pm"]
 
 [ext_resource type="Script" uid="uid://b857rlbbl7w2n" path="res://Pieces/base_piece.gd" id="1_i1x1e"]
+[ext_resource type="Texture2D" uid="uid://c84og1nabu004" path="res://Art/Pieces/BishopOutline.png" id="1_yl517"]
 
 [resource]
 script = ExtResource("1_i1x1e")
 name = "Bishop"
+pawn_texture = ExtResource("1_yl517")
 health = 2
 damage = 3
-elixer = 3
+elixer = 2
 metadata/_custom_type_script = "uid://b857rlbbl7w2n"

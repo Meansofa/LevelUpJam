@@ -106,7 +106,8 @@ shape = SubResource("RectangleShape2D_efxa6")
 
 [node name="pawn" type="CanvasGroup" parent="."]
 
-[node name="TextureButton" type="TextureButton" parent="pawn"]
+[node name="pawn_texture" type="TextureButton" parent="pawn"]
+unique_name_in_owner = true
 offset_left = -61.0
 offset_top = -99.0
 offset_right = 67.0

@@ -5,12 +5,16 @@ const cols := 4
 
 var board : Array = []
 
-@export var pick_card : PackedScene
-
 @export var rook_tres : piece
 @export var bishop_tres : piece
 
 var player_cards = []
+
+#called from slot.gd
+func place_piece(slot_number : int, card : piece):
+	card.team = piece.teams.player #assign piece to player
+	board[rows - 1][slot_number] = card
+	update_simulation()
 
 func calculate_index(x:int, y:int) -> int:
 	return (x*cols) + y
@@ -28,7 +32,7 @@ func attack():
 						if pawn.attack_mode:
 							await square.attack_opponent()
 							front_piece.health -= pawn.damage
-							update_visuals(front_square, front_piece)
+							front_square.update_visuals(front_piece)
 						else:
 							pawn.attack_mode = true
 					else: 
@@ -41,23 +45,19 @@ func attack():
 						if pawn.attack_mode:
 							await square.attack_player()
 							front_piece.health -= pawn.damage
-							update_visuals(front_square, front_piece)
+							front_square.update_visuals(front_piece)
 						else:
 							pawn.attack_mode = true
 					else: 
 						pawn.attack_mode = false
 
-func update_visuals(square: Area2D, pawn : piece):
-	square.change_health(pawn.health)
-	square.change_damage(pawn.damage)
-
 func simulate():
-	player_move()
-	opponent_move()
-	update_simulation()
+	player_move() #move the player first
+	opponent_move() #move the opponent's pieces
+	attack() #simulate attacks
+	update_simulation() #change animation
 
 func update_simulation():
-	attack()
 	for x in range(rows):
 		for y in range(cols):
 			var pawn = board[x][y]
@@ -65,15 +65,9 @@ func update_simulation():
 			var square : Area2D = %Board.get_node("Square" + str(index)) #the node in game corresponding to an index in the board
 			if pawn is piece:
 				square.visible = true #show the pawn
-				
-				update_visuals(square, pawn) #should always be last
+				square.update_visuals(pawn)
 			else:
 				square.visible = false
-
-func place_piece(slot_number : int, card : piece):
-	card.team = piece.teams.player #assign piece to player
-	board[rows - 1][slot_number] = card
-	update_simulation()
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
@@ -160,13 +154,14 @@ func instantiate_board():
 	view_board()
 	
 func view_board():
+	return
 	#print("-------------------")
-	for x in range(rows):
-		var line := ""
-		for y in range(cols):
-			if board[x][y]is piece:
-				line += board[x][y].name + " "
-			else:
-				line += str(board[x][y]) + " "
+	#for x in range(rows):
+		#var line := ""
+		#for y in range(cols):
+			#if board[x][y]is piece:
+				#line += board[x][y].name + " "
+			#else:
+				#line += str(board[x][y]) + " "
 		#print(line)
 	#print("-------------------")

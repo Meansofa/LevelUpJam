@@ -1,16 +1,13 @@
 extends Area2D
 
-@export var elixer_texture : CompressedTexture2D
+@onready var spawn_position = self.position
 
-signal place_card
+@export var elixer_texture : CompressedTexture2D
 
 var dragging := false #if the card is getting dragged
 var in_area := false #if mouse is hovering in the card
 var draggable := false #if the card can be dragged
 
-
-
-@onready var spawn_position = self.position
 var in_slot : bool #if the card is released on top of a slot
 var slots := [] #area2d of the slot
 var nearest_slot : Area2D
@@ -29,12 +26,11 @@ func start():
 	await %AnimationPlayer.animation_finished
 	draggable = true
 
-func reset():
-	pass
-
 func update_visual():
 	%health_label.text = "[b]" + str(card.health)
+	%card_label.text = "[center]" + card.name
 	%damage_label.text = "[b]" + str(card.damage)
+	$%pawn_texture.texture_normal = card.pawn_texture
 	for elixer in range(card.elixer):
 		var textureRect = TextureRect.new()
 		textureRect.texture = elixer_texture
@@ -46,7 +42,8 @@ func _input(event):
 			if event.pressed and in_area: #if player's mouse is in the collision of this area and player is holding left click 
 				dragging = true
 			else: #if player released the left click
-				_release_card()
+				if dragging == true:
+					_release_card()
 
 	if event is InputEventMouseMotion:
 		if not slots.is_empty():
@@ -65,9 +62,11 @@ func _release_card():
 	z_index = 0
 	
 	if in_slot == false or %Elixer.enough_elixer(card.elixer) == false: #if the card was released and is not near a slot return to hand
+		print("in_slot ==", in_slot)
 		position = spawn_position
 	else: #Place the card in the slot ------------------------------------------
-		emit_signal("place_card")
+		nearest_slot.get_parent().place_card(card) #call the function inside the slot script
+		print("card place at: ", nearest_slot.get_parent().name)
 		self.global_position = nearest_slot.global_position
 		disable_monitoring()
 		
@@ -79,7 +78,6 @@ func _release_card():
 		%AnimationPlayer.play("return")
 		await %AnimationPlayer.animation_finished
 		enable_monitoring()
-
 
 func disable_monitoring():
 	in_area = false
@@ -121,4 +119,5 @@ func _on_area_entered(area: Area2D) -> void:
 func _on_area_exited(area: Area2D) -> void:
 	if area.is_in_group("Slot"):
 		slots.erase(area)
-		in_slot = false
+		if slots.size() <= 0:
+			in_slot = false

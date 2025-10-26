@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://1ii02qh8q237"]
+[gd_scene load_steps=21 format=3 uid="uid://1ii02qh8q237"]
 
 [ext_resource type="Script" uid="uid://cnxb5wywldhy3" path="res://main.gd" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://bac0wa6usgxao" path="res://player_scene.tscn" id="2_0xm2m"]
@@ -48,6 +48,196 @@ corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 expand_margin_top = 16.0
 expand_margin_bottom = 16.0
+
+[sub_resource type="Animation" id="Animation_w48qg"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:theme_override_styles/panel:bg_color:r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.3829191, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:theme_override_styles/panel:bg_color:g")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.4765219, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:theme_override_styles/panel:bg_color:b")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.4312976, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:theme_override_styles/panel:bg_color:a")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Elixers:modulate:r")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Elixers:modulate:g")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Elixers:modulate:b")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Elixers:modulate:a")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_ycdy4"]
+resource_name = "not_enough_elixer"
+length = 0.7
+step = 0.0333333
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:theme_override_styles/panel:bg_color:r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2),
+"points": PackedFloat32Array(0.3829191, -0.25, 0, 0.25, 0, 0.5921569, -0.031666666, 0, 0.085, 0, 0.3829191, -0.11666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.19, 0.7)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:theme_override_styles/panel:bg_color:g")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2),
+"points": PackedFloat32Array(0.4765219, -0.25, 0, 0.25, 0, 0, -0.031666666, 0, 0.085, 0, 0.4765219, -0.11666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.19, 0.7)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:theme_override_styles/panel:bg_color:b")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2),
+"points": PackedFloat32Array(0.4312976, -0.25, 0, 0.25, 0, 0, -0.031666666, 0, 0.085, 0, 0.4312976, -0.11666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.19, 0.7)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:theme_override_styles/panel:bg_color:a")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.031666666, 0, 0.085, 0, 1, -0.11666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.19, 0.7)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Elixers:modulate:r")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.05166667, 0, 0.065, 0, 1, -0.11666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.31, 0.7)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Elixers:modulate:g")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.19607843, -0.05166667, 0, 0.065, 0, 1, -0.11666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.31, 0.7)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Elixers:modulate:b")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.25490198, -0.05166667, 0, 0.065, 0, 1, -0.11666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.31, 0.7)
+}
+tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Elixers:modulate:a")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.05166667, 0, 0.065, 0, 1, -0.11666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.31, 0.7)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vivmo"]
+_data = {
+&"RESET": SubResource("Animation_w48qg"),
+&"not_enough_elixer": SubResource("Animation_ycdy4")
+}
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_ig7tw")
@@ -522,7 +712,6 @@ position = Vector2(552, 1144)
 [node name="GamePlay" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("4_1bvp3")
-pick_card = ExtResource("5_4c57u")
 rook_tres = ExtResource("5_7mycd")
 bishop_tres = ExtResource("6_272bh")
 metadata/_edit_lock_ = true
@@ -657,15 +846,35 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 5.0
-offset_top = -623.0
+offset_top = -938.0
 offset_right = 64.0
 offset_bottom = -308.0
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_w48qg")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Elixer/PanelContainer"]
+libraries = {
+&"": SubResource("AnimationLibrary_vivmo")
+}
+
 [node name="Elixers" type="VBoxContainer" parent="Elixer/PanelContainer"]
 layout_mode = 2
 alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="Elixer/PanelContainer/Elixers"]
+layout_mode = 2
+texture = ExtResource("12_dg77c")
+expand_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="Elixer/PanelContainer/Elixers"]
+layout_mode = 2
+texture = ExtResource("12_dg77c")
+expand_mode = 5
+
+[node name="TextureRect3" type="TextureRect" parent="Elixer/PanelContainer/Elixers"]
+layout_mode = 2
+texture = ExtResource("12_dg77c")
+expand_mode = 5
 
 [connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Join" to="." method="_on_join_pressed"]

@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="piece" load_steps=2 format=3 uid="uid://bp7sx5327bjvn"]
+[gd_resource type="Resource" script_class="piece" load_steps=3 format=3 uid="uid://bp7sx5327bjvn"]
 
+[ext_resource type="Texture2D" uid="uid://b7p6t2p2k55ny" path="res://Art/Pieces/PawnOutline.png" id="1_0qtca"]
 [ext_resource type="Script" uid="uid://b857rlbbl7w2n" path="res://Pieces/base_piece.gd" id="1_070ro"]
 
 [resource]
 script = ExtResource("1_070ro")
 name = "Pawn"
+pawn_texture = ExtResource("1_0qtca")
 metadata/_custom_type_script = "uid://b857rlbbl7w2n"
