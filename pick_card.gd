@@ -65,19 +65,22 @@ func _release_card():
 		print("in_slot ==", in_slot)
 		position = spawn_position
 	else: #Place the card in the slot ------------------------------------------
-		nearest_slot.get_parent().place_card(card) #call the function inside the slot script
-		print("card place at: ", nearest_slot.get_parent().name)
-		self.global_position = nearest_slot.global_position
-		disable_monitoring()
-		
-		%AnimationPlayer.play("dissolve")
-		await %AnimationPlayer.animation_finished
-		
-		position = spawn_position
-		
-		%AnimationPlayer.play("return")
-		await %AnimationPlayer.animation_finished
-		enable_monitoring()
+		place_card()
+
+func place_card():
+	nearest_slot.get_parent().place_card(card) #call the function inside the slot script
+	print("card place at: ", nearest_slot.get_parent().name)
+	self.global_position = nearest_slot.global_position
+	disable_monitoring()
+	
+	%AnimationPlayer.play("dissolve")
+	await %AnimationPlayer.animation_finished
+	
+	position = spawn_position
+	
+	%AnimationPlayer.play("return")
+	await %AnimationPlayer.animation_finished
+	enable_monitoring()
 
 func disable_monitoring():
 	in_area = false
