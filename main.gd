@@ -8,7 +8,6 @@ const PORT := 9998 #available port
 const ADDRESS := "relay.nodetunnel.io" #IP address (change to the host's ip adress if you want to test with other devices), "local host" if you want to test locally
 
 func _ready() -> void:
-	return
 	multiplayer.multiplayer_peer = peer
 	peer.connect_to_relay(ADDRESS, PORT)
 	

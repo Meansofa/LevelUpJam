@@ -10,10 +10,33 @@ var board : Array = []
 
 var player_cards = []
 
+
 #called from slot.gd
-func place_piece(slot_number : int, card : piece):
-	card.team = piece.teams.player #assign piece to player
-	board[rows - 1][slot_number] = card
+func place_piece(slot_number : int, card_name : String):
+	var player_id = multiplayer.get_unique_id()
+	
+	who_placed_piece( slot_number, card_name, player_id)
+	rpc("who_placed_piece", slot_number, card_name, player_id) #This updates for the other players
+
+func get_card_with_name(card_name : String) -> piece:
+	for card in %AllCards.cards:
+		if card_name == card.name:
+			return card
+	var error = piece.new()
+	error.name = "ERROR CARD"
+	return error
+
+@rpc("any_peer")
+func who_placed_piece(slot_number : int, card_name : String, player_id):
+	print(player_id, ": placed a piece")
+	var card = get_card_with_name(card_name)
+	if multiplayer.get_unique_id() == player_id: #if you cliked the button the other player gets damage(Check their screen if their green character has decreased health)
+		card.team = piece.teams.player #assign piece to player
+		board[rows - 1][slot_number] = card
+	else: #if the player clicked the button meaning you take damage
+		card.team = piece.teams.opponent #assign piece to opponent
+		board[0][slot_number] = card
+	
 	update_simulation()
 
 func calculate_index(x:int, y:int) -> int:
@@ -69,37 +92,6 @@ func update_simulation():
 			else:
 				square.visible = false
 
-func _input(event: InputEvent) -> void:
-	if event is InputEventKey:
-		if board == []:
-			return
-		if Input.is_key_pressed(KEY_A):
-			update_simulation()
-		if Input.is_key_pressed(KEY_Q):
-			player_move()
-			opponent_move()
-			update_simulation()
-		if Input.is_key_pressed(KEY_1):
-			player_move()
-			var rook = rook_tres.duplicate()
-			rook.team = piece.teams.player #assign piece to player
-			board[rows - 1][0] = rook
-		if Input.is_key_pressed(KEY_2):
-			player_move()
-			var rook = rook_tres.duplicate()
-			rook.team = piece.teams.player #assign piece to player
-			board[rows - 1][1] = rook
-		if Input.is_key_pressed(KEY_5):
-			opponent_move()
-			#var rook = rook_tres.duplicate()
-			#rook.team = piece.teams.opponent #assign piece to player
-			#board[0][0] = rook
-			var bishop = bishop_tres.duplicate()
-			bishop.team = piece.teams.opponent #assign piece to oppoonent
-			board[0][0] = bishop
-		
-		view_board()
-
 func player_move():
 	for x in range(rows):
 		for y in range(cols):
@@ -151,17 +143,3 @@ func instantiate_board():
 			row.append((x * cols) + y)
 		board.append(row)
 	
-	view_board()
-	
-func view_board():
-	return
-	#print("-------------------")
-	#for x in range(rows):
-		#var line := ""
-		#for y in range(cols):
-			#if board[x][y]is piece:
-				#line += board[x][y].name + " "
-			#else:
-				#line += str(board[x][y]) + " "
-		#print(line)
-	#print("-------------------")
