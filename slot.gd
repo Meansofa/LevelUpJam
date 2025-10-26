@@ -10,6 +10,7 @@ func _ready() -> void:
 #while select_card is in the card_detector area and select_card stops dragging
 func place_card(card : piece):
 	gameplay.place_piece(slot_number, card.name) #place the card
+	#rpc doesn't allow object passed from a function
 	
 	stop_detection()
 

@@ -18,6 +18,7 @@ func place_piece(slot_number : int, card_name : String):
 	who_placed_piece( slot_number, card_name, player_id)
 	rpc("who_placed_piece", slot_number, card_name, player_id) #This updates for the other players
 
+#rpc doesn't allow object passed from a function
 func get_card_with_name(card_name : String) -> piece:
 	for card in %AllCards.cards:
 		if card_name == card.name:
@@ -29,11 +30,11 @@ func get_card_with_name(card_name : String) -> piece:
 @rpc("any_peer")
 func who_placed_piece(slot_number : int, card_name : String, player_id):
 	print(player_id, ": placed a piece")
-	var card = get_card_with_name(card_name)
-	if multiplayer.get_unique_id() == player_id: #if you cliked the button the other player gets damage(Check their screen if their green character has decreased health)
+	var card = get_card_with_name(card_name) #rpc doesn't allow object passed from a function
+	if multiplayer.get_unique_id() == player_id: #If you are the player on this networkd
 		card.team = piece.teams.player #assign piece to player
 		board[rows - 1][slot_number] = card
-	else: #if the player clicked the button meaning you take damage
+	else: #If the player id was the opponent
 		card.team = piece.teams.opponent #assign piece to opponent
 		board[0][slot_number] = card
 	
@@ -74,11 +75,24 @@ func attack():
 					else: 
 						pawn.attack_mode = false
 
+#IMPORTANT----------------------------------------------
 func simulate():
+	var player_id = multiplayer.get_unique_id()
+	who_clicked_end_turn(player_id)
+	rpc("who_clicked_end_turn", player_id)
+
+@rpc("any_peer")#even if you're not using player_id, 
+func who_clicked_end_turn(player_id): #you still need to put it as a parameter of the function
+	if multiplayer.get_unique_id() == player_id: #If you clicked end turn
+		%EndTurn.disabled = true  #disable your end turn so opponent can use end turn
+	else: #If the player id was the opponent
+		%EndTurn.disabled = false #if opponent clicked end turn it's your turn to click it
 	player_move() #move the player first
 	opponent_move() #move the opponent's pieces
+	view_board()
 	attack() #simulate attacks
 	update_simulation() #change animation
+#IMPORTANT----------------------------------------------
 
 func update_simulation():
 	for x in range(rows):
@@ -119,6 +133,7 @@ func opponent_move():
 			var reverse_y = cols - (y + 1) #first index(0) becomes last index(23)
 			if board[reverse_x][reverse_y] is piece and board[reverse_x][reverse_y].team == piece.teams.opponent:
 				var opponent_piece = board[reverse_x][reverse_y]
+				print("reverse_x + 1: ", reverse_x + 1)
 				if board[reverse_x + 1][reverse_y] is piece: #check if forward is a piece 
 					continue #skip the next lines of code and move to the next loop
 				#Move if possible
@@ -142,4 +157,15 @@ func instantiate_board():
 		for y in range(cols):
 			row.append((x * cols) + y)
 		board.append(row)
-	
+
+func view_board():
+	print("-------------------")
+	for x in range(rows):
+		var line := ""
+		for y in range(cols):
+			if board[x][y]is piece:
+				line += board[x][y].name + " "
+			else:
+				line += str(board[x][y]) + " "
+		print(line)
+	print("-------------------")
