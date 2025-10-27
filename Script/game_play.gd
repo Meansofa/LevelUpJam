@@ -25,7 +25,7 @@ func get_card_with_name(card_name : String) -> piece:
 
 @rpc("any_peer")
 func who_placed_piece(slot_number : int, card_name : String, player_id):
-	print(player_id, ": placed a piece")
+	#print(player_id, ": placed a piece")
 	var card = get_card_with_name(card_name) #rpc doesn't allow object passed from a function
 	
 	if multiplayer.get_unique_id() == player_id: #If you are the player on this networkd
@@ -46,33 +46,28 @@ func attack():
 	for x in range(rows):
 		for y in range(cols):
 			var pawn = board[x][y]
+			
+			var front_piece = null
+			var front_square : Area2D
+			if pawn is piece:
+				if pawn.team  == piece.teams.player:
+					front_piece = board[x - pawn.attack_direction][y]
+					front_square = %Board.get_node("Square" + str(calculate_index(x - pawn.attack_direction, y))) #the node in game corresponding to an index in the board
+				elif pawn.team  == piece.teams.opponent:
+					front_piece = board[x + pawn.attack_direction][y]
+					front_square = %Board.get_node("Square" + str(calculate_index(x + pawn.attack_direction, y))) #the node in game corresponding to an index in the board
+				else:
+					pawn.attack_mode = false
+
 			var square : Area2D = %Board.get_node("Square" + str(calculate_index(x, y))) #the node in game corresponding to an index in the board
-			if pawn is piece and pawn.team  == piece.teams.player:
-				var front_piece = board[x - pawn.attack_direction][y]
-				var front_square : Area2D = %Board.get_node("Square" + str(calculate_index(x - pawn.attack_direction, y))) #the node in game corresponding to an index in the board
-				if front_piece is piece:
-					if front_piece.team == piece.teams.opponent:
-						if pawn.attack_mode:
-							front_piece.health -= pawn.damage
-							square.attack_opponent(front_square, front_piece) #IMPORTANT using await, only this function will wait, other functions will keep on going, so this will get delayed
-							print("front_piece.health: ", front_piece.health)
-						else:
-							pawn.attack_mode = true
-					else: 
-						pawn.attack_mode = false
-			elif pawn is piece and pawn.team  == piece.teams.opponent:
-				var front_piece = board[x + pawn.attack_direction][y]
-				var front_square : Area2D = %Board.get_node("Square" + str(calculate_index(x + pawn.attack_direction, y))) #the node in game corresponding to an index in the board
-				if front_piece is piece:
-					if front_piece.team == piece.teams.player:
-						if pawn.attack_mode:
-							front_piece.health -= pawn.damage
-							square.attack_player(front_square, front_piece)#IMPORTANT using await, only this function will wait, other functions will keep on going, so this will get delayed
-							print("front_piece.health: ", front_piece.health)
-						else:
-							pawn.attack_mode = true
-					else: 
-						pawn.attack_mode = false
+			if front_piece is piece:
+				if pawn.attack_mode:
+					front_piece.health -= pawn.damage
+					square.attack_pawn(front_square, front_piece) #IMPORTANT using await, only this function will wait, other functions will keep on going, so this will get delayed
+					print("front_piece.health: ", front_piece.health)
+				else:
+					pawn.attack_mode = true
+			
 	print(name, "> attack phase finished")
 
 #IMPORTANT-only runs if end turn is pressed---------------------------------------------
@@ -85,15 +80,15 @@ func simulate():
 func who_clicked_end_turn(player_id): #you still need to put it as a parameter of the function
 	if multiplayer.get_unique_id() == player_id: #If you clicked end turn
 		%EndTurn.disabled = true  #disable your end turn so opponent can use end turn
-		print(player_id, ": clicked: ", " %EndTurn.disabled: ", %EndTurn.disabled)
+		#print(player_id, ": clicked: ", " %EndTurn.disabled: ", %EndTurn.disabled)
 	else: #If the player id was the opponent
 		%EndTurn.disabled = false #if opponent clicked end turn it's your turn to click it
-		print(player_id, ": clicked: ", " %EndTurn.disabled: ", %EndTurn.disabled)
+		#print(player_id, ": clicked: ", " %EndTurn.disabled: ", %EndTurn.disabled)
 	player_move() #move the player first
 	opponent_move() #move the opponent's pieces
-	view_board()
 	attack() #simulate attacks
 	update_simulation() #change animation
+	view_board()
 #IMPORTANT----------------------------------------------
 
 @rpc("any_peer")
@@ -165,7 +160,6 @@ func instantiate_board():
 		board.append(row)
 
 func view_board():
-	return
 	print(">>>>>>>>>>>>>>>>>>>>>>>>>>")
 	var player_id = multiplayer.get_unique_id()
 	print(" view_board() player_id: ", player_id)

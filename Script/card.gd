@@ -28,26 +28,34 @@ func change_damage(value: int):
 func change_texture(value : CompressedTexture2D):
 	%pawn_texture.texture_normal = value
 
-func attack_opponent(opponent_square : Area2D, opponent_piece : piece) -> bool:
+func attack_pawn(square : Area2D, pawn : piece) -> bool:
 	z_index = 100
-	animation_player.play("attack_opponent")
+	
+	if pawn.team == piece.teams.opponent:
+		animation_player.play("attack_opponent")
+	else:
+		animation_player.play("attack_player")
 	await animation_player.animation_finished
-	animation_player.play_backwards("attack_opponent")
+	
+	if pawn.team == piece.teams.opponent:
+		animation_player.play_backwards("attack_opponent")
+	else:
+		animation_player.play_backwards("attack_player")
 	await animation_player.animation_finished
 	z_index = 0
 	
-	opponent_square.update_visuals(opponent_piece) #update the health value
+	square.update_visuals(pawn) #update the health value
 	
 	return true
-
-func attack_player(player_square : Area2D, player_piece : piece) -> bool:
-	z_index = 100
-	animation_player.play("attack_player")
-	await animation_player.animation_finished
-	animation_player.play_backwards("attack_player")
-	await animation_player.animation_finished
-	z_index = 0
-	
-	player_square.update_visuals(player_piece) #update the health value
-	
-	return true
+#
+#func attack_player(player_square : Area2D, player_piece : piece) -> bool:
+	#z_index = 100
+	#animation_player.play("attack_player")
+	#await animation_player.animation_finished
+	#animation_player.play_backwards("attack_player")
+	#await animation_player.animation_finished
+	#z_index = 0
+	#
+	#player_square.update_visuals(player_piece) #update the health value
+	#
+	#return true

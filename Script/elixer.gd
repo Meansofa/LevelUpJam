@@ -25,9 +25,9 @@ func end_turn_elixer():
 func create_new_elixer(elixer_count : int):
 	for count in range(elixer_count - 1):
 		if elixers_parent.get_child_count() >= max_elixer:
-			print("elixers_parent.get_child_count(): ", elixers_parent.get_child_count())
+			#print("elixers_parent.get_child_count(): ", elixers_parent.get_child_count())
 			return
-		print(name, ": create_new_elixer")
+		#print(name, ": create_new_elixer")
 		var textureRect = TextureRect.new()
 		textureRect.expand_mode = TextureRect.EXPAND_FIT_HEIGHT_PROPORTIONAL
 		textureRect.texture = elixer_texture
