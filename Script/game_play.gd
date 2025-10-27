@@ -46,10 +46,9 @@ func attack():
 	for x in range(rows):
 		for y in range(cols):
 			var pawn = board[x][y]
-			
-			var front_piece = null
-			var front_square : Area2D
 			if pawn is piece:
+				var front_piece = null #piece in front of the pawn
+				var front_square : Area2D #square in front of the pawn
 				if pawn.team  == piece.teams.player:
 					front_piece = board[x - pawn.attack_direction][y]
 					front_square = %Board.get_node("Square" + str(calculate_index(x - pawn.attack_direction, y))) #the node in game corresponding to an index in the board
@@ -57,17 +56,17 @@ func attack():
 					front_piece = board[x + pawn.attack_direction][y]
 					front_square = %Board.get_node("Square" + str(calculate_index(x + pawn.attack_direction, y))) #the node in game corresponding to an index in the board
 				else:
-					pawn.attack_mode = false
+					pawn.attack_mode = false #incase it just defeated the pawn in front
 
-			var square : Area2D = %Board.get_node("Square" + str(calculate_index(x, y))) #the node in game corresponding to an index in the board
-			if front_piece is piece:
-				if pawn.attack_mode:
-					front_piece.health -= pawn.damage
-					square.attack_pawn(front_square, front_piece) #IMPORTANT using await, only this function will wait, other functions will keep on going, so this will get delayed
-					print("front_piece.health: ", front_piece.health)
-				else:
-					pawn.attack_mode = true
-			
+				#ATTACK------------------------------------------------------------
+				var square : Area2D = %Board.get_node("Square" + str(calculate_index(x, y))) #the node in game corresponding to an index in the board
+				if front_piece is piece:
+					if pawn.attack_mode:
+						front_piece.health -= pawn.damage
+						square.attack_pawn(front_square, front_piece) #IMPORTANT using await, only this function will wait, other functions will keep on going, so this will get delayed
+						print("front_piece.health: ", front_piece.health)
+					else:
+						pawn.attack_mode = true
 	print(name, "> attack phase finished")
 
 #IMPORTANT-only runs if end turn is pressed---------------------------------------------
@@ -96,18 +95,20 @@ func update_simulation():
 	for x in range(rows):
 		for y in range(cols):
 			var pawn = board[x][y]
-			var index := (x*cols) + y
+			var index := calculate_index(x, y)
 			var square : Area2D = %Board.get_node("Square" + str(index)) #the node in game corresponding to an index in the board
 			if pawn is piece:
 				square.visible = true #show the pawn
 				if square.is_pawn_dead(pawn): #run animiation pawn dead if true
-					board[x][y] = calculate_index(x, y) #replace the cell with index
+					board[x][y] = index #replace the cell with index
+					square.visible = false
 				else: #if false 
 					square.update_visuals(pawn)
 			else:
 				square.visible = false
 @rpc("any_peer")
 func player_move():
+	print("player_move")
 	for x in range(rows):
 		for y in range(cols):
 			if board[x][y] is piece and board[x][y].team == piece.teams.player:
@@ -124,8 +125,10 @@ func move_forward(x : int, y: int, square : piece):
 		board[x][y] = "Q"
 	else: #if not on edge move forward
 		board[x - 1][y] = square #move up by reducing x axis
+
 @rpc("any_peer")
 func opponent_move():
+	print("opponent_move")
 	#since the 0 index is at the top and last index is at the bottom, if the piece goes down it will keep on going down 
 	#we gotta start from the last index to the top to not counter this logical bug
 	for x in range(rows):
