@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cv50k8ineexkg"]
+[gd_scene load_steps=24 format=3 uid="uid://cv50k8ineexkg"]
 
 [ext_resource type="Script" uid="uid://r10i8cnvrsr1" path="res://Script/game_play.gd" id="1_0mbhd"]
 [ext_resource type="Resource" uid="uid://bg0scmb60ole" path="res://Pieces/rook.tres" id="2_uycrd"]
@@ -14,6 +14,8 @@
 [ext_resource type="Script" uid="uid://b1kol4jahgr23" path="res://Script/all_cards.gd" id="11_uycrd"]
 [ext_resource type="Script" uid="uid://b857rlbbl7w2n" path="res://Pieces/base_piece.gd" id="12_x2ujm"]
 [ext_resource type="Resource" uid="uid://bp7sx5327bjvn" path="res://Pieces/pawn.tres" id="13_xjpow"]
+[ext_resource type="Texture2D" uid="uid://cosfisv3mpfiq" path="res://icon.svg" id="15_fvbcm"]
+[ext_resource type="Script" uid="uid://ds2co40nx6snr" path="res://Script/health_bar.gd" id="16_kgpdb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ycdy4"]
 size = Vector2(16, 32)
@@ -768,7 +770,7 @@ offset_bottom = 1127.5
 grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
-text = "[center][b]100"
+text = "[center][b]32"
 fit_content = true
 scroll_active = false
 
@@ -776,6 +778,108 @@ scroll_active = false
 unique_name_in_owner = true
 script = ExtResource("11_uycrd")
 cards = Array[ExtResource("12_x2ujm")]([ExtResource("13_xjpow"), ExtResource("2_uycrd"), ExtResource("3_7bf21")])
+
+[node name="Player" type="Control" parent="."]
+custom_minimum_size = Vector2(720, 1280)
+layout_mode = 3
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+theme = ExtResource("4_x2ujm")
+
+[node name="TextureRect" type="TextureRect" parent="Player"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -104.0
+offset_top = -360.0
+offset_right = 24.0
+offset_bottom = -232.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("15_fvbcm")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Player"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_top = -400.0
+offset_right = -2.0
+offset_bottom = -360.0
+grow_horizontal = 0
+grow_vertical = 0
+bbcode_enabled = true
+text = "[b][center]Player 1"
+fit_content = true
+scroll_active = false
+autowrap_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Panel" type="Panel" parent="Player"]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -96.0
+offset_top = -283.0
+offset_right = -32.0
+offset_bottom = -264.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="HealthBar" type="ProgressBar" parent="Player"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -104.0
+offset_top = -280.0
+offset_right = -24.0
+offset_bottom = -270.0
+grow_horizontal = 0
+grow_vertical = 0
+step = 20.0
+value = 50.0
+show_percentage = false
+script = ExtResource("16_kgpdb")
+
+[node name="health_label" type="RichTextLabel" parent="Player/HealthBar"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -104.0
+offset_top = -14.0
+offset_right = 22.0
+offset_bottom = 6.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 0, 0, 1)
+bbcode_enabled = true
+text = "[b][center]100"
+fit_content = true
+scroll_active = false
+autowrap_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 2
 
 [connection signal="area_entered" from="BoardDesign/VBoxContainer/PlayerSlots/Slot/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot" method="_on_card_detector_area_entered"]
 [connection signal="area_exited" from="BoardDesign/VBoxContainer/PlayerSlots/Slot/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot" method="_on_card_detector_area_exited"]
@@ -785,3 +889,4 @@ cards = Array[ExtResource("12_x2ujm")]([ExtResource("13_xjpow"), ExtResource("2_
 [connection signal="area_exited" from="BoardDesign/VBoxContainer/PlayerSlots/Slot3/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot3" method="_on_card_detector_area_exited"]
 [connection signal="area_entered" from="BoardDesign/VBoxContainer/PlayerSlots/Slot4/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot4" method="_on_card_detector_area_entered"]
 [connection signal="area_exited" from="BoardDesign/VBoxContainer/PlayerSlots/Slot4/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot4" method="_on_card_detector_area_exited"]
+[connection signal="value_changed" from="Player/HealthBar" to="Player/HealthBar" method="_on_value_changed"]

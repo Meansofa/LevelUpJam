@@ -45,7 +45,7 @@ func who_placed_piece(slot_number : int, card_name : String, player_id):
 func calculate_index(x:int, y:int) -> int:
 	return (x*cols) + y
 
-func attack():
+func simulate_attack():
 	for x in range(rows):
 		for y in range(cols):
 			var pawn = board[x][y]
@@ -55,25 +55,31 @@ func attack():
 				var front_square : Area2D #square in front of the pawn
 				if pawn.team  == piece.teams.player:
 					front_piece = board[x - pawn.attack_direction][y]
-					front_square = %Board.get_node("Square" + str(calculate_index(x - pawn.attack_direction, y))) #the node in game corresponding to an index in the board
+					if front_piece is piece: #This makes sure to only get piece while not needing to check if it is on edge
+						front_square = %Board.get_node("Square" + str(calculate_index(x - pawn.attack_direction, y))) #the node in game corresponding to an index in the board
+						if front_piece.team == piece.teams.opponent:
+							attack(pawn, square, front_piece, front_square)
 				elif pawn.team  == piece.teams.opponent:
-					front_piece = board[x + pawn.attack_direction][y]
-					front_square = %Board.get_node("Square" + str(calculate_index(x + pawn.attack_direction, y))) #the node in game corresponding to an index in the board
+					front_piece = board[x - pawn.attack_direction][y]
+					if front_piece is piece: #This makes sure to only get piece while not needing to check if it is on edge
+						front_square = %Board.get_node("Square" + str(calculate_index(x + pawn.attack_direction, y))) #the node in game corresponding to an index in the board
+						if front_piece is piece and front_piece.team == piece.teams.player:
+							attack(pawn, square, front_piece, front_square)
 
-				#ATTACK------------------------------------------------------------
-				if front_piece is piece:
-					if pawn.attack_mode:
-						front_piece.health -= pawn.damage
-						square.attack_pawn(front_square, front_piece) #IMPORTANT using await, only this function will wait, other functions will keep on going, so this will get delayed
-						print("front_piece.health: ", front_piece.health)
-						if front_piece.health <= 0: #if pawn killed it's opponent disable attack_mode
-							pawn.attack_mode = false
-							square.attack_mode(false)
-							front_square.attack_mode(false)
-					else:
-						pawn.attack_mode = true
-						square.attack_mode(true)
-						front_square.attack_mode(true)
+	#ATTACK------------------------------------------------------------
+func attack(pawn : piece, square : Area2D, front_piece : piece, front_square : Area2D):
+	if pawn.attack_mode:
+		front_piece.health -= pawn.damage
+		square.attack_pawn(front_square, front_piece) #IMPORTANT using await, only this function will wait, other functions will keep on going, so this will get delayed
+		print("front_piece.health: ", front_piece.health)
+		if front_piece.health <= 0: #if pawn killed it's opponent disable attack_mode
+			pawn.attack_mode = false
+			square.attack_mode(false)
+			front_square.attack_mode(false)
+	else:
+		pawn.attack_mode = true
+		square.attack_mode(true)
+		front_square.attack_mode(true)
 	print(name, "> attack phase finished")
 
 #IMPORTANT-only runs if end turn is pressed---------------------------------------------
@@ -92,7 +98,7 @@ func who_clicked_end_turn(player_id): #you still need to put it as a parameter o
 		#print(player_id, ": clicked: ", " %EndTurn.disabled: ", %EndTurn.disabled)
 	player_move() #move the player first
 	opponent_move() #move the opponent's pieces
-	attack() #simulate attacks
+	simulate_attack() #simulate attacks
 	update_simulation() #change animation
 	view_board()
 #IMPORTANT----------------------------------------------
@@ -120,18 +126,29 @@ func player_move():
 		for y in range(cols):
 			if board[x][y] is piece and board[x][y].team == piece.teams.player:
 				var player_piece = board[x][y]
-				
+				if x - 1 < 0: #check if on edge
+					board[x][y] = calculate_index(x, y)#return the index number
+					damage_player()
+					continue
 				if board[x - 1][y] is piece: #check if forward is a piece(this will decide if pawn will move forward)
 					continue #skip the next lines of code and move to the next loop
 				
-				move_forward(x , y, player_piece)
+				#there's a logical problem where opponent and player has to share 1 square, and always the player side takes that place because player_move() is run before opponent_move()
+				#this negates it by prioritizing the pawn that is closest to the other player's end
+				if board[x - 2][y] is piece and board[x-2][y].team == piece.teams.opponent: #check 2 piece in front
+					if x <= cols -1:
+						move_forward(x , y, player_piece)
+				else:
+					move_forward(x , y, player_piece)
+
+func damage_player():
+	print("AWWWWWWWWWWWWWWWWWWWW")
+	%HealthBar.take_damage(%HealthBar.step)
 
 func move_forward(x : int, y: int, square : piece):
-	board[x][y] = (x * cols) + y #return the index number
-	if x - 1 < 0: #if piece is at the edge
-		board[x][y] = "Q"
-	else: #if not on edge move forward
-		board[x - 1][y] = square #move up by reducing x axis
+	#if not on edge move forward
+	board[x][y] = calculate_index(x, y)#return the index number
+	board[x - 1][y] = square #move up by reducing x axis
 
 @rpc("any_peer")
 func opponent_move():
@@ -145,17 +162,19 @@ func opponent_move():
 			var player_id = multiplayer.get_unique_id()
 			if board[reverse_x][reverse_y] is piece and board[reverse_x][reverse_y].team == piece.teams.opponent:
 				var opponent_piece = board[reverse_x][reverse_y]
+				if reverse_x + 1 >= rows: #check if on edge
+					board[reverse_x][reverse_y] = calculate_index(reverse_x, reverse_y)#return the index number
+					damage_player()
+					continue 
 				if board[reverse_x + 1][reverse_y] is piece: #check if forward is a piece 
 					continue #skip the next lines of code and move to the next loop
 				#Move if possible
 				move_downward(reverse_x, reverse_y, opponent_piece) 
 
 func move_downward(x:int, y:int, square:piece):
-	board[x][y] = (x * cols) + y #return the index number
-	if x + 1 >= rows - 1 :
-		board[x + 1][y] = "B"
-	else:
-		board[x + 1][y] = square #move down by reducing x axis
+	#if not on edge move forward
+	board[x][y] = calculate_index(x, y)#return the index number
+	board[x + 1][y] = square #move down by reducing x axis
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

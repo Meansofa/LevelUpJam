@@ -15,6 +15,7 @@ func attack_mode(yes : bool):
 
 func is_pawn_dead(pawn : piece) -> bool:
 	if pawn.health <= 0:
+		change_health(pawn.health) #just to make sure before animation they know their pawn is dead
 		print(pawn.team, pawn, ": dead")
 		if animation_player.is_playing():
 			print("HUHUHUHUH")

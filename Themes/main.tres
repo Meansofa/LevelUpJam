@@ -1,9 +1,31 @@
-[gd_resource type="Theme" load_steps=3 format=3 uid="uid://buamt54f6ol74"]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://buamt54f6ol74"]
 
 [ext_resource type="FontFile" uid="uid://bke4uhr2sqeg2" path="res://Themes/Fonts/Daydream DEMO.otf" id="1_dn4vi"]
 [ext_resource type="FontFile" uid="uid://ckvailqr3qsxt" path="res://Themes/Fonts/GrapeSoda.ttf" id="2_dn4vi"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dn4vi"]
+bg_color = Color(0.20871013, 0.20871016, 0.20871013, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_apm7t"]
+bg_color = Color(1, 0.25882354, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.7254902, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_bottom_left = 5
+
 [resource]
+ProgressBar/styles/background = SubResource("StyleBoxFlat_dn4vi")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_apm7t")
 RichTextLabel/constants/outline_size = 3
 RichTextLabel/font_sizes/bold_font_size = 12
 RichTextLabel/font_sizes/normal_font_size = 16

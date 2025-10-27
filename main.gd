@@ -87,10 +87,10 @@ func _on_peer_disconnected(peer_id):
 	$%disconnected_label.text = "[b]Player " + str(peer_id) + " DISCONNECTED."
 
 func _disable_buttons():
-	$Host.visible = false
-	$Host.disabled = true
-	$Join.visible = false
-	$Join.disabled = true
+	%Host.visible = false
+	%Host.disabled = true
+	%Join.visible = false
+	%Join.disabled = true
 	%OnlineID.visible = false
 	%JoinID.visible = false
 	%local_checkbox.visible = false
@@ -98,10 +98,10 @@ func _disable_buttons():
 	#%Settings.mouse_filter = Control.MouseFilter.MOUSE_FILTER_IGNORE
 
 func _enable_buttons():
-	$Host.visible = true
-	$Host.disabled = false
-	$Join.visible = true
-	$Join.disabled = false
+	%Host.visible = true
+	%Host.disabled = false
+	%Join.visible = true
+	%Join.disabled = false
 	%OnlineID.visible = true
 	%JoinID.visible = true
 	%local_checkbox.visible = true
