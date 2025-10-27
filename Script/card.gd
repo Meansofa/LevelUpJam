@@ -1,15 +1,20 @@
 extends Area2D
 
-func change_pawn(pawn : piece):
-	change_health(pawn.health)
-
 func update_visuals(pawn : piece):
 	change_health(pawn.health)
 	change_damage(pawn.damage)
 	change_texture(pawn.pawn_texture)
 
+func is_pawn_dead(pawn : piece) -> bool:
+	if pawn.health <= 0:
+		%AnimationPlayer.play("death")
+		return true
+	#print(pawn.name, ": health: ", pawn.health)
+	return false
+
 func change_health(value: int):
 	%health_label.text = "[b]" + str(value)
+	
 
 func change_damage(value: int):
 	%damage_label.text = "[b]" + str(value)

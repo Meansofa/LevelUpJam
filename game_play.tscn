@@ -1,16 +1,16 @@
 [gd_scene load_steps=21 format=3 uid="uid://cv50k8ineexkg"]
 
-[ext_resource type="Script" uid="uid://r10i8cnvrsr1" path="res://game_play.gd" id="1_0mbhd"]
+[ext_resource type="Script" uid="uid://r10i8cnvrsr1" path="res://Script/game_play.gd" id="1_0mbhd"]
 [ext_resource type="Resource" uid="uid://bg0scmb60ole" path="res://Pieces/rook.tres" id="2_uycrd"]
 [ext_resource type="Resource" uid="uid://ccijcv8lt06pm" path="res://Pieces/bishop.tres" id="3_7bf21"]
 [ext_resource type="Theme" uid="uid://buamt54f6ol74" path="res://Themes/main.tres" id="4_x2ujm"]
-[ext_resource type="Script" uid="uid://y82d36rfxdrd" path="res://slot.gd" id="5_xjpow"]
+[ext_resource type="Script" uid="uid://y82d36rfxdrd" path="res://Script/slot.gd" id="5_xjpow"]
 [ext_resource type="PackedScene" uid="uid://b4x0sflvtqalj" path="res://pick_card.tscn" id="6_fvbcm"]
-[ext_resource type="Script" uid="uid://bd3kqdjnuomn3" path="res://board.gd" id="7_kgpdb"]
+[ext_resource type="Script" uid="uid://bd3kqdjnuomn3" path="res://Script/board.gd" id="7_kgpdb"]
 [ext_resource type="PackedScene" uid="uid://q3epd7gwh8wv" path="res://card.tscn" id="8_a1b81"]
-[ext_resource type="Script" uid="uid://453o1y0takwh" path="res://elixer.gd" id="9_htgex"]
+[ext_resource type="Script" uid="uid://453o1y0takwh" path="res://Script/elixer.gd" id="9_htgex"]
 [ext_resource type="Texture2D" uid="uid://cqcjqxj2r8q3q" path="res://Art/Pieces/elixer.png" id="10_3ux7j"]
-[ext_resource type="Script" uid="uid://b1kol4jahgr23" path="res://all_cards.gd" id="11_uycrd"]
+[ext_resource type="Script" uid="uid://b1kol4jahgr23" path="res://Script/all_cards.gd" id="11_uycrd"]
 [ext_resource type="Script" uid="uid://b857rlbbl7w2n" path="res://Pieces/base_piece.gd" id="12_x2ujm"]
 [ext_resource type="Resource" uid="uid://bp7sx5327bjvn" path="res://Pieces/pawn.tres" id="13_xjpow"]
 
@@ -653,6 +653,7 @@ offset_left = 632.0
 offset_top = 1024.0
 offset_right = 710.0
 offset_bottom = 1055.0
+focus_mode = 0
 text = "End Turn"
 
 [node name="Elixer" type="Control" parent="."]

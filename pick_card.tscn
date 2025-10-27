@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://b4x0sflvtqalj"]
 
-[ext_resource type="Script" uid="uid://cuy3fw8c4ffs2" path="res://pick_card.gd" id="1_h87mr"]
+[ext_resource type="Script" uid="uid://cuy3fw8c4ffs2" path="res://Script/pick_card.gd" id="1_h87mr"]
 [ext_resource type="Texture2D" uid="uid://b7p6t2p2k55ny" path="res://Art/Pieces/PawnOutline.png" id="2_aa7bi"]
 [ext_resource type="Script" uid="uid://b857rlbbl7w2n" path="res://Pieces/base_piece.gd" id="2_lokbd"]
 [ext_resource type="Theme" uid="uid://buamt54f6ol74" path="res://Themes/main.tres" id="3_pm4o3"]

@@ -68,6 +68,8 @@ func _release_card():
 		place_card()
 
 func place_card():
+	if nearest_slot == null:
+		return
 	nearest_slot.get_parent().place_card(card) #call the function inside the slot script
 	print("card place at: ", nearest_slot.get_parent().name)
 	self.global_position = nearest_slot.global_position

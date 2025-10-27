@@ -14,7 +14,6 @@ func _ready() -> void:
 	await peer.relay_connected
 	
 	%OnlineID.text = peer.online_id
-	
 
 func _on_host_pressed() -> void:
 	_disable_buttons()
@@ -29,7 +28,6 @@ func _on_host_pressed() -> void:
 	
 	var player_scene = player_packed_scene.instantiate()
 	add_child(player_scene)
-	
 
 func _on_join_pressed() -> void:
 	_disable_buttons()
