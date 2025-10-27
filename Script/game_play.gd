@@ -7,7 +7,7 @@ var board : Array = []
 
 var player_cards = []
 
-#called from slot.gd
+#called from slot.gd >>>>>>>>>>>>>>>>>>>>>>>>>>>>
 func place_piece(slot_number : int, card_name : String):
 	var player_id = multiplayer.get_unique_id()
 	
@@ -37,6 +37,7 @@ func who_placed_piece(slot_number : int, card_name : String, player_id):
 	
 	update_simulation()
 	view_board()
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 func calculate_index(x:int, y:int) -> int:
 	return (x*cols) + y
@@ -52,9 +53,9 @@ func attack():
 				if front_piece is piece:
 					if front_piece.team == piece.teams.opponent:
 						if pawn.attack_mode:
-							await square.attack_opponent() #IMPORTANT-------------------
 							front_piece.health -= pawn.damage
-							front_square.update_visuals(front_piece) #update the health value
+							square.attack_opponent(front_square, front_piece) #IMPORTANT using await, only this function will wait, other functions will keep on going, so this will get delayed
+							print("front_piece.health: ", front_piece.health)
 						else:
 							pawn.attack_mode = true
 					else: 
@@ -65,15 +66,16 @@ func attack():
 				if front_piece is piece:
 					if front_piece.team == piece.teams.player:
 						if pawn.attack_mode:
-							await square.attack_player()#IMPORTANT-------------------
 							front_piece.health -= pawn.damage
-							front_square.update_visuals(front_piece) #update the health value
+							square.attack_player(front_square, front_piece)#IMPORTANT using await, only this function will wait, other functions will keep on going, so this will get delayed
+							print("front_piece.health: ", front_piece.health)
 						else:
 							pawn.attack_mode = true
 					else: 
 						pawn.attack_mode = false
+	print(name, "> attack phase finished")
 
-#IMPORTANT----------------------------------------------
+#IMPORTANT-only runs if end turn is pressed---------------------------------------------
 func simulate():
 	var player_id = multiplayer.get_unique_id()
 	who_clicked_end_turn(player_id)
@@ -83,8 +85,10 @@ func simulate():
 func who_clicked_end_turn(player_id): #you still need to put it as a parameter of the function
 	if multiplayer.get_unique_id() == player_id: #If you clicked end turn
 		%EndTurn.disabled = true  #disable your end turn so opponent can use end turn
+		print(player_id, ": clicked: ", " %EndTurn.disabled: ", %EndTurn.disabled)
 	else: #If the player id was the opponent
 		%EndTurn.disabled = false #if opponent clicked end turn it's your turn to click it
+		print(player_id, ": clicked: ", " %EndTurn.disabled: ", %EndTurn.disabled)
 	player_move() #move the player first
 	opponent_move() #move the opponent's pieces
 	view_board()
@@ -102,7 +106,7 @@ func update_simulation():
 			if pawn is piece:
 				square.visible = true #show the pawn
 				if square.is_pawn_dead(pawn): #run animiation pawn dead if true
-					board[x][y] = calculate_index(x, y)
+					board[x][y] = calculate_index(x, y) #replace the cell with index
 				else: #if false 
 					square.update_visuals(pawn)
 			else:
@@ -134,10 +138,8 @@ func opponent_move():
 			var reverse_x = rows - (x + 1) #first index(0) becomes last index(23)
 			var reverse_y = cols - (y + 1) #first index(0) becomes last index(23)
 			var player_id = multiplayer.get_unique_id()
-			print( player_id, ": reverse_x: ", reverse_x)
 			if board[reverse_x][reverse_y] is piece and board[reverse_x][reverse_y].team == piece.teams.opponent:
 				var opponent_piece = board[reverse_x][reverse_y]
-				#print("reverse_x + 1: ", reverse_x + 1)
 				if board[reverse_x + 1][reverse_y] is piece: #check if forward is a piece 
 					continue #skip the next lines of code and move to the next loop
 				#Move if possible
@@ -163,6 +165,7 @@ func instantiate_board():
 		board.append(row)
 
 func view_board():
+	return
 	print(">>>>>>>>>>>>>>>>>>>>>>>>>>")
 	var player_id = multiplayer.get_unique_id()
 	print(" view_board() player_id: ", player_id)
