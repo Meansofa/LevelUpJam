@@ -8,14 +8,12 @@ const PORT := 9998 #available port
 const ADDRESS := "relay.nodetunnel.io" #IP address (change to the host's ip adress if you want to test with other devices), "local host" if you want to test locally
 
 func _ready() -> void:
-	return
 	multiplayer.multiplayer_peer = peer
 	peer.connect_to_relay(ADDRESS, PORT)
 	
 	await peer.relay_connected
 	
 	%OnlineID.text = peer.online_id
-	
 
 func _on_host_pressed() -> void:
 	_disable_buttons()
@@ -30,7 +28,6 @@ func _on_host_pressed() -> void:
 	
 	var player_scene = player_packed_scene.instantiate()
 	add_child(player_scene)
-	
 
 func _on_join_pressed() -> void:
 	_disable_buttons()

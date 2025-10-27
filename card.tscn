@@ -1,6 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://q3epd7gwh8wv"]
+[gd_scene load_steps=12 format=3 uid="uid://q3epd7gwh8wv"]
 
-[ext_resource type="Script" uid="uid://x6qjxb1tisg2" path="res://card.gd" id="1_e484p"]
+[ext_resource type="Script" uid="uid://x6qjxb1tisg2" path="res://Script/card.gd" id="1_e484p"]
 [ext_resource type="Texture2D" uid="uid://b7p6t2p2k55ny" path="res://Art/Pieces/PawnOutline.png" id="2_1i5pp"]
 [ext_resource type="Texture2D" uid="uid://bnw64uj26d4r6" path="res://Art/Pieces/heart.png" id="4_b4rk6"]
 [ext_resource type="Texture2D" uid="uid://jtgyxukmqidc" path="res://Art/Pieces/sword.png" id="5_6lcat"]
@@ -15,7 +15,7 @@ length = 0.001
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("pawn:position:x")
+tracks/0/path = NodePath("pawn:position:y")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -23,75 +23,72 @@ tracks/0/keys = {
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
-tracks/1/type = "bezier"
+tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("pawn:position:y")
+tracks/1/path = NodePath("pawn:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_e484p"]
 resource_name = "attack_opponent"
+length = 0.5
 step = 0.0333333
 tracks/0/type = "bezier"
 tracks/0/imported = false
-tracks/0/enabled = false
-tracks/0/path = NodePath("pawn:position:x")
+tracks/0/enabled = true
+tracks/0/path = NodePath("pawn:position:y")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("pawn:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "handle_modes": PackedInt32Array(0, 0, 0),
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 15.5, -0.25, 0, 0.25, 0, -144, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.6333333, 1)
+"times": PackedFloat32Array(0, 0.13333333, 0.43333334)
 }
 
 [sub_resource type="Animation" id="Animation_pjytt"]
 resource_name = "attack_player"
+length = 0.5
 step = 0.0333333
 tracks/0/type = "bezier"
 tracks/0/imported = false
-tracks/0/enabled = false
-tracks/0/path = NodePath("pawn:position:x")
+tracks/0/enabled = true
+tracks/0/path = NodePath("pawn:position:y")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 1)
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -15.5, -0.25, 0, 0.25, 0, 60, -0.03333334, -17.722223, 0.016666666, 8.86111, 144, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.13333333, 0.3, 0.5)
 }
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("pawn:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -15.5, -0.25, 0, 0.25, 0, 144, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.6333333, 1)
+
+[sub_resource type="Animation" id="Animation_1i5pp"]
+resource_name = "death"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pawn:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.61, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 0.3882353), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1i5pp"]
 _data = {
 &"RESET": SubResource("Animation_fpac0"),
 &"attack_opponent": SubResource("Animation_e484p"),
-&"attack_player": SubResource("Animation_pjytt")
+&"attack_player": SubResource("Animation_pjytt"),
+&"death": SubResource("Animation_1i5pp")
 }
 
 [node name="Card" type="Area2D" groups=["Card"]]
