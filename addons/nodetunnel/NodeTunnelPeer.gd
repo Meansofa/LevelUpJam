@@ -114,6 +114,7 @@ func connect_to_relay(node_tunnel_address: String, node_tunnel_port: int) -> voi
 ## Start hosting a multiplayer session
 func host() -> void:
 	if connection_state != ConnectionState.CONNECTED:
+		joined.emit()
 		_log_error("Must be connected to relay before hosting")
 		return
 	

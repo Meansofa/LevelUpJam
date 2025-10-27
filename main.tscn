@@ -1,11 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://1ii02qh8q237"]
+[gd_scene load_steps=7 format=3 uid="uid://1ii02qh8q237"]
 
-[ext_resource type="Script" uid="uid://dfnwfg116r5h7" path="res://main_localhost.gd" id="1_h2yge"]
+[ext_resource type="Script" uid="uid://cnxb5wywldhy3" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://c0qpjsiu58e47" path="res://opponent_scene.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://cv50k8ineexkg" path="res://game_play.tscn" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://cx6c3jd8l1qmu" path="res://settings.gd" id="4_lquwl"]
+[ext_resource type="Theme" uid="uid://buamt54f6ol74" path="res://Themes/main.tres" id="5_lquwl"]
+
+[sub_resource type="GDScript" id="GDScript_7mycd"]
+resource_name = "local_checkbox"
+script/source = "extends CheckButton
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	toggled.emit(button_pressed)
+"
 
 [node name="Main" type="Node2D"]
-script = ExtResource("1_h2yge")
+script = ExtResource("1_0xm2m")
 player_packed_scene = ExtResource("4_1bvp3")
 opponent_packed_scene = ExtResource("3_h2yge")
 
@@ -42,5 +54,116 @@ offset_top = 113.0
 offset_right = 460.0
 offset_bottom = 144.0
 
+[node name="required" type="Label" parent="JoinID"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 31.0
+offset_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.49411765)
+theme_override_colors/font_outline_color = Color(0.59906006, 0, 0, 1)
+theme_override_constants/outline_size = 6
+text = "Required*"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="local_checkbox" type="CheckButton" parent="."]
+unique_name_in_owner = true
+offset_left = 32.0
+offset_top = 29.0
+offset_right = 121.0
+offset_bottom = 60.0
+button_pressed = true
+text = "Local"
+script = SubResource("GDScript_7mycd")
+
+[node name="Settings" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 720.0
+offset_bottom = 1280.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("4_lquwl")
+
+[node name="Restart" type="Button" parent="Settings"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+focus_mode = 0
+text = "Restart"
+
+[node name="Loading" type="RichTextLabel" parent="Settings"]
+unique_name_in_owner = true
+clip_contents = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -284.0
+offset_top = -65.0
+offset_right = 284.0
+offset_bottom = 65.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("5_lquwl")
+theme_override_font_sizes/bold_font_size = 32
+theme_override_font_sizes/italics_font_size = 24
+bbcode_enabled = true
+text = "[b]LOADING.................[/b]
+[i]3-10 seconds
+
+[i]# if this takes long to load, check if you entered the correct code, or you could re enter the code again."
+fit_content = true
+scroll_active = false
+autowrap_mode = 2
+
+[node name="PlayerDisconnected" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 720.0
+offset_bottom = 1280.0
+mouse_filter = 2
+theme = ExtResource("5_lquwl")
+
+[node name="PanelContainer" type="PanelContainer" parent="PlayerDisconnected"]
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="disconnected_label" type="RichTextLabel" parent="PlayerDisconnected/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/bold_font_size = 32
+bbcode_enabled = true
+text = "[b]PLAYER 1123 - DISCONNECTED."
+scroll_active = false
+autowrap_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="local_checkbox" to="." method="_on_check_button_pressed"]
+[connection signal="toggled" from="local_checkbox" to="." method="_on_check_button_toggled"]
+[connection signal="pressed" from="Settings/Restart" to="Settings" method="_on_restart_pressed"]

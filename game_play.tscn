@@ -244,7 +244,7 @@ corner_radius_bottom_left = 10
 script = ExtResource("1_0mbhd")
 metadata/_edit_lock_ = true
 
-[node name="Board2" type="Control" parent="."]
+[node name="BoardDesign" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 68.0
@@ -254,7 +254,7 @@ mouse_filter = 2
 theme = ExtResource("4_x2ujm")
 metadata/_edit_lock_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Board2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="BoardDesign"]
 layout_mode = 1
 offset_top = 20.0
 offset_right = 315.0
@@ -262,14 +262,14 @@ offset_bottom = 520.0
 theme_override_constants/separation = 4
 metadata/_edit_lock_ = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Board2/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="BoardDesign/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
 metadata/_edit_lock_ = true
 
-[node name="Button2" type="Button" parent="Board2/VBoxContainer/HBoxContainer"]
+[node name="Button2" type="Button" parent="BoardDesign/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
@@ -278,7 +278,7 @@ toggle_mode = true
 button_pressed = true
 button_mask = 0
 
-[node name="Button3" type="Button" parent="Board2/VBoxContainer/HBoxContainer"]
+[node name="Button3" type="Button" parent="BoardDesign/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
@@ -287,7 +287,7 @@ toggle_mode = true
 button_pressed = true
 button_mask = 0
 
-[node name="Button4" type="Button" parent="Board2/VBoxContainer/HBoxContainer"]
+[node name="Button4" type="Button" parent="BoardDesign/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
@@ -296,7 +296,7 @@ toggle_mode = true
 button_pressed = true
 button_mask = 0
 
-[node name="Button" type="Button" parent="Board2/VBoxContainer/HBoxContainer"]
+[node name="Button" type="Button" parent="BoardDesign/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
@@ -305,149 +305,149 @@ toggle_mode = true
 button_pressed = true
 button_mask = 0
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="Board2/VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="BoardDesign/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 metadata/_edit_lock_ = true
 
-[node name="Button2" type="Button" parent="Board2/VBoxContainer/HBoxContainer3"]
+[node name="Button2" type="Button" parent="BoardDesign/VBoxContainer/HBoxContainer3"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
 disabled = true
 
-[node name="Button3" type="Button" parent="Board2/VBoxContainer/HBoxContainer3"]
+[node name="Button3" type="Button" parent="BoardDesign/VBoxContainer/HBoxContainer3"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
 disabled = true
 
-[node name="Button4" type="Button" parent="Board2/VBoxContainer/HBoxContainer3"]
+[node name="Button4" type="Button" parent="BoardDesign/VBoxContainer/HBoxContainer3"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
 disabled = true
 
-[node name="Button" type="Button" parent="Board2/VBoxContainer/HBoxContainer3"]
+[node name="Button" type="Button" parent="BoardDesign/VBoxContainer/HBoxContainer3"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
 disabled = true
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="Board2/VBoxContainer"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="BoardDesign/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 metadata/_edit_lock_ = true
 
-[node name="Button2" type="Button" parent="Board2/VBoxContainer/HBoxContainer4"]
+[node name="Button2" type="Button" parent="BoardDesign/VBoxContainer/HBoxContainer4"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
 disabled = true
 
-[node name="Button3" type="Button" parent="Board2/VBoxContainer/HBoxContainer4"]
+[node name="Button3" type="Button" parent="BoardDesign/VBoxContainer/HBoxContainer4"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
 disabled = true
 
-[node name="Button4" type="Button" parent="Board2/VBoxContainer/HBoxContainer4"]
+[node name="Button4" type="Button" parent="BoardDesign/VBoxContainer/HBoxContainer4"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
 disabled = true
 
-[node name="Button" type="Button" parent="Board2/VBoxContainer/HBoxContainer4"]
+[node name="Button" type="Button" parent="BoardDesign/VBoxContainer/HBoxContainer4"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
 disabled = true
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="Board2/VBoxContainer"]
+[node name="HBoxContainer5" type="HBoxContainer" parent="BoardDesign/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 metadata/_edit_lock_ = true
 
-[node name="Button2" type="Button" parent="Board2/VBoxContainer/HBoxContainer5"]
+[node name="Button2" type="Button" parent="BoardDesign/VBoxContainer/HBoxContainer5"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
 disabled = true
 
-[node name="Button3" type="Button" parent="Board2/VBoxContainer/HBoxContainer5"]
+[node name="Button3" type="Button" parent="BoardDesign/VBoxContainer/HBoxContainer5"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
 disabled = true
 
-[node name="Button4" type="Button" parent="Board2/VBoxContainer/HBoxContainer5"]
+[node name="Button4" type="Button" parent="BoardDesign/VBoxContainer/HBoxContainer5"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
 disabled = true
 
-[node name="Button" type="Button" parent="Board2/VBoxContainer/HBoxContainer5"]
+[node name="Button" type="Button" parent="BoardDesign/VBoxContainer/HBoxContainer5"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
 disabled = true
 
-[node name="HBoxContainer6" type="HBoxContainer" parent="Board2/VBoxContainer"]
+[node name="HBoxContainer6" type="HBoxContainer" parent="BoardDesign/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 metadata/_edit_lock_ = true
 
-[node name="Button2" type="Button" parent="Board2/VBoxContainer/HBoxContainer6"]
+[node name="Button2" type="Button" parent="BoardDesign/VBoxContainer/HBoxContainer6"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
 disabled = true
 
-[node name="Button3" type="Button" parent="Board2/VBoxContainer/HBoxContainer6"]
+[node name="Button3" type="Button" parent="BoardDesign/VBoxContainer/HBoxContainer6"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
 disabled = true
 
-[node name="Button4" type="Button" parent="Board2/VBoxContainer/HBoxContainer6"]
+[node name="Button4" type="Button" parent="BoardDesign/VBoxContainer/HBoxContainer6"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
 disabled = true
 
-[node name="Button" type="Button" parent="Board2/VBoxContainer/HBoxContainer6"]
+[node name="Button" type="Button" parent="BoardDesign/VBoxContainer/HBoxContainer6"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
 disabled = true
 
-[node name="PlayerSlots" type="HBoxContainer" parent="Board2/VBoxContainer"]
+[node name="PlayerSlots" type="HBoxContainer" parent="BoardDesign/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 metadata/_edit_lock_ = true
 
-[node name="Slot" type="Button" parent="Board2/VBoxContainer/PlayerSlots"]
+[node name="Slot" type="Button" parent="BoardDesign/VBoxContainer/PlayerSlots"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
@@ -455,15 +455,15 @@ focus_mode = 0
 button_mask = 0
 script = ExtResource("5_xjpow")
 
-[node name="card_detector" type="Area2D" parent="Board2/VBoxContainer/PlayerSlots/Slot" groups=["Slot"]]
+[node name="card_detector" type="Area2D" parent="BoardDesign/VBoxContainer/PlayerSlots/Slot" groups=["Slot"]]
 position = Vector2(60, 72)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Board2/VBoxContainer/PlayerSlots/Slot/card_detector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoardDesign/VBoxContainer/PlayerSlots/Slot/card_detector"]
 position = Vector2(0, -40)
 shape = SubResource("RectangleShape2D_ycdy4")
 debug_color = Color(0.739724, 0.4672796, 0, 0.41960785)
 
-[node name="Slot2" type="Button" parent="Board2/VBoxContainer/PlayerSlots"]
+[node name="Slot2" type="Button" parent="BoardDesign/VBoxContainer/PlayerSlots"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
@@ -472,15 +472,15 @@ button_mask = 0
 script = ExtResource("5_xjpow")
 slot_number = 1
 
-[node name="card_detector" type="Area2D" parent="Board2/VBoxContainer/PlayerSlots/Slot2" groups=["Slot"]]
+[node name="card_detector" type="Area2D" parent="BoardDesign/VBoxContainer/PlayerSlots/Slot2" groups=["Slot"]]
 position = Vector2(60, 72)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Board2/VBoxContainer/PlayerSlots/Slot2/card_detector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoardDesign/VBoxContainer/PlayerSlots/Slot2/card_detector"]
 position = Vector2(0, -40)
 shape = SubResource("RectangleShape2D_ycdy4")
 debug_color = Color(0.739724, 0.4672796, 0, 0.41960785)
 
-[node name="Slot3" type="Button" parent="Board2/VBoxContainer/PlayerSlots"]
+[node name="Slot3" type="Button" parent="BoardDesign/VBoxContainer/PlayerSlots"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
@@ -489,15 +489,15 @@ button_mask = 0
 script = ExtResource("5_xjpow")
 slot_number = 2
 
-[node name="card_detector" type="Area2D" parent="Board2/VBoxContainer/PlayerSlots/Slot3" groups=["Slot"]]
+[node name="card_detector" type="Area2D" parent="BoardDesign/VBoxContainer/PlayerSlots/Slot3" groups=["Slot"]]
 position = Vector2(60, 72)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Board2/VBoxContainer/PlayerSlots/Slot3/card_detector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoardDesign/VBoxContainer/PlayerSlots/Slot3/card_detector"]
 position = Vector2(0, -40)
 shape = SubResource("RectangleShape2D_ycdy4")
 debug_color = Color(0.739724, 0.4672796, 0, 0.41960785)
 
-[node name="Slot4" type="Button" parent="Board2/VBoxContainer/PlayerSlots"]
+[node name="Slot4" type="Button" parent="BoardDesign/VBoxContainer/PlayerSlots"]
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
@@ -506,10 +506,10 @@ button_mask = 0
 script = ExtResource("5_xjpow")
 slot_number = 3
 
-[node name="card_detector" type="Area2D" parent="Board2/VBoxContainer/PlayerSlots/Slot4" groups=["Slot"]]
+[node name="card_detector" type="Area2D" parent="BoardDesign/VBoxContainer/PlayerSlots/Slot4" groups=["Slot"]]
 position = Vector2(60, 72)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Board2/VBoxContainer/PlayerSlots/Slot4/card_detector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoardDesign/VBoxContainer/PlayerSlots/Slot4/card_detector"]
 position = Vector2(0, -40)
 shape = SubResource("RectangleShape2D_ycdy4")
 debug_color = Color(0.739724, 0.4672796, 0, 0.41960785)
@@ -712,6 +712,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 theme = ExtResource("4_x2ujm")
 script = ExtResource("9_xjpow")
 
@@ -776,11 +777,11 @@ unique_name_in_owner = true
 script = ExtResource("11_uycrd")
 cards = Array[ExtResource("12_x2ujm")]([ExtResource("13_xjpow"), ExtResource("2_uycrd"), ExtResource("3_7bf21")])
 
-[connection signal="area_entered" from="Board2/VBoxContainer/PlayerSlots/Slot/card_detector" to="Board2/VBoxContainer/PlayerSlots/Slot" method="_on_card_detector_area_entered"]
-[connection signal="area_exited" from="Board2/VBoxContainer/PlayerSlots/Slot/card_detector" to="Board2/VBoxContainer/PlayerSlots/Slot" method="_on_card_detector_area_exited"]
-[connection signal="area_entered" from="Board2/VBoxContainer/PlayerSlots/Slot2/card_detector" to="Board2/VBoxContainer/PlayerSlots/Slot2" method="_on_card_detector_area_entered"]
-[connection signal="area_exited" from="Board2/VBoxContainer/PlayerSlots/Slot2/card_detector" to="Board2/VBoxContainer/PlayerSlots/Slot2" method="_on_card_detector_area_exited"]
-[connection signal="area_entered" from="Board2/VBoxContainer/PlayerSlots/Slot3/card_detector" to="Board2/VBoxContainer/PlayerSlots/Slot3" method="_on_card_detector_area_entered"]
-[connection signal="area_exited" from="Board2/VBoxContainer/PlayerSlots/Slot3/card_detector" to="Board2/VBoxContainer/PlayerSlots/Slot3" method="_on_card_detector_area_exited"]
-[connection signal="area_entered" from="Board2/VBoxContainer/PlayerSlots/Slot4/card_detector" to="Board2/VBoxContainer/PlayerSlots/Slot4" method="_on_card_detector_area_entered"]
-[connection signal="area_exited" from="Board2/VBoxContainer/PlayerSlots/Slot4/card_detector" to="Board2/VBoxContainer/PlayerSlots/Slot4" method="_on_card_detector_area_exited"]
+[connection signal="area_entered" from="BoardDesign/VBoxContainer/PlayerSlots/Slot/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot" method="_on_card_detector_area_entered"]
+[connection signal="area_exited" from="BoardDesign/VBoxContainer/PlayerSlots/Slot/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot" method="_on_card_detector_area_exited"]
+[connection signal="area_entered" from="BoardDesign/VBoxContainer/PlayerSlots/Slot2/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot2" method="_on_card_detector_area_entered"]
+[connection signal="area_exited" from="BoardDesign/VBoxContainer/PlayerSlots/Slot2/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot2" method="_on_card_detector_area_exited"]
+[connection signal="area_entered" from="BoardDesign/VBoxContainer/PlayerSlots/Slot3/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot3" method="_on_card_detector_area_entered"]
+[connection signal="area_exited" from="BoardDesign/VBoxContainer/PlayerSlots/Slot3/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot3" method="_on_card_detector_area_exited"]
+[connection signal="area_entered" from="BoardDesign/VBoxContainer/PlayerSlots/Slot4/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot4" method="_on_card_detector_area_entered"]
+[connection signal="area_exited" from="BoardDesign/VBoxContainer/PlayerSlots/Slot4/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot4" method="_on_card_detector_area_exited"]

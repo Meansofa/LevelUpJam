@@ -7,6 +7,9 @@ var board : Array = []
 
 var player_cards = []
 
+func restart():
+	get_tree().reload_current_scene()
+
 #called from slot.gd >>>>>>>>>>>>>>>>>>>>>>>>>>>>
 func place_piece(slot_number : int, card_name : String):
 	var player_id = multiplayer.get_unique_id()
