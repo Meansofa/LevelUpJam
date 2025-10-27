@@ -47,6 +47,7 @@ func attack():
 		for y in range(cols):
 			var pawn = board[x][y]
 			if pawn is piece:
+				var square : Area2D = %Board.get_node("Square" + str(calculate_index(x, y))) #the node in game corresponding to an index in the board
 				var front_piece = null #piece in front of the pawn
 				var front_square : Area2D #square in front of the pawn
 				if pawn.team  == piece.teams.player:
@@ -55,18 +56,21 @@ func attack():
 				elif pawn.team  == piece.teams.opponent:
 					front_piece = board[x + pawn.attack_direction][y]
 					front_square = %Board.get_node("Square" + str(calculate_index(x + pawn.attack_direction, y))) #the node in game corresponding to an index in the board
-				else:
-					pawn.attack_mode = false #incase it just defeated the pawn in front
 
 				#ATTACK------------------------------------------------------------
-				var square : Area2D = %Board.get_node("Square" + str(calculate_index(x, y))) #the node in game corresponding to an index in the board
 				if front_piece is piece:
 					if pawn.attack_mode:
 						front_piece.health -= pawn.damage
 						square.attack_pawn(front_square, front_piece) #IMPORTANT using await, only this function will wait, other functions will keep on going, so this will get delayed
 						print("front_piece.health: ", front_piece.health)
+						if front_piece.health <= 0: #if pawn killed it's opponent disable attack_mode
+							pawn.attack_mode = false
+							square.attack_mode(false)
+							front_square.attack_mode(false)
 					else:
 						pawn.attack_mode = true
+						square.attack_mode(true)
+						front_square.attack_mode(true)
 	print(name, "> attack phase finished")
 
 #IMPORTANT-only runs if end turn is pressed---------------------------------------------
@@ -99,7 +103,7 @@ func update_simulation():
 			var square : Area2D = %Board.get_node("Square" + str(index)) #the node in game corresponding to an index in the board
 			if pawn is piece:
 				square.visible = true #show the pawn
-				if square.is_pawn_dead(pawn): #run animiation pawn dead if true
+				if await square.is_pawn_dead(pawn): #run animiation pawn dead if true
 					board[x][y] = index #replace the cell with index
 					square.visible = false
 				else: #if false 

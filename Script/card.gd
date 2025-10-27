@@ -7,20 +7,27 @@ func update_visuals(pawn : piece):
 	change_damage(pawn.damage)
 	change_texture(pawn.pawn_texture)
 
+func attack_mode(yes : bool):
+	if yes:
+		%Damage.modulate = Color.RED
+	else:
+		%Damage.modulate = Color.WHITE
+
 func is_pawn_dead(pawn : piece) -> bool:
 	if pawn.health <= 0:
 		print(pawn.team, pawn, ": dead")
 		if animation_player.is_playing():
+			print("HUHUHUHUH")
 			animation_player.queue("death")
 		else:
 			animation_player.play("death")
+		await animation_player.animation_finished
 		return true
 	#print(pawn.name, ": health: ", pawn.health)
 	return false
 
 func change_health(value: int):
 	%health_label.text = "[b]" + str(value)
-	
 
 func change_damage(value: int):
 	%damage_label.text = "[b]" + str(value)
@@ -31,16 +38,7 @@ func change_texture(value : CompressedTexture2D):
 func attack_pawn(square : Area2D, pawn : piece) -> bool:
 	z_index = 100
 	
-	if pawn.team == piece.teams.opponent:
-		animation_player.play("attack_opponent")
-	else:
-		animation_player.play("attack_player")
-	await animation_player.animation_finished
-	
-	if pawn.team == piece.teams.opponent:
-		animation_player.play_backwards("attack_opponent")
-	else:
-		animation_player.play_backwards("attack_player")
+	animation_player.play("attack")
 	await animation_player.animation_finished
 	z_index = 0
 	

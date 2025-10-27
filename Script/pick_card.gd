@@ -67,14 +67,17 @@ func _release_card():
 	else: #Place the card in the slot ------------------------------------------
 		place_card()
 
+#Place a card in a slot
 func place_card():
 	if nearest_slot == null:
 		return
 	nearest_slot.get_parent().place_card(card) #call the function inside the slot script
 	print("card place at: ", nearest_slot.get_parent().name)
 	self.global_position = nearest_slot.global_position
-	disable_monitoring()
 	
+	%CardStash.reduce_cards()
+	
+	disable_monitoring()#Dissallow clicking
 	%AnimationPlayer.play("dissolve")
 	await %AnimationPlayer.animation_finished
 	
@@ -82,7 +85,7 @@ func place_card():
 	
 	%AnimationPlayer.play("return")
 	await %AnimationPlayer.animation_finished
-	enable_monitoring()
+	enable_monitoring()#Allow clicking
 
 func disable_monitoring():
 	in_area = false

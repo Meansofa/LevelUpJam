@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cv50k8ineexkg"]
+[gd_scene load_steps=22 format=3 uid="uid://cv50k8ineexkg"]
 
 [ext_resource type="Script" uid="uid://r10i8cnvrsr1" path="res://Script/game_play.gd" id="1_0mbhd"]
 [ext_resource type="Resource" uid="uid://bg0scmb60ole" path="res://Pieces/rook.tres" id="2_uycrd"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://bd3kqdjnuomn3" path="res://Script/board.gd" id="7_kgpdb"]
 [ext_resource type="PackedScene" uid="uid://q3epd7gwh8wv" path="res://card.tscn" id="8_a1b81"]
 [ext_resource type="Script" uid="uid://453o1y0takwh" path="res://Script/elixer.gd" id="9_htgex"]
+[ext_resource type="Script" uid="uid://ehuqivrlrvic" path="res://card_stash.gd" id="9_xjpow"]
 [ext_resource type="Texture2D" uid="uid://cqcjqxj2r8q3q" path="res://Art/Pieces/elixer.png" id="10_3ux7j"]
 [ext_resource type="Script" uid="uid://b1kol4jahgr23" path="res://Script/all_cards.gd" id="11_uycrd"]
 [ext_resource type="Script" uid="uid://b857rlbbl7w2n" path="res://Pieces/base_piece.gd" id="12_x2ujm"]
@@ -241,8 +242,6 @@ corner_radius_bottom_left = 10
 
 [node name="GamePlay" type="Node2D"]
 script = ExtResource("1_0mbhd")
-rook_tres = ExtResource("2_uycrd")
-bishop_tres = ExtResource("3_7bf21")
 metadata/_edit_lock_ = true
 
 [node name="Board2" type="Control" parent="."]
@@ -708,11 +707,13 @@ texture = ExtResource("10_3ux7j")
 expand_mode = 5
 
 [node name="CardStash" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("4_x2ujm")
+script = ExtResource("9_xjpow")
 
 [node name="CanvasGroup" type="CanvasGroup" parent="CardStash"]
 position = Vector2(635, 1078)

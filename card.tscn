@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://q3epd7gwh8wv"]
+[gd_scene load_steps=11 format=3 uid="uid://q3epd7gwh8wv"]
 
 [ext_resource type="Script" uid="uid://x6qjxb1tisg2" path="res://Script/card.gd" id="1_e484p"]
 [ext_resource type="Texture2D" uid="uid://b7p6t2p2k55ny" path="res://Art/Pieces/PawnOutline.png" id="2_1i5pp"]
@@ -35,49 +35,61 @@ tracks/1/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
-tracks/2/type = "value"
+tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".:visible")
+tracks/2/path = NodePath("pawn/Damage:position:x")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(40, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("pawn/Damage:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(64, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("pawn/Damage/Sprite2D5:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("pawn/Damage/Sprite2D5/Sprite2D4:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_e484p"]
-resource_name = "attack_opponent"
-length = 0.5
-step = 0.0333333
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("pawn:position:y")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 15.5, -0.25, 0, 0.25, 0, -144, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.13333333, 0.43333334)
-}
-
-[sub_resource type="Animation" id="Animation_pjytt"]
-resource_name = "attack_player"
-length = 0.5
-step = 0.0333333
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("pawn:position:y")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -15.5, -0.25, 0, 0.25, 0, 60, -0.03333334, -17.722223, 0.016666666, 8.86111, 144, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.13333333, 0.3, 0.5)
 }
 
 [sub_resource type="Animation" id="Animation_1i5pp"]
@@ -90,7 +102,7 @@ tracks/0/path = NodePath("pawn:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.14366055, 0.6333333, 0.7333333, 0.8),
+"times": PackedFloat32Array(0, 0.14366055, 0.6333333, 0.7333333, 0.76666665),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 0.60784316, 0.60784316, 1), Color(1, 0, 0, 0.3882353), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
@@ -102,17 +114,65 @@ tracks/1/path = NodePath(".:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.7050008),
+"times": PackedFloat32Array(0, 0.7310286),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
 }
 
+[sub_resource type="Animation" id="Animation_e484p"]
+resource_name = "attack"
+length = 0.8
+step = 0.0333333
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pawn/Damage:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(40, 0, 0, 0.083333336, 0, 31.758953, -0.023333333, 1.8666667, 0.060000002, -4.8, 0, -0.083333336, 6.666667, 0, 0, 0, -0.061111115, -4.478827, 0.01111111, 0.8143321, 31.758953, -0.023333333, 1.8666667, 0.060000002, -4.8, 40, 0, 0, 0.083333336, 0),
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.7, 0.76666665, 0.8)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pawn/Damage:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(64, 0, 0, 0.083333336, 0, 44.22149, -0.023333333, 4.48, 0.060000002, -11.52, -32, -0.083333336, 16, 0, 0, -32, -0.061111115, -10.749185, 0.01111111, 1.954397, 44.22149, -0.023333333, 4.48, 0.060000002, -11.52, 64, 0, 0, 0.083333336, 0),
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.7, 0.76666665, 0.8)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pawn/Damage/Sprite2D5:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2, 2, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -0.2385992, -0.054054394, 0.03976653, 0, 0, 0.31967705, -0.019914782, -0.09304605, 0, 0, 0, -0.009364158, 0.053279508, 0, 0, -0.2385992, -0.054054394, 0.03976653, 0, 0, 0.31967705, -0.019914782, -0.09304605, 0, 0, 0, -0.009364158, 0.053279508, 0, 0),
+"times": PackedFloat32Array(0, 0.32432637, 0.44381505, 0.5, 0.56666666, 0.6, 0.65618503)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("pawn/Damage/Sprite2D5/Sprite2D4:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2, 2, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.21723202, -0.054054394, -0.036205336, 0, 0, -0.4089565, -0.019914782, 0.10436475, 0, 0, 0, -0.009364158, -0.06815942, 0, 0, 0.21723202, -0.054054394, -0.036205336, 0, 0, -0.4089565, -0.019914782, 0.10436475, 0, 0, 0, -0.009364158, -0.06815942, 0, 0),
+"times": PackedFloat32Array(0, 0.32432637, 0.44381505, 0.5, 0.56666666, 0.6, 0.65618503)
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1i5pp"]
 _data = {
 &"RESET": SubResource("Animation_fpac0"),
-&"attack_opponent": SubResource("Animation_e484p"),
-&"attack_player": SubResource("Animation_pjytt"),
+&"attack": SubResource("Animation_e484p"),
 &"death": SubResource("Animation_1i5pp")
 }
 
@@ -127,6 +187,7 @@ position = Vector2(2, -2.5)
 shape = SubResource("RectangleShape2D_efxa6")
 
 [node name="pawn" type="CanvasGroup" parent="."]
+unique_name_in_owner = true
 
 [node name="pawn_texture" type="TextureButton" parent="pawn"]
 unique_name_in_owner = true
@@ -162,23 +223,28 @@ text = "[b]3"
 fit_content = true
 scroll_active = false
 
-[node name="Sprite2D4" type="Sprite2D" parent="pawn"]
-position = Vector2(48, 64)
-scale = Vector2(3, 3)
-texture = ExtResource("5_6lcat")
+[node name="Damage" type="Node2D" parent="pawn"]
+unique_name_in_owner = true
+position = Vector2(40, 64)
 
-[node name="Sprite2D5" type="Sprite2D" parent="pawn"]
-position = Vector2(48, 64)
+[node name="Sprite2D5" type="Sprite2D" parent="pawn/Damage"]
 scale = Vector2(3, 3)
 texture = ExtResource("5_6lcat")
 flip_h = true
 
-[node name="damage_label" type="RichTextLabel" parent="pawn"]
+[node name="Sprite2D4" type="Sprite2D" parent="pawn/Damage/Sprite2D5"]
+texture = ExtResource("5_6lcat")
+
+[node name="damage_label" type="RichTextLabel" parent="pawn/Damage"]
 unique_name_in_owner = true
-offset_left = 35.0
-offset_top = 42.0
-offset_right = 75.0
-offset_bottom = 87.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -24.0
+offset_right = 28.0
+offset_bottom = 21.0
+grow_vertical = 2
 mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0.22745098, 0.15686275, 0.007843138, 1)
 theme_override_constants/outline_size = 8
