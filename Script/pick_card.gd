@@ -16,6 +16,7 @@ var nearest_slot : Area2D
 var card : piece
 
 func _ready() -> void:
+	spawn_position = self.position
 	start()
 	
 	card = cards[randi_range(0, cards.size() - 1)]
@@ -30,7 +31,7 @@ func update_visual():
 	%health_label.text = "[b]" + str(card.health)
 	%card_label.text = "[center]" + card.name
 	%damage_label.text = "[b]" + str(card.damage)
-	$%pawn_texture.texture_normal = card.pawn_texture
+	$%pawn_texture.texture_normal = card.player_pawn_texture
 	for elixer in range(card.elixer):
 		var textureRect = TextureRect.new()
 		textureRect.texture = elixer_texture
@@ -40,6 +41,7 @@ func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and draggable:
 			if event.pressed and in_area: #if player's mouse is in the collision of this area and player is holding left click 
+				spawn_position = self.position
 				dragging = true
 			else: #if player released the left click
 				if dragging == true:

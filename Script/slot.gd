@@ -16,10 +16,14 @@ func place_card(card : piece):
 
 func stop_detection():
 	card_detector.set_deferred("monitorable", false)
-	card_detector.set_deferred("monitoring", false)
 	card_detector.visible = false
+	self.button_mask = false
 
 func enable_detection():
 	card_detector.set_deferred("monitorable", true)
-	card_detector.set_deferred("monitoring", true)
 	card_detector.visible = true
+	self.button_mask = MOUSE_BUTTON_MASK_LEFT
+
+
+func _on_pressed() -> void:
+	%Warning.play("DragACard")

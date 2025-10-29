@@ -5,10 +5,10 @@
 [ext_resource type="FontFile" uid="uid://ckvailqr3qsxt" path="res://Themes/Fonts/GrapeSoda.ttf" id="2_dn4vi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1lsov"]
-bg_color = Color(0.3529412, 0.36862746, 0.6, 0.57254905)
+bg_color = Color(0.11372549, 0.11764706, 0.29803923, 0.47843137)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r0ra0"]
-bg_color = Color(0.5125796, 0, 0.038126532, 0.3764706)
+bg_color = Color(0.2874102, 1.7868541e-06, 0.011604998, 0.3764706)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m4fr6"]
 bg_color = Color(0, 0, 0.26666668, 0.59607846)

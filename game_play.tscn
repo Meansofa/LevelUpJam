@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cv50k8ineexkg"]
+[gd_scene load_steps=34 format=3 uid="uid://cv50k8ineexkg"]
 
 [ext_resource type="Script" uid="uid://r10i8cnvrsr1" path="res://Script/game_play.gd" id="1_0mbhd"]
 [ext_resource type="Texture2D" uid="uid://clgoqclmfrrg2" path="res://Art/Pieces/chair.png" id="2_a1b81"]
@@ -15,69 +15,168 @@
 [ext_resource type="Script" uid="uid://b1kol4jahgr23" path="res://Script/all_cards.gd" id="11_uycrd"]
 [ext_resource type="Script" uid="uid://b857rlbbl7w2n" path="res://Pieces/base_piece.gd" id="12_x2ujm"]
 [ext_resource type="Resource" uid="uid://bp7sx5327bjvn" path="res://Pieces/pawn.tres" id="13_xjpow"]
-[ext_resource type="Texture2D" uid="uid://cosfisv3mpfiq" path="res://icon.svg" id="15_fvbcm"]
+[ext_resource type="Texture2D" uid="uid://brb72kigbbfpy" path="res://Art/Pieces/characterFrames.png" id="16_htgex"]
 [ext_resource type="Script" uid="uid://ds2co40nx6snr" path="res://Script/health_bar.gd" id="16_kgpdb"]
 
 [sub_resource type="Gradient" id="Gradient_htgex"]
 offsets = PackedFloat32Array(1)
-colors = PackedColorArray(0.36078432, 0.18431373, 0.18431373, 1)
+colors = PackedColorArray(0.26666668, 0.8745098, 0.6117647, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_3ux7j"]
 gradient = SubResource("Gradient_htgex")
 
+[sub_resource type="Gradient" id="Gradient_a1b81"]
+interpolation_mode = 2
+colors = PackedColorArray(0, 0, 1, 0.25882354, 1, 0, 0, 0.6627451)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_a1b81"]
+gradient = SubResource("Gradient_a1b81")
+width = 40
+height = 16
+fill_from = Vector2(1, 1)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ycdy4"]
 size = Vector2(16, 32)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a1b81"]
-bg_color = Color(0.3829191, 0.4765219, 0.4312976, 1)
+[sub_resource type="Animation" id="Animation_a1b81"]
+resource_name = "DragACard"
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Warning/RichTextLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 980), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Warning/RichTextLabel:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.43333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.8627451), Color(1, 1, 1, 0.5921569), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("%Warning/RichTextLabel:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_htgex"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Warning/RichTextLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 596)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Warning/RichTextLabel:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.5921569)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("%Warning/RichTextLabel:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3ux7j"]
+_data = {
+&"DragACard": SubResource("Animation_a1b81"),
+&"RESET": SubResource("Animation_htgex")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_htgex"]
+bg_color = Color(0.2784314, 0, 0.33333334, 1)
+border_width_left = 2
 border_width_top = 2
+border_width_right = 2
 border_width_bottom = 2
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-expand_margin_top = 16.0
-expand_margin_bottom = 16.0
+border_color = Color(0.9490196, 0.5764706, 0.14901961, 1)
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a1b81"]
+bg_color = Color(0, 0, 0, 0.4509804)
 
 [sub_resource type="Animation" id="Animation_w48qg"]
 length = 0.001
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:theme_override_styles/panel:bg_color:r")
+tracks/0/path = NodePath("Elixers:modulate:r")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0.3829191, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:theme_override_styles/panel:bg_color:g")
+tracks/1/path = NodePath("Elixers:modulate:g")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0.4765219, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".:theme_override_styles/panel:bg_color:b")
+tracks/2/path = NodePath("Elixers:modulate:b")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0.4312976, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath(".:theme_override_styles/panel:bg_color:a")
+tracks/3/path = NodePath("Elixers:modulate:a")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -85,49 +184,17 @@ tracks/3/keys = {
 "points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
-tracks/4/type = "bezier"
+tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Elixers:modulate:r")
+tracks/4/path = NodePath(".:theme_override_styles/panel:bg_color")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/5/type = "bezier"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Elixers:modulate:g")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/6/type = "bezier"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Elixers:modulate:b")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/7/type = "bezier"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Elixers:modulate:a")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0.4509804)]
 }
 
 [sub_resource type="Animation" id="Animation_ycdy4"]
@@ -137,90 +204,58 @@ step = 0.0333333
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:theme_override_styles/panel:bg_color:r")
+tracks/0/path = NodePath("Elixers:modulate:r")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "handle_modes": PackedInt32Array(0, 2, 2),
-"points": PackedFloat32Array(0.3829191, -0.25, 0, 0.25, 0, 0.5921569, -0.031666666, 0, 0.085, 0, 0.3829191, -0.11666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.19, 0.7)
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.05166667, 0, 0.065, 0, 1, -0.11666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.31, 0.7)
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:theme_override_styles/panel:bg_color:g")
+tracks/1/path = NodePath("Elixers:modulate:g")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "handle_modes": PackedInt32Array(0, 2, 2),
-"points": PackedFloat32Array(0.4765219, -0.25, 0, 0.25, 0, 0, -0.031666666, 0, 0.085, 0, 0.4765219, -0.11666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.19, 0.7)
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.19607843, -0.05166667, 0, 0.065, 0, 1, -0.11666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.31, 0.7)
 }
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".:theme_override_styles/panel:bg_color:b")
+tracks/2/path = NodePath("Elixers:modulate:b")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "handle_modes": PackedInt32Array(0, 2, 2),
-"points": PackedFloat32Array(0.4312976, -0.25, 0, 0.25, 0, 0, -0.031666666, 0, 0.085, 0, 0.4312976, -0.11666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.19, 0.7)
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.25490198, -0.05166667, 0, 0.065, 0, 1, -0.11666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.31, 0.7)
 }
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath(".:theme_override_styles/panel:bg_color:a")
+tracks/3/path = NodePath("Elixers:modulate:a")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "handle_modes": PackedInt32Array(0, 2, 2),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.031666666, 0, 0.085, 0, 1, -0.11666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.19, 0.7)
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.05166667, 0, 0.065, 0, 1, -0.11666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.31, 0.7)
 }
-tracks/4/type = "bezier"
+tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Elixers:modulate:r")
+tracks/4/path = NodePath(".:theme_override_styles/panel:bg_color")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.05166667, 0, 0.065, 0, 1, -0.11666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.31, 0.7)
-}
-tracks/5/type = "bezier"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Elixers:modulate:g")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.19607843, -0.05166667, 0, 0.065, 0, 1, -0.11666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.31, 0.7)
-}
-tracks/6/type = "bezier"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Elixers:modulate:b")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.25490198, -0.05166667, 0, 0.065, 0, 1, -0.11666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.31, 0.7)
-}
-tracks/7/type = "bezier"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Elixers:modulate:a")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.05166667, 0, 0.065, 0, 1, -0.11666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.31, 0.7)
+"times": PackedFloat32Array(0, 0.13, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0.4509804), Color(1, 0, 0, 0.4509804), Color(0, 0, 0, 0.4509804)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vivmo"]
@@ -250,22 +285,61 @@ border_color = Color(0.16774932, 0.07867085, 0, 1)
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="GDScript" id="GDScript_a1b81"]
+resource_name = "FirstTurn"
+script/source = "extends PanelContainer
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+func first_turn_name(player_name : String):
+	$FirstTurnLabel.text = \"[b][center]\" + player_name + \"\\n Goes first!\"
+
+func enemy_first_turn():
+	$FirstTurnLabel.text = \"[b][center] Opponent Goes first!\"
+"
+
 [node name="GamePlay" type="Node2D"]
 script = ExtResource("1_0mbhd")
 metadata/_edit_lock_ = true
 
-[node name="Background2" type="TextureRect" parent="."]
+[node name="Background" type="CanvasGroup" parent="."]
+
+[node name="Background2" type="TextureRect" parent="Background"]
 z_index = -100
+offset_top = 24.0
 offset_right = 720.0
 offset_bottom = 1280.0
 texture = SubResource("GradientTexture2D_3ux7j")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="Background"]
 self_modulate = Color(0.5882353, 0.84705883, 1, 1)
 z_index = -100
 offset_right = 720.0
 offset_bottom = 1280.0
 texture = ExtResource("2_a1b81")
+
+[node name="Background3" type="TextureRect" parent="Background"]
+modulate = Color(0.74509805, 0, 1, 0.59607846)
+z_index = -100
+offset_top = 1088.0
+offset_right = 720.0
+offset_bottom = 1280.0
+texture = SubResource("GradientTexture2D_3ux7j")
+
+[node name="GradientColor" type="TextureRect" parent="Background"]
+unique_name_in_owner = true
+z_index = -100
+offset_right = 720.0
+offset_bottom = 1080.0
+texture = SubResource("GradientTexture2D_a1b81")
 
 [node name="BoardDesign" type="Control" parent="."]
 layout_mode = 3
@@ -491,11 +565,11 @@ custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 focus_mode = 0
-button_mask = 0
 script = ExtResource("5_xjpow")
 
 [node name="card_detector" type="Area2D" parent="BoardDesign/VBoxContainer/PlayerSlots/Slot" groups=["Slot"]]
 position = Vector2(60, 72)
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BoardDesign/VBoxContainer/PlayerSlots/Slot/card_detector"]
 position = Vector2(0, -40)
@@ -507,12 +581,12 @@ custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 focus_mode = 0
-button_mask = 0
 script = ExtResource("5_xjpow")
 slot_number = 1
 
 [node name="card_detector" type="Area2D" parent="BoardDesign/VBoxContainer/PlayerSlots/Slot2" groups=["Slot"]]
 position = Vector2(60, 72)
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BoardDesign/VBoxContainer/PlayerSlots/Slot2/card_detector"]
 position = Vector2(0, -40)
@@ -524,12 +598,12 @@ custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 focus_mode = 0
-button_mask = 0
 script = ExtResource("5_xjpow")
 slot_number = 2
 
 [node name="card_detector" type="Area2D" parent="BoardDesign/VBoxContainer/PlayerSlots/Slot3" groups=["Slot"]]
 position = Vector2(60, 72)
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BoardDesign/VBoxContainer/PlayerSlots/Slot3/card_detector"]
 position = Vector2(0, -40)
@@ -541,17 +615,48 @@ custom_minimum_size = Vector2(128, 160)
 layout_mode = 2
 size_flags_vertical = 0
 focus_mode = 0
-button_mask = 0
 script = ExtResource("5_xjpow")
 slot_number = 3
 
 [node name="card_detector" type="Area2D" parent="BoardDesign/VBoxContainer/PlayerSlots/Slot4" groups=["Slot"]]
 position = Vector2(60, 72)
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BoardDesign/VBoxContainer/PlayerSlots/Slot4/card_detector"]
 position = Vector2(0, -40)
 shape = SubResource("RectangleShape2D_ycdy4")
 debug_color = Color(0.739724, 0.4672796, 0, 0.41960785)
+
+[node name="Warning" type="AnimationPlayer" parent="BoardDesign"]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_3ux7j")
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="BoardDesign/Warning"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.5921569)
+z_index = 100
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = -44.0
+offset_right = 362.0
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_font_sizes/bold_font_size = 64
+bbcode_enabled = true
+text = "[b]Drag a card to the slot"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
 
 [node name="Choices" type="Control" parent="."]
 custom_minimum_size = Vector2(360, 100)
@@ -692,6 +797,7 @@ offset_top = 1024.0
 offset_right = 710.0
 offset_bottom = 1055.0
 focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_htgex")
 text = "End Turn"
 
 [node name="Elixer" type="Control" parent="."]
@@ -708,6 +814,17 @@ grow_vertical = 0
 mouse_filter = 2
 script = ExtResource("9_htgex")
 elixer_texture = ExtResource("10_3ux7j")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Elixer"]
+layout_mode = 0
+offset_top = 320.0
+offset_right = 68.0
+offset_bottom = 343.0
+bbcode_enabled = true
+text = "[center][b]POWER"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
 
 [node name="PanelContainer" type="PanelContainer" parent="Elixer"]
 layout_mode = 1
@@ -840,9 +957,10 @@ offset_bottom = -232.0
 grow_horizontal = 0
 grow_vertical = 0
 scale = Vector2(0.6, 0.6)
-texture = ExtResource("15_fvbcm")
+texture = ExtResource("16_htgex")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Player"]
+[node name="PlayerTag" type="RichTextLabel" parent="Player"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -920,12 +1038,54 @@ autowrap_mode = 2
 horizontal_alignment = 1
 vertical_alignment = 2
 
+[node name="Displays" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 720.0
+offset_bottom = 1280.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("4_x2ujm")
+
+[node name="FirstTurn" type="PanelContainer" parent="Displays"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_a1b81")
+
+[node name="FirstTurnLabel" type="RichTextLabel" parent="Displays/FirstTurn"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/bold_font_size = 24
+bbcode_enabled = true
+text = "[b][center]PLAYER 1 
+Goes first!"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[connection signal="pressed" from="BoardDesign/VBoxContainer/PlayerSlots/Slot" to="BoardDesign/VBoxContainer/PlayerSlots/Slot" method="_on_pressed"]
 [connection signal="area_entered" from="BoardDesign/VBoxContainer/PlayerSlots/Slot/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot" method="_on_card_detector_area_entered"]
 [connection signal="area_exited" from="BoardDesign/VBoxContainer/PlayerSlots/Slot/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot" method="_on_card_detector_area_exited"]
+[connection signal="pressed" from="BoardDesign/VBoxContainer/PlayerSlots/Slot2" to="BoardDesign/VBoxContainer/PlayerSlots/Slot2" method="_on_pressed"]
 [connection signal="area_entered" from="BoardDesign/VBoxContainer/PlayerSlots/Slot2/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot2" method="_on_card_detector_area_entered"]
 [connection signal="area_exited" from="BoardDesign/VBoxContainer/PlayerSlots/Slot2/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot2" method="_on_card_detector_area_exited"]
+[connection signal="pressed" from="BoardDesign/VBoxContainer/PlayerSlots/Slot3" to="BoardDesign/VBoxContainer/PlayerSlots/Slot3" method="_on_pressed"]
 [connection signal="area_entered" from="BoardDesign/VBoxContainer/PlayerSlots/Slot3/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot3" method="_on_card_detector_area_entered"]
 [connection signal="area_exited" from="BoardDesign/VBoxContainer/PlayerSlots/Slot3/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot3" method="_on_card_detector_area_exited"]
+[connection signal="pressed" from="BoardDesign/VBoxContainer/PlayerSlots/Slot4" to="BoardDesign/VBoxContainer/PlayerSlots/Slot4" method="_on_pressed"]
 [connection signal="area_entered" from="BoardDesign/VBoxContainer/PlayerSlots/Slot4/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot4" method="_on_card_detector_area_entered"]
 [connection signal="area_exited" from="BoardDesign/VBoxContainer/PlayerSlots/Slot4/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot4" method="_on_card_detector_area_exited"]
 [connection signal="value_changed" from="Player/HealthBar" to="Player/HealthBar" method="_on_value_changed"]

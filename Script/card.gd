@@ -5,7 +5,10 @@ extends Area2D
 func update_visuals(pawn : piece):
 	change_health(pawn.health)
 	change_damage(pawn.damage)
-	change_texture(pawn.pawn_texture)
+	if pawn.team == piece.teams.player:
+		change_texture(pawn.player_pawn_texture)
+	else:
+		change_texture(pawn.opponent_pawn_texture)
 
 func attack_mode(yes : bool):
 	if yes:
@@ -18,7 +21,6 @@ func is_pawn_dead(pawn : piece) -> bool:
 		change_health(pawn.health) #just to make sure before animation they know their pawn is dead
 		print(pawn.team, pawn, ": dead")
 		if animation_player.is_playing():
-			print("HUHUHUHUH")
 			animation_player.queue("death")
 		else:
 			animation_player.play("death")
@@ -48,5 +50,6 @@ func attack_pawn(square : Area2D, pawn : piece) -> bool:
 	return true
 
 func _on_visibility_changed() -> void:
+	return
 	if self.visible == false:
 		print(name, ": ", visible)

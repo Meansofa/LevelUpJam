@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://1ii02qh8q237"]
+[gd_scene load_steps=16 format=3 uid="uid://1ii02qh8q237"]
 
 [ext_resource type="Script" uid="uid://cnxb5wywldhy3" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://c0qpjsiu58e47" path="res://opponent_scene.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://cv50k8ineexkg" path="res://game_play.tscn" id="4_1bvp3"]
 [ext_resource type="Theme" uid="uid://cvxfg8jiluc8k" path="res://Themes/MainMenu.tres" id="4_7mycd"]
+[ext_resource type="PackedScene" uid="uid://d1t6b32rtcea8" path="res://rock_paper_scissors.tscn" id="4_272bh"]
 [ext_resource type="Script" uid="uid://cx6c3jd8l1qmu" path="res://settings.gd" id="4_lquwl"]
 [ext_resource type="Theme" uid="uid://buamt54f6ol74" path="res://Themes/main.tres" id="5_lquwl"]
 
@@ -49,6 +50,7 @@ border_color = Color(0, 0.09411765, 0.6313726, 1)
 script = ExtResource("1_0xm2m")
 player_packed_scene = ExtResource("4_1bvp3")
 opponent_packed_scene = ExtResource("3_h2yge")
+rock_paper_scissors_scene = ExtResource("4_272bh")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -62,7 +64,7 @@ anchor_bottom = 0.5
 offset_left = -248.0
 offset_top = -395.0
 offset_right = 221.0
-offset_bottom = -176.0
+offset_bottom = -136.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("4_7mycd")
@@ -79,6 +81,22 @@ autowrap_mode = 0
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxEmpty_7mycd")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Menu"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Menu/HBoxContainer2"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[b][i]Name: "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="PlayerName" type="LineEdit" parent="CanvasLayer/Menu/HBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
 
 [node name="local_checkbox" type="CheckButton" parent="CanvasLayer/Menu"]
 unique_name_in_owner = true
@@ -105,12 +123,12 @@ text = "Host
 [node name="OnlineID" type="RichTextLabel" parent="CanvasLayer/Menu/HBoxContainer/Host"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 53.0
+offset_left = 16.0
 offset_top = 70.0
-offset_right = 194.0
-offset_bottom = 110.0
+offset_right = 216.0
+offset_bottom = 116.0
 bbcode_enabled = true
-text = "[center]Loading ID...."
+text = "Room ID: [i]Loading ID...."
 fit_content = true
 autowrap_mode = 2
 
@@ -127,6 +145,7 @@ offset_left = 46.0
 offset_top = 74.0
 offset_right = 183.0
 offset_bottom = 105.0
+placeholder_text = "Enter Room ID"
 
 [node name="required" type="Label" parent="CanvasLayer/Menu/HBoxContainer/Join/JoinID"]
 unique_name_in_owner = true
@@ -168,23 +187,22 @@ offset_bottom = 8.0
 focus_mode = 0
 text = "Restart"
 
-[node name="Loading" type="RichTextLabel" parent="CanvasLayer/Settings"]
+[node name="Loading" type="PanelContainer" parent="CanvasLayer/Settings"]
 unique_name_in_owner = true
-clip_contents = false
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = 14
 anchor_top = 0.5
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -284.0
-offset_top = -65.0
-offset_right = 284.0
-offset_bottom = 65.0
+offset_top = -64.0
+offset_bottom = 158.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="Loading" type="RichTextLabel" parent="CanvasLayer/Settings/Loading"]
+clip_contents = false
+layout_mode = 2
 theme = ExtResource("5_lquwl")
 theme_override_font_sizes/bold_font_size = 32
 theme_override_font_sizes/italics_font_size = 24
@@ -192,13 +210,14 @@ bbcode_enabled = true
 text = "[b]LOADING.................[/b]
 [i]3-10 seconds
 
-[i]# if this takes long to load, check if you entered the correct code, or you could re enter the code again."
+[i]# if this takes long to load, check if the host finished hosting,  you entered the correct code, or you could rejoin or enter the code again then rejoin."
 fit_content = true
 scroll_active = false
 autowrap_mode = 2
 
 [node name="PlayerDisconnected" type="Control" parent="CanvasLayer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 720.0
