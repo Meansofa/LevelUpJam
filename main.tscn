@@ -1,10 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://1ii02qh8q237"]
+[gd_scene load_steps=15 format=3 uid="uid://1ii02qh8q237"]
 
 [ext_resource type="Script" uid="uid://cnxb5wywldhy3" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://c0qpjsiu58e47" path="res://opponent_scene.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://cv50k8ineexkg" path="res://game_play.tscn" id="4_1bvp3"]
+[ext_resource type="Theme" uid="uid://cvxfg8jiluc8k" path="res://Themes/MainMenu.tres" id="4_7mycd"]
 [ext_resource type="Script" uid="uid://cx6c3jd8l1qmu" path="res://settings.gd" id="4_lquwl"]
 [ext_resource type="Theme" uid="uid://buamt54f6ol74" path="res://Themes/main.tres" id="5_lquwl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7mycd"]
 
 [sub_resource type="GDScript" id="GDScript_7mycd"]
 resource_name = "local_checkbox"
@@ -16,6 +19,32 @@ func _ready() -> void:
 	toggled.emit(button_pressed)
 "
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7mycd"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_272bh"]
+bg_color = Color(0.05197096, 0.051970966, 0.051970914, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.09411765, 0.6313726, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_272bh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5vw27"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kek77"]
+bg_color = Color(0.05197096, 0.051970966, 0.051970914, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.09411765, 0.6313726, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4c57u"]
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_0xm2m")
 player_packed_scene = ExtResource("4_1bvp3")
@@ -23,42 +52,83 @@ opponent_packed_scene = ExtResource("3_h2yge")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Host" type="Button" parent="CanvasLayer"]
+[node name="Menu" type="VBoxContainer" parent="CanvasLayer"]
 unique_name_in_owner = true
-offset_left = 36.0
-offset_top = 61.0
-offset_right = 80.0
-offset_bottom = 92.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -248.0
+offset_top = -395.0
+offset_right = 221.0
+offset_bottom = -176.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_7mycd")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Menu"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center][b]Card Chess"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="VSeparator" type="VSeparator" parent="CanvasLayer/Menu"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_7mycd")
+
+[node name="local_checkbox" type="CheckButton" parent="CanvasLayer/Menu"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+button_pressed = true
+text = "Local Multiplayer"
+alignment = 2
+script = SubResource("GDScript_7mycd")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Menu"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="Host" type="Button" parent="CanvasLayer/Menu/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Host
 "
 
-[node name="Join" type="Button" parent="CanvasLayer"]
+[node name="OnlineID" type="RichTextLabel" parent="CanvasLayer/Menu/HBoxContainer/Host"]
 unique_name_in_owner = true
-offset_left = 360.0
-offset_top = 74.0
-offset_right = 404.0
-offset_bottom = 105.0
-text = "Join"
-
-[node name="OnlineID" type="RichTextLabel" parent="CanvasLayer"]
-unique_name_in_owner = true
-offset_left = 15.0
-offset_top = 112.0
-offset_right = 156.0
-offset_bottom = 152.0
+layout_mode = 0
+offset_left = 53.0
+offset_top = 70.0
+offset_right = 194.0
+offset_bottom = 110.0
 bbcode_enabled = true
-text = "Loading ID...."
+text = "[center]Loading ID...."
 fit_content = true
 autowrap_mode = 2
 
-[node name="JoinID" type="LineEdit" parent="CanvasLayer"]
+[node name="Join" type="Button" parent="CanvasLayer/Menu/HBoxContainer"]
 unique_name_in_owner = true
-offset_left = 323.0
-offset_top = 113.0
-offset_right = 460.0
-offset_bottom = 144.0
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Join"
 
-[node name="required" type="Label" parent="CanvasLayer/JoinID"]
+[node name="JoinID" type="LineEdit" parent="CanvasLayer/Menu/HBoxContainer/Join"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 46.0
+offset_top = 74.0
+offset_right = 183.0
+offset_bottom = 105.0
+
+[node name="required" type="Label" parent="CanvasLayer/Menu/HBoxContainer/Join/JoinID"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -77,17 +147,7 @@ text = "Required*"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="local_checkbox" type="CheckButton" parent="CanvasLayer"]
-unique_name_in_owner = true
-offset_left = 32.0
-offset_top = 29.0
-offset_right = 121.0
-offset_bottom = 60.0
-button_pressed = true
-text = "Local"
-script = SubResource("GDScript_7mycd")
-
-[node name="Settings" type="Control" parent="CanvasLayer"]
+[node name="Settings" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("main")]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
@@ -97,8 +157,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("4_lquwl")
+main = NodePath("../..")
+metadata/_edit_lock_ = true
 
 [node name="Restart" type="Button" parent="CanvasLayer/Settings"]
+z_index = 100
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
@@ -142,6 +205,23 @@ offset_right = 720.0
 offset_bottom = 1280.0
 mouse_filter = 2
 theme = ExtResource("5_lquwl")
+metadata/_edit_lock_ = true
+
+[node name="CanvasGroup2" type="CanvasGroup" parent="CanvasLayer/PlayerDisconnected"]
+modulate = Color(1, 1, 1, 0.6784314)
+
+[node name="Panel" type="Panel" parent="CanvasLayer/PlayerDisconnected/CanvasGroup2"]
+custom_minimum_size = Vector2(720, 1248)
+offset_top = 48.0
+offset_right = 720.0
+offset_bottom = 1296.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_7mycd")
+
+[node name="Panel2" type="Panel" parent="CanvasLayer/PlayerDisconnected/CanvasGroup2"]
+offset_left = 80.0
+offset_right = 724.0
+offset_bottom = 48.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_7mycd")
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/PlayerDisconnected"]
 custom_minimum_size = Vector2(0, 180)
@@ -152,6 +232,7 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_272bh")
 
 [node name="disconnected_label" type="RichTextLabel" parent="CanvasLayer/PlayerDisconnected/PanelContainer"]
 unique_name_in_owner = true
@@ -164,8 +245,136 @@ autowrap_mode = 2
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="CanvasLayer/Host" to="." method="_on_host_pressed"]
-[connection signal="pressed" from="CanvasLayer/Join" to="." method="_on_join_pressed"]
-[connection signal="pressed" from="CanvasLayer/local_checkbox" to="." method="_on_check_button_pressed"]
-[connection signal="toggled" from="CanvasLayer/local_checkbox" to="." method="_on_check_button_toggled"]
+[node name="CanvasGroup" type="Panel" parent="CanvasLayer/PlayerDisconnected"]
+layout_mode = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_272bh")
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerDisconnected/CanvasGroup"]
+layout_mode = 0
+offset_left = 88.0
+offset_right = 183.0
+offset_bottom = 62.0
+rotation = 0.4292535
+text = "<-----"
+
+[node name="Label3" type="Label" parent="CanvasLayer/PlayerDisconnected/CanvasGroup"]
+layout_mode = 0
+offset_left = 88.0
+offset_top = -16.0
+offset_right = 183.0
+offset_bottom = 46.0
+rotation = 0.009115249
+text = "<------"
+
+[node name="Label2" type="Label" parent="CanvasLayer/PlayerDisconnected/CanvasGroup"]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 40.0
+offset_right = 183.0
+offset_bottom = 102.0
+rotation = 1.4050215
+text = "<-----"
+
+[node name="Label4" type="Label" parent="CanvasLayer/PlayerDisconnected/CanvasGroup"]
+layout_mode = 0
+offset_left = 55.999996
+offset_top = 48.0
+offset_right = 164.0
+offset_bottom = 110.0
+rotation = 1.605976
+text = "<-----"
+
+[node name="WaitingForPlayer" type="Control" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 720.0
+offset_bottom = 1280.0
+mouse_filter = 2
+theme = ExtResource("5_lquwl")
+metadata/_edit_lock_ = true
+
+[node name="CanvasGroup2" type="CanvasGroup" parent="CanvasLayer/WaitingForPlayer"]
+modulate = Color(1, 1, 1, 0.6784314)
+
+[node name="Panel" type="Panel" parent="CanvasLayer/WaitingForPlayer/CanvasGroup2"]
+custom_minimum_size = Vector2(720, 1248)
+offset_top = 48.0
+offset_right = 720.0
+offset_bottom = 1296.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_5vw27")
+
+[node name="Panel2" type="Panel" parent="CanvasLayer/WaitingForPlayer/CanvasGroup2"]
+offset_left = 80.0
+offset_right = 724.0
+offset_bottom = 48.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_5vw27")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/WaitingForPlayer"]
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kek77")
+
+[node name="disconnected_label" type="RichTextLabel" parent="CanvasLayer/WaitingForPlayer/PanelContainer"]
+layout_mode = 2
+theme_override_font_sizes/bold_font_size = 32
+bbcode_enabled = true
+text = "[b]Waiting For Opponent..."
+scroll_active = false
+autowrap_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CanvasGroup" type="Panel" parent="CanvasLayer/WaitingForPlayer"]
+layout_mode = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_4c57u")
+
+[node name="Label" type="Label" parent="CanvasLayer/WaitingForPlayer/CanvasGroup"]
+layout_mode = 0
+offset_left = 88.0
+offset_right = 183.0
+offset_bottom = 62.0
+rotation = 0.4292535
+text = "<-----"
+
+[node name="Label3" type="Label" parent="CanvasLayer/WaitingForPlayer/CanvasGroup"]
+layout_mode = 0
+offset_left = 88.0
+offset_top = -16.0
+offset_right = 183.0
+offset_bottom = 46.0
+rotation = 0.009115249
+text = "<------"
+
+[node name="Label2" type="Label" parent="CanvasLayer/WaitingForPlayer/CanvasGroup"]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 40.0
+offset_right = 183.0
+offset_bottom = 102.0
+rotation = 1.4050215
+text = "<-----"
+
+[node name="Label4" type="Label" parent="CanvasLayer/WaitingForPlayer/CanvasGroup"]
+layout_mode = 0
+offset_left = 55.999996
+offset_top = 48.0
+offset_right = 164.0
+offset_bottom = 110.0
+rotation = 1.605976
+text = "<-----"
+
+[connection signal="pressed" from="CanvasLayer/Menu/local_checkbox" to="." method="_on_check_button_pressed"]
+[connection signal="toggled" from="CanvasLayer/Menu/local_checkbox" to="." method="_on_check_button_toggled"]
+[connection signal="pressed" from="CanvasLayer/Menu/HBoxContainer/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="CanvasLayer/Menu/HBoxContainer/Join" to="." method="_on_join_pressed"]
 [connection signal="pressed" from="CanvasLayer/Settings/Restart" to="CanvasLayer/Settings" method="_on_restart_pressed"]

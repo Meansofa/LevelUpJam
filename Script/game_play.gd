@@ -142,7 +142,6 @@ func player_move():
 					move_forward(x , y, player_piece)
 
 func damage_player():
-	print("AWWWWWWWWWWWWWWWWWWWW")
 	%HealthBar.take_damage(%HealthBar.step)
 
 func move_forward(x : int, y: int, square : piece):

@@ -1,7 +1,30 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://buamt54f6ol74"]
+[gd_resource type="Theme" load_steps=10 format=3 uid="uid://buamt54f6ol74"]
 
+[ext_resource type="FontFile" uid="uid://c3pf1wrqtqwal" path="res://Themes/Fonts/SimpleHandmade.otf" id="1_apm7t"]
 [ext_resource type="FontFile" uid="uid://bke4uhr2sqeg2" path="res://Themes/Fonts/Daydream DEMO.otf" id="1_dn4vi"]
 [ext_resource type="FontFile" uid="uid://ckvailqr3qsxt" path="res://Themes/Fonts/GrapeSoda.ttf" id="2_dn4vi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1lsov"]
+bg_color = Color(0.3529412, 0.36862746, 0.6, 0.57254905)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r0ra0"]
+bg_color = Color(0.5125796, 0, 0.038126532, 0.3764706)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m4fr6"]
+bg_color = Color(0, 0, 0.26666668, 0.59607846)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ubf7"]
+bg_color = Color(0.41960785, 0.011764706, 0.047058824, 0.5921569)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dn4vi"]
 bg_color = Color(0.20871013, 0.20871016, 0.20871013, 1)
@@ -15,15 +38,21 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_apm7t"]
-bg_color = Color(1, 0.25882354, 0, 1)
+bg_color = Color(0.40784314, 0.18039216, 1, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_bottom = 2
-border_color = Color(0.7254902, 0, 0, 1)
+border_color = Color(0, 0, 1, 1)
 corner_radius_top_left = 5
 corner_radius_bottom_left = 5
 
 [resource]
+Button/styles/disabled = SubResource("StyleBoxFlat_1lsov")
+Button/styles/disabled_mirrored = SubResource("StyleBoxFlat_r0ra0")
+Button/styles/normal = SubResource("StyleBoxFlat_m4fr6")
+Button/styles/pressed = SubResource("StyleBoxFlat_4ubf7")
+Label/font_sizes/font_size = 64
+Label/fonts/font = ExtResource("1_apm7t")
 ProgressBar/styles/background = SubResource("StyleBoxFlat_dn4vi")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_apm7t")
 RichTextLabel/constants/outline_size = 3

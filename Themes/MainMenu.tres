@@ -1,0 +1,17 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://cvxfg8jiluc8k"]
+
+[ext_resource type="FontFile" uid="uid://dfm5marj1iqb6" path="res://Themes/Fonts/Cakecafe.ttf" id="1_i5fhn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6oihh"]
+bg_color = Color(0.12591085, 0.12591085, 0.12591082, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.42352942, 1, 1)
+
+[resource]
+Button/fonts/font = null
+Button/styles/normal = SubResource("StyleBoxFlat_6oihh")
+RichTextLabel/font_sizes/bold_font_size = 64
+RichTextLabel/fonts/bold_font = ExtResource("1_i5fhn")

@@ -42,7 +42,7 @@ func _on_host_pressed() -> void:
 	
 	#connect a signal to when a peer connects
 	multiplayer.peer_connected.connect(_on_peer_connected)
-	
+	%WaitingForPlayer.visible = true
 	var player_scene = player_packed_scene.instantiate()
 	add_child(player_scene)
 	player_side_scenes.append(player_scene)
@@ -77,6 +77,7 @@ func _on_join_pressed() -> void:
 #This only shows if you're the host
 func _on_peer_connected(peer_id):
 	print("Player: ", peer_id, " joined!")
+	%WaitingForPlayer.visible = false
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	var opponent_scene = opponent_packed_scene.instantiate()
 	add_child(opponent_scene)
@@ -87,6 +88,7 @@ func _on_peer_disconnected(peer_id):
 	$%disconnected_label.text = "[b]Player " + str(peer_id) + " DISCONNECTED."
 
 func _disable_buttons():
+	%Menu.visible = false
 	%Host.visible = false
 	%Host.disabled = true
 	%Join.visible = false
@@ -98,6 +100,7 @@ func _disable_buttons():
 	#%Settings.mouse_filter = Control.MouseFilter.MOUSE_FILTER_IGNORE
 
 func _enable_buttons():
+	%Menu.visible = true
 	%Host.visible = true
 	%Host.disabled = false
 	%Join.visible = true
