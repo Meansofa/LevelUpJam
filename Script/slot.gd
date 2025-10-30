@@ -28,7 +28,7 @@ func stop_detection():
 
 @rpc("any_peer")
 func enable_detection(player_id):
-	print("card_detector: ", card_detector)
+	print("card_detector: ", card_detector, " : player_id: ", player_id)
 	card_detector.monitorable = true
 	card_detector.visible = true
 	self.button_mask = MOUSE_BUTTON_MASK_LEFT

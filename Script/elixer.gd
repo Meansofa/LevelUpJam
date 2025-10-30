@@ -11,9 +11,17 @@ extends Control
 
 func _ready() -> void:
 	%EndTurn.connect("pressed", end_turn_elixer) #after pressing end turn generate elixer
-	starting_elixer()
+	_starting_elixer()
 
-func starting_elixer():
+func new_round():
+	_erase_elixer()
+	_starting_elixer()
+
+func _erase_elixer():
+	for elixer in elixers_parent.get_children():
+		elixers_parent.remove_child(elixer)
+
+func _starting_elixer():
 	if elixers_parent.get_child_count() >= start_elixer_count:
 		return
 	create_new_elixer(start_elixer_count)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cv50k8ineexkg"]
+[gd_scene load_steps=35 format=3 uid="uid://cv50k8ineexkg"]
 
 [ext_resource type="Script" uid="uid://r10i8cnvrsr1" path="res://Script/game_play.gd" id="1_0mbhd"]
 [ext_resource type="Texture2D" uid="uid://clgoqclmfrrg2" path="res://Art/Pieces/chair.png" id="2_a1b81"]
@@ -10,11 +10,12 @@
 [ext_resource type="Script" uid="uid://bd3kqdjnuomn3" path="res://Script/board.gd" id="7_kgpdb"]
 [ext_resource type="PackedScene" uid="uid://q3epd7gwh8wv" path="res://card.tscn" id="8_a1b81"]
 [ext_resource type="Script" uid="uid://453o1y0takwh" path="res://Script/elixer.gd" id="9_htgex"]
-[ext_resource type="Script" uid="uid://ehuqivrlrvic" path="res://card_stash.gd" id="9_xjpow"]
+[ext_resource type="Script" uid="uid://ehuqivrlrvic" path="res://Script/card_stash.gd" id="9_xjpow"]
 [ext_resource type="Texture2D" uid="uid://cqcjqxj2r8q3q" path="res://Art/Pieces/elixer.png" id="10_3ux7j"]
 [ext_resource type="Script" uid="uid://b1kol4jahgr23" path="res://Script/all_cards.gd" id="11_uycrd"]
 [ext_resource type="Script" uid="uid://b857rlbbl7w2n" path="res://Pieces/base_piece.gd" id="12_x2ujm"]
 [ext_resource type="Resource" uid="uid://bp7sx5327bjvn" path="res://Pieces/pawn.tres" id="13_xjpow"]
+[ext_resource type="Script" uid="uid://cml44y27vephb" path="res://Script/block_inputs.gd" id="16_a1b81"]
 [ext_resource type="PackedScene" uid="uid://c0qpjsiu58e47" path="res://opponent_scene.tscn" id="16_kgpdb"]
 
 [sub_resource type="Gradient" id="Gradient_htgex"]
@@ -142,6 +143,17 @@ _data = {
 &"DragACard": SubResource("Animation_a1b81"),
 &"RESET": SubResource("Animation_htgex")
 }
+
+[sub_resource type="GDScript" id="GDScript_htgex"]
+resource_name = "Choices"
+script/source = "extends Control
+
+func new_round():
+	%PickCard.new_round()
+	%PickCard2.new_round()
+	%PickCard3.new_round()
+	%PickCard4.new_round()
+"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_htgex"]
 bg_color = Color(0.2784314, 0, 0.33333334, 1)
@@ -287,16 +299,6 @@ _data = {
 [sub_resource type="GDScript" id="GDScript_a1b81"]
 resource_name = "FirstTurn"
 script/source = "extends PanelContainer
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 func first_turn_name(player_name : String):
 	$FirstTurnLabel.text = \"[b][center]\" + player_name + \"\\n Goes first!\"
@@ -725,6 +727,7 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="Choices" type="Control" parent="."]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(360, 100)
 layout_mode = 3
 anchors_preset = 0
@@ -734,6 +737,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
 theme = ExtResource("4_x2ujm")
+script = SubResource("GDScript_htgex")
 metadata/_edit_lock_ = true
 
 [node name="SelectCards" type="HBoxContainer" parent="Choices"]
@@ -949,9 +953,21 @@ grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("4_x2ujm")
 
+[node name="BlockInputs" type="PanelContainer" parent="Displays"]
+unique_name_in_owner = true
+z_index = 100
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("16_a1b81")
+
 [node name="FirstTurn" type="PanelContainer" parent="Displays"]
 unique_name_in_owner = true
 visible = false
+z_index = 100
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -975,6 +991,49 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
+[node name="Round" type="PanelContainer" parent="Displays"]
+unique_name_in_owner = true
+visible = false
+z_index = 100
+custom_minimum_size = Vector2(720, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -159.0
+offset_top = -81.0
+offset_right = 159.0
+offset_bottom = 81.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="round_label" type="RichTextLabel" parent="Displays/Round"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/bold_font_size = 32
+bbcode_enabled = true
+text = "[b][center]Round 1 Win"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="round_label2" type="RichTextLabel" parent="Displays/Round"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_font_sizes/italics_font_size = 32
+bbcode_enabled = true
+text = "[i][center]preparing next round......."
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
 [node name="Player" parent="." instance=ExtResource("16_kgpdb")]
 unique_name_in_owner = true
 
@@ -984,9 +1043,6 @@ offset_bottom = 976.0
 
 [node name="playertag" parent="Player/Control/Player" index="1"]
 text = "[b][center]Player 792347"
-
-[node name="round_label" parent="Player/Control/Round" index="0"]
-text = "[b][center]Round 1 Win"
 
 [connection signal="pressed" from="BoardDesign/VBoxContainer/PlayerSlots/Slot" to="BoardDesign/VBoxContainer/PlayerSlots/Slot" method="_on_pressed"]
 [connection signal="area_entered" from="BoardDesign/VBoxContainer/PlayerSlots/Slot/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot" method="_on_card_detector_area_entered"]

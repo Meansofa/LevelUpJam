@@ -6,8 +6,8 @@ extends Node2D
 
 var current_round := 1
 
-func _ready() -> void:
-	%Round.visible = false
+func new_round():
+	%HealthBar.value = 100
 
 func take_damage() -> float:
 	%HealthBar.take_damage(%HealthBar.step)
@@ -23,10 +23,3 @@ func change_player_frame(operator : String):
 		%playerframe.texture = player_1_texture
 	else:
 		%playerframe.texture = player_2_texture
-
-func round_win():
-	display_round()
-
-func display_round():
-	%Round.visible = true
-	%round_label.text = "[b][center]Round " + str(current_round) + " Win"

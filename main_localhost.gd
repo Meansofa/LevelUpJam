@@ -34,7 +34,7 @@ func _on_join_pressed() -> void:
 
 #This only shows if you're the host
 func _on_peer_connected(peer_id):
-	print("Player joined!")
+	print("Player joined: ", peer_id)
 	
 	var opponent_scene = opponent_packed_scene.instantiate()
 	add_child(opponent_scene)

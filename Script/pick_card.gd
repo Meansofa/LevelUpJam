@@ -18,6 +18,9 @@ func _ready() -> void:
 	spawn_position = self.position
 	start()
 
+func new_round():
+	start()
+
 func start():
 	_request_card_from_player_stash()
 	%AnimationPlayer.play("return")
@@ -25,7 +28,7 @@ func start():
 	draggable = true
 
 func _request_card_from_player_stash():
-	%CardStash.request_card(self)
+	%CardStash.request_card(self) #After this it should return to the function give_card
 
 #CALLED FROM card_stash.gd >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 func give_card(new_card : piece):
@@ -47,7 +50,6 @@ func update_visuals():
 	for elixer in %elixer.get_children(): #Clear first before getting replaced
 		elixer.queue_free()
 	for elixer in range(card.elixer): #elixer/power needed for this card
-		print("NINININI")
 		var textureRect = TextureRect.new()
 		textureRect.texture = elixer_texture
 		%elixer.add_child(textureRect)

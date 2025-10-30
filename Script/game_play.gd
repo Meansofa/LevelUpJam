@@ -1,5 +1,7 @@
 extends Node2D
 
+var curr_round := 1
+
 var opponent_scene : Node2D
 const rows := 6
 const cols := 4
@@ -11,6 +13,32 @@ var player_cards = []
 var player_name : String
 var enemy_name : String
 
+func next_round():
+	curr_round += 1
+	%round_label.text = "[b][center]Round " + str(curr_round) +  " Go!!!"
+	%round_label2.visible = false
+	
+	new_round()
+	await get_tree().create_timer(2).timeout
+	%Round.visible = false
+
+func new_round():
+	%Choices.new_round()
+	%CardStash.new_round()
+	%Player.new_round()
+	opponent_scene.new_round()
+
+func round_won(winner : piece.teams):
+	%BlockInputs.visible = true
+	%Round.visible = true
+	if winner == piece.teams.player:
+		%round_label.text = "[b][center]Round " + str(curr_round) +  " Win"
+	else:
+		%round_label.text = "[b][center]Round " + str(curr_round) +  " Lost"
+	await get_tree().create_timer(3).timeout
+	next_round()
+
+#Called when pressing restart by main.gd
 func restart():
 	get_tree().reload_current_scene()
 
@@ -136,6 +164,7 @@ func update_simulation():
 					square.update_visuals(pawn)
 			else:
 				square.visible = false
+
 @rpc("any_peer")
 func player_move():
 	print("player_move")
@@ -160,19 +189,16 @@ func player_move():
 
 #DAMAGE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #Damage happens when either opponent or player's pieces reaches the other side's edge
-func damage_player(): #If the opponent's pieces reaches the player's edge
-	var health = %Player.take_damage()
-	if health <= 0:
-		opponent_scene.round_win()
-
 func damage_opponent():#If the player's pieces reaches the opponent's edge
 	var health = opponent_scene.take_damage()
 	if health <= 0:
-		%Player.round_win()
-#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		round_won(piece.teams.player)
 
-func round_won():
-	pass
+func damage_player(): #If the opponent's pieces reaches the player's edge
+	var health = %Player.take_damage()
+	if health <= 0:
+		round_won(piece.teams.opponent)
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 func move_forward(x : int, y: int, square : piece):
 	#if not on edge move forward
@@ -217,16 +243,17 @@ func instantiate_board():
 		board.append(row)
 
 func view_board():
+	pass
 	#print(">>>>>>>>>>>>>>>>>>>>>>>>>>")
 	#var player_id = multiplayer.get_unique_id()
 	#print(" view_board() player_id: ", player_id)
-	for x in range(rows):
-		var line := ""
-		for y in range(cols):
-			if board[x][y]is piece:
-				line += str(board[x][y].team) + str(board[x][y].name) + " "
-			else:
-				line += str(board[x][y]) + " "
+	#for x in range(rows):
+		#var line := ""
+		#for y in range(cols):
+			#if board[x][y]is piece:
+				#line += str(board[x][y].team) + str(board[x][y].name) + " "
+			#else:
+				#line += str(board[x][y]) + " "
 		#print(line)
 	#print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
 
