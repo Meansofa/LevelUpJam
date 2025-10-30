@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://cv50k8ineexkg"]
+[gd_scene load_steps=33 format=3 uid="uid://cv50k8ineexkg"]
 
 [ext_resource type="Script" uid="uid://r10i8cnvrsr1" path="res://Script/game_play.gd" id="1_0mbhd"]
 [ext_resource type="Texture2D" uid="uid://clgoqclmfrrg2" path="res://Art/Pieces/chair.png" id="2_a1b81"]
@@ -15,8 +15,7 @@
 [ext_resource type="Script" uid="uid://b1kol4jahgr23" path="res://Script/all_cards.gd" id="11_uycrd"]
 [ext_resource type="Script" uid="uid://b857rlbbl7w2n" path="res://Pieces/base_piece.gd" id="12_x2ujm"]
 [ext_resource type="Resource" uid="uid://bp7sx5327bjvn" path="res://Pieces/pawn.tres" id="13_xjpow"]
-[ext_resource type="Texture2D" uid="uid://brb72kigbbfpy" path="res://Art/Pieces/characterFrames.png" id="16_htgex"]
-[ext_resource type="Script" uid="uid://ds2co40nx6snr" path="res://Script/health_bar.gd" id="16_kgpdb"]
+[ext_resource type="PackedScene" uid="uid://c0qpjsiu58e47" path="res://opponent_scene.tscn" id="16_kgpdb"]
 
 [sub_resource type="Gradient" id="Gradient_htgex"]
 offsets = PackedFloat32Array(1)
@@ -34,6 +33,27 @@ gradient = SubResource("Gradient_a1b81")
 width = 40
 height = 16
 fill_from = Vector2(1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vivmo"]
+bg_color = Color(0.9490196, 0.5764706, 0.14901961, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3566954, 0.1904014, 7.219613e-08, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2cqfq"]
+bg_color = Color(0.8198132, 0.48531199, 0.07037226, 1)
+border_width_left = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.16774932, 0.07867085, 0, 1)
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ycdy4"]
 size = Vector2(16, 32)
@@ -264,27 +284,6 @@ _data = {
 &"not_enough_elixer": SubResource("Animation_ycdy4")
 }
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vivmo"]
-bg_color = Color(0.9490196, 0.5764706, 0.14901961, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.3566954, 0.1904014, 7.219613e-08, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2cqfq"]
-bg_color = Color(0.8198132, 0.48531199, 0.07037226, 1)
-border_width_left = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.16774932, 0.07867085, 0, 1)
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
 [sub_resource type="GDScript" id="GDScript_a1b81"]
 resource_name = "FirstTurn"
 script/source = "extends PanelContainer
@@ -340,6 +339,73 @@ z_index = -100
 offset_right = 720.0
 offset_bottom = 1080.0
 texture = SubResource("GradientTexture2D_a1b81")
+
+[node name="CardStash" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+theme = ExtResource("4_x2ujm")
+script = ExtResource("9_xjpow")
+starting_cards = Array[ExtResource("12_x2ujm")]([ExtResource("13_xjpow"), ExtResource("13_xjpow"), ExtResource("13_xjpow"), ExtResource("13_xjpow"), ExtResource("13_xjpow"), ExtResource("13_xjpow"), ExtResource("13_xjpow"), ExtResource("13_xjpow"), ExtResource("2_uycrd"), ExtResource("2_uycrd"), ExtResource("3_7bf21"), ExtResource("3_7bf21")])
+
+[node name="CanvasGroup" type="CanvasGroup" parent="CardStash"]
+position = Vector2(635, 1078)
+
+[node name="Panel2" type="Panel" parent="CardStash/CanvasGroup"]
+offset_left = -1.0
+offset_top = -3.0
+offset_right = 41.667
+offset_bottom = 61.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_vivmo")
+
+[node name="Panel" type="Panel" parent="CardStash/CanvasGroup/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2cqfq")
+
+[node name="Panel3" type="Panel" parent="CardStash/CanvasGroup"]
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 46.667
+offset_bottom = 67.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_vivmo")
+
+[node name="Panel" type="Panel" parent="CardStash/CanvasGroup/Panel3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2cqfq")
+
+[node name="CardsAmount" type="RichTextLabel" parent="CardStash"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 607.0
+offset_top = 1104.5
+offset_right = 647.0
+offset_bottom = 1127.5
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center][b]77"
+fit_content = true
+scroll_active = false
 
 [node name="BoardDesign" type="Control" parent="."]
 layout_mode = 3
@@ -677,16 +743,20 @@ offset_bottom = 40.0
 mouse_filter = 2
 theme_override_constants/separation = 154
 
-[node name="PickCard5" parent="Choices/SelectCards" instance=ExtResource("6_fvbcm")]
+[node name="PickCard" parent="Choices/SelectCards" instance=ExtResource("6_fvbcm")]
+unique_name_in_owner = true
 position = Vector2(96, 1144)
 
-[node name="PickCard6" parent="Choices/SelectCards" instance=ExtResource("6_fvbcm")]
+[node name="PickCard2" parent="Choices/SelectCards" instance=ExtResource("6_fvbcm")]
+unique_name_in_owner = true
 position = Vector2(248, 1144)
 
-[node name="PickCard7" parent="Choices/SelectCards" instance=ExtResource("6_fvbcm")]
+[node name="PickCard3" parent="Choices/SelectCards" instance=ExtResource("6_fvbcm")]
+unique_name_in_owner = true
 position = Vector2(400, 1144)
 
-[node name="PickCard8" parent="Choices/SelectCards" instance=ExtResource("6_fvbcm")]
+[node name="PickCard4" parent="Choices/SelectCards" instance=ExtResource("6_fvbcm")]
+unique_name_in_owner = true
 position = Vector2(552, 1144)
 
 [node name="Board" type="Marker2D" parent="."]
@@ -862,181 +932,10 @@ layout_mode = 2
 texture = ExtResource("10_3ux7j")
 expand_mode = 5
 
-[node name="CardStash" type="Control" parent="."]
-unique_name_in_owner = true
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 2
-theme = ExtResource("4_x2ujm")
-script = ExtResource("9_xjpow")
-
-[node name="CanvasGroup" type="CanvasGroup" parent="CardStash"]
-position = Vector2(635, 1078)
-
-[node name="Panel2" type="Panel" parent="CardStash/CanvasGroup"]
-offset_left = -1.0
-offset_top = -3.0
-offset_right = 41.667
-offset_bottom = 61.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_vivmo")
-
-[node name="Panel" type="Panel" parent="CardStash/CanvasGroup/Panel2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 32.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_2cqfq")
-
-[node name="Panel3" type="Panel" parent="CardStash/CanvasGroup"]
-offset_left = 4.0
-offset_top = 3.0
-offset_right = 46.667
-offset_bottom = 67.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_vivmo")
-
-[node name="Panel" type="Panel" parent="CardStash/CanvasGroup/Panel3"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 32.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_2cqfq")
-
-[node name="CardsAmount" type="RichTextLabel" parent="CardStash"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 607.0
-offset_top = 1104.5
-offset_right = 647.0
-offset_bottom = 1127.5
-grow_horizontal = 2
-grow_vertical = 2
-bbcode_enabled = true
-text = "[center][b]32"
-fit_content = true
-scroll_active = false
-
 [node name="AllCards" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("11_uycrd")
 cards = Array[ExtResource("12_x2ujm")]([ExtResource("13_xjpow"), ExtResource("2_uycrd"), ExtResource("3_7bf21")])
-
-[node name="Player" type="Control" parent="."]
-custom_minimum_size = Vector2(720, 1280)
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 2
-theme = ExtResource("4_x2ujm")
-metadata/_edit_lock_ = true
-
-[node name="TextureRect" type="TextureRect" parent="Player"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -104.0
-offset_top = -360.0
-offset_right = 24.0
-offset_bottom = -232.0
-grow_horizontal = 0
-grow_vertical = 0
-scale = Vector2(0.6, 0.6)
-texture = ExtResource("16_htgex")
-
-[node name="PlayerTag" type="RichTextLabel" parent="Player"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -128.0
-offset_top = -400.0
-offset_right = -2.0
-offset_bottom = -360.0
-grow_horizontal = 0
-grow_vertical = 0
-bbcode_enabled = true
-text = "[b][center]Player 1"
-fit_content = true
-scroll_active = false
-autowrap_mode = 2
-horizontal_alignment = 1
-vertical_alignment = 2
-
-[node name="Panel" type="Panel" parent="Player"]
-visible = false
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -96.0
-offset_top = -283.0
-offset_right = -32.0
-offset_bottom = -264.0
-grow_horizontal = 0
-grow_vertical = 0
-
-[node name="HealthBar" type="ProgressBar" parent="Player"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -104.0
-offset_top = -280.0
-offset_right = -24.0
-offset_bottom = -270.0
-grow_horizontal = 0
-grow_vertical = 0
-step = 20.0
-value = 60.0
-show_percentage = false
-script = ExtResource("16_kgpdb")
-
-[node name="health_label" type="RichTextLabel" parent="Player/HealthBar"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -104.0
-offset_top = -14.0
-offset_right = 22.0
-offset_bottom = 6.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_colors/default_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0.3019608, 1)
-bbcode_enabled = true
-text = "[b][center]100"
-fit_content = true
-scroll_active = false
-autowrap_mode = 2
-horizontal_alignment = 1
-vertical_alignment = 2
 
 [node name="Displays" type="Control" parent="."]
 layout_mode = 3
@@ -1076,6 +975,13 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
+[node name="Player" parent="." instance=ExtResource("16_kgpdb")]
+unique_name_in_owner = true
+position = Vector2(0, 872)
+
+[node name="playertag" parent="Player/Control/Player" index="1"]
+text = "[b][center]Player 792347"
+
 [connection signal="pressed" from="BoardDesign/VBoxContainer/PlayerSlots/Slot" to="BoardDesign/VBoxContainer/PlayerSlots/Slot" method="_on_pressed"]
 [connection signal="area_entered" from="BoardDesign/VBoxContainer/PlayerSlots/Slot/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot" method="_on_card_detector_area_entered"]
 [connection signal="area_exited" from="BoardDesign/VBoxContainer/PlayerSlots/Slot/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot" method="_on_card_detector_area_exited"]
@@ -1088,4 +994,5 @@ autowrap_mode = 0
 [connection signal="pressed" from="BoardDesign/VBoxContainer/PlayerSlots/Slot4" to="BoardDesign/VBoxContainer/PlayerSlots/Slot4" method="_on_pressed"]
 [connection signal="area_entered" from="BoardDesign/VBoxContainer/PlayerSlots/Slot4/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot4" method="_on_card_detector_area_entered"]
 [connection signal="area_exited" from="BoardDesign/VBoxContainer/PlayerSlots/Slot4/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot4" method="_on_card_detector_area_exited"]
-[connection signal="value_changed" from="Player/HealthBar" to="Player/HealthBar" method="_on_value_changed"]
+
+[editable path="Player"]

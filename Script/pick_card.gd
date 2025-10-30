@@ -12,27 +12,42 @@ var in_slot : bool #if the card is released on top of a slot
 var slots := [] #area2d of the slot
 var nearest_slot : Area2D
 
-@export var cards: Array[piece]
-var card : piece
+var card : piece = null
 
 func _ready() -> void:
 	spawn_position = self.position
 	start()
-	
-	card = cards[randi_range(0, cards.size() - 1)]
-	update_visual()
 
 func start():
+	_request_card_from_player_stash()
 	%AnimationPlayer.play("return")
 	await %AnimationPlayer.animation_finished
 	draggable = true
 
-func update_visual():
+func _request_card_from_player_stash():
+	%CardStash.request_card(self)
+
+#CALLED FROM card_stash.gd >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+func give_card(new_card : piece):
+	if new_card == null:
+		print(name, ": new_card is null")
+	card = new_card
+	update_visuals()
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+func update_visuals():
 	%health_label.text = "[b]" + str(card.health)
 	%card_label.text = "[center]" + card.name
 	%damage_label.text = "[b]" + str(card.damage)
-	$%pawn_texture.texture_normal = card.player_pawn_texture
-	for elixer in range(card.elixer):
+	var player_id = multiplayer.get_unique_id()
+	if player_id == 1:
+		$%pawn_texture.texture_normal = card.player_pawn_texture
+	else: $%pawn_texture.texture_normal = card.opponent_pawn_texture
+	
+	for elixer in %elixer.get_children(): #Clear first before getting replaced
+		elixer.queue_free()
+	for elixer in range(card.elixer): #elixer/power needed for this card
+		print("NINININI")
 		var textureRect = TextureRect.new()
 		textureRect.texture = elixer_texture
 		%elixer.add_child(textureRect)
@@ -63,6 +78,8 @@ func _release_card():
 	scale.y = 1
 	z_index = 0
 	
+	if card == null:
+		return
 	if in_slot == false or %Elixer.enough_elixer(card.elixer) == false: #if the card was released and is not near a slot return to hand
 		print("in_slot ==", in_slot)
 		position = spawn_position
@@ -77,7 +94,7 @@ func place_card():
 	print("card place at: ", nearest_slot.get_parent().name)
 	self.global_position = nearest_slot.global_position
 	
-	%CardStash.reduce_cards()
+	%CardStash.request_card(self) #pass self too so the card stash knows what pick_card needs to be replaced
 	
 	disable_monitoring()#Dissallow clicking
 	%AnimationPlayer.play("dissolve")

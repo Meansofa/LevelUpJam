@@ -1,5 +1,6 @@
 extends Node2D
 
+var opponent_scene : Node2D
 const rows := 6
 const cols := 4
 
@@ -8,19 +9,21 @@ var board : Array = []
 var player_cards = []
 
 var player_name : String
+var enemy_name : String
 
 func restart():
 	get_tree().reload_current_scene()
 
-#Called from main.gd after instantiating this scene to transger name entered, etc.
+#Called from main.gd after instantiating this scene to transfer name entered, etc.
 @rpc("any_peer")
 func transfer_data(new_name : String, player_id):
-	player_name = new_name
 	if multiplayer.get_unique_id() == player_id:
-		%PlayerTag.text = "[b][center]" + player_name
+		player_name = new_name
+		print("player_name = ", new_name)
+		%Player.player_tag(player_name) #changes the player tag
 	else:
-		if find_child("OpponentScene"):
-			get_node("OpponentScene").transfer_data(player_name)
+		enemy_name = new_name
+		print("enemy_name = ", new_name)
 
 #called from slot.gd >>>>>>>>>>>>>>>>>>>>>>>>>>>>
 func place_piece(slot_number : int, card_name : String):
@@ -29,7 +32,7 @@ func place_piece(slot_number : int, card_name : String):
 	who_placed_piece(slot_number, card_name, player_id)
 	rpc("who_placed_piece", slot_number, card_name, player_id) #This updates for the other players
 
-#rpc doesn't allow object passed from a function
+#rpc doesn't allow object passed from a function like passing a pawn/piece that's why we have to get it insied a function
 func get_card_with_name(card_name : String) -> piece:
 	for card in %AllCards.cards:
 		if card_name == card.name:
@@ -142,6 +145,7 @@ func player_move():
 				var player_piece = board[x][y]
 				if x - 1 < 0: #check if on edge
 					board[x][y] = calculate_index(x, y)#return the index number
+					damage_opponent()
 					continue
 				if board[x - 1][y] is piece: #check if forward is a piece(this will decide if pawn will move forward)
 					continue #skip the next lines of code and move to the next loop
@@ -157,10 +161,10 @@ func player_move():
 #DAMAGE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #Damage happens when either opponent or player's pieces reaches the other side's edge
 func damage_player(): #If the opponent's pieces reaches the player's edge
-	%HealthBar.take_damage(%HealthBar.step)
+	%Player.take_damage()
 
 func damage_opponent():#If the player's pieces reaches the opponent's edge
-	pass
+	opponent_scene.take_damage()
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 func move_forward(x : int, y: int, square : piece):
@@ -206,9 +210,9 @@ func instantiate_board():
 		board.append(row)
 
 func view_board():
-	print(">>>>>>>>>>>>>>>>>>>>>>>>>>")
-	var player_id = multiplayer.get_unique_id()
-	print(" view_board() player_id: ", player_id)
+	#print(">>>>>>>>>>>>>>>>>>>>>>>>>>")
+	#var player_id = multiplayer.get_unique_id()
+	#print(" view_board() player_id: ", player_id)
 	for x in range(rows):
 		var line := ""
 		for y in range(cols):
@@ -216,8 +220,8 @@ func view_board():
 				line += str(board[x][y].team) + str(board[x][y].name) + " "
 			else:
 				line += str(board[x][y]) + " "
-		print(line)
-	print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+		#print(line)
+	#print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
 
 #Called from RockPaperScissors.gd after determining who gets to go first by rock paper scissors
 func who_goes_first(player_id):
@@ -237,3 +241,15 @@ func first_move(player_id):
 
 	await get_tree().create_timer(3).timeout
 	%FirstTurn.visible = false
+
+func opponent_joined(the_opponent_scene : Node2D):
+	opponent_scene = the_opponent_scene
+	
+	var player_id = multiplayer.get_unique_id()
+	
+	if player_id == 1:
+		opponent_scene.change_player_frame("host")
+		%Player.change_player_frame("join")
+	else:
+		opponent_scene.change_player_frame("join")
+		%Player.change_player_frame("host")

@@ -5,10 +5,17 @@ extends Area2D
 func update_visuals(pawn : piece):
 	change_health(pawn.health)
 	change_damage(pawn.damage)
-	if pawn.team == piece.teams.player:
-		change_texture(pawn.player_pawn_texture)
-	else:
-		change_texture(pawn.opponent_pawn_texture)
+	var player_id = multiplayer.get_unique_id()
+	if player_id == 1: #IF host
+		if pawn.team == piece.teams.player:
+			change_texture(pawn.player_pawn_texture)
+		else:
+			change_texture(pawn.opponent_pawn_texture)
+	else: #IF join
+		if pawn.team == piece.teams.player:
+			change_texture(pawn.opponent_pawn_texture)
+		else:
+			change_texture(pawn.player_pawn_texture)
 
 func attack_mode(yes : bool):
 	if yes:
@@ -48,8 +55,3 @@ func attack_pawn(square : Area2D, pawn : piece) -> bool:
 	square.update_visuals(pawn) #update the health value
 	
 	return true
-
-func _on_visibility_changed() -> void:
-	return
-	if self.visible == false:
-		print(name, ": ", visible)

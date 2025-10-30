@@ -11,8 +11,8 @@ const PORT := 9998 #port to use, Nodetunnel only has this node available
 const ADDRESS := "relay.nodetunnel.io" #IP address (change to the host's ip adress if you want to test with other devices), "local host" if you want to test locally
 const localADDRESS := "localhost"
 
-var player_side_scenes := []
-var opponent_side_scenes := []
+var player_side : Node2D
+var opponent_side : Node2D
 
 var use_local_multiplayer := false
 
@@ -47,29 +47,18 @@ func _on_host_pressed() -> void:
 	%WaitingForPlayer.visible = true
 	var player_scene = player_packed_scene.instantiate()
 	add_child(player_scene)
-	transfer_data(player_scene) #Player because he pressed host button, host is always the Player team
+	transfer_data(player_scene)
 	
-	player_side_scenes.append(player_scene)
+	player_side = player_scene
 
 func _on_join_pressed() -> void:
 	if use_local_multiplayer:
 		localpeer.create_client(localADDRESS, PORT)
 		multiplayer.multiplayer_peer = localpeer
 		%Loading.visible = true
-		
 		_disable_buttons()
 		
-		multiplayer.connected_to_server.connect( #Before adding children must check if joined from someone's hot
-		func instantiate_scenes():
-			var player_scene = player_packed_scene.instantiate()
-			var opponent_scene = opponent_packed_scene.instantiate()
-			add_child(player_scene)
-			add_child(opponent_scene)
-			%Loading.visible = false
-			var rock_paper_scissors = rock_paper_scissors_scene.instantiate()
-			player_scene.add_child(rock_paper_scissors)
-			transfer_data(player_scene) #Opponent because he pressed join button, host is always the Player team
-		)
+		multiplayer.connected_to_server.connect(_on_connected_to_server) #Before adding children must check if joined from someone's hot)
 	else:
 		if %JoinID.text == "":
 			%required.visible = true
@@ -80,25 +69,36 @@ func _on_join_pressed() -> void:
 	
 		%Loading.visible = true
 		await peer.joined
+		#AFTER JOINING>>>>>>>>>>>>>>>>>
 		_disable_buttons()
-		var player_scene = player_packed_scene.instantiate()
-		var opponent_scene = opponent_packed_scene.instantiate()
-		add_child(player_scene)
-		add_child(opponent_scene)
-		%Loading.visible = false
-		
-		var rock_paper_scissors = rock_paper_scissors_scene.instantiate()
-		player_scene.add_child(rock_paper_scissors)
-		
-		transfer_data(player_scene) #Opponent because he pressed join button, host is always the Player team
+		_on_connected_to_server()
 	
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
+
+#If you pressed join and you got connected
+func _on_connected_to_server():
+	var player_scene = player_packed_scene.instantiate()
+	add_child(player_scene)
 	
+	var opponent_scene = opponent_packed_scene.instantiate()
+	add_child(opponent_scene)
+	
+	player_side = player_scene
+	opponent_side = opponent_scene
+	
+	player_side.opponent_joined(opponent_side) #For player_scene to get access to opponent_scene
+	
+	%Loading.visible = false
+	var rock_paper_scissors = rock_paper_scissors_scene.instantiate()
+	player_scene.add_child(rock_paper_scissors)
+	
+	transfer_data(player_scene)
 
 func transfer_data(player_scene : Node2D):
 	var player_id = multiplayer.get_unique_id()
 	if %PlayerName.text == "":
 		%PlayerName.text = "Player " + str(player_id)
+	
 	player_scene.transfer_data(%PlayerName.text, player_id)
 
 #This only shows if you're the host
@@ -107,11 +107,15 @@ func _on_peer_connected(peer_id):
 	%WaitingForPlayer.visible = false
 	
 	var rock_paper_scissors = rock_paper_scissors_scene.instantiate()
-	player_side_scenes[0].add_child(rock_paper_scissors)
+	player_side.add_child(rock_paper_scissors)
 	
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	var opponent_scene = opponent_packed_scene.instantiate()
 	add_child(opponent_scene)
+	
+	opponent_side = opponent_scene
+	player_side.opponent_joined(opponent_side) #For player_scene to get access to opponent_scene
+	
 
 func _on_peer_disconnected(peer_id):
 	print("Player: ", peer_id, " disconnected!")
@@ -127,8 +131,6 @@ func _disable_buttons():
 	%OnlineID.visible = false
 	%JoinID.visible = false
 	%local_checkbox.visible = false
-	#%Settings.visible = false
-	#%Settings.mouse_filter = Control.MouseFilter.MOUSE_FILTER_IGNORE
 
 func _enable_buttons():
 	%Menu.visible = true
@@ -139,8 +141,6 @@ func _enable_buttons():
 	%OnlineID.visible = true
 	%JoinID.visible = true
 	%local_checkbox.visible = true
-	#%Settings.visible = true
-	#%Settings.mouse_filter = Control.MouseFilter.MOUSE_FILTER_STOP
 
 func restart():
 	get_tree().reload_current_scene()
