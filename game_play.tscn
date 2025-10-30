@@ -977,10 +977,16 @@ autowrap_mode = 0
 
 [node name="Player" parent="." instance=ExtResource("16_kgpdb")]
 unique_name_in_owner = true
-position = Vector2(0, 872)
+
+[node name="Player" parent="Player/Control" index="0"]
+offset_top = 848.0
+offset_bottom = 976.0
 
 [node name="playertag" parent="Player/Control/Player" index="1"]
 text = "[b][center]Player 792347"
+
+[node name="round_label" parent="Player/Control/Round" index="0"]
+text = "[b][center]Round 1 Win"
 
 [connection signal="pressed" from="BoardDesign/VBoxContainer/PlayerSlots/Slot" to="BoardDesign/VBoxContainer/PlayerSlots/Slot" method="_on_pressed"]
 [connection signal="area_entered" from="BoardDesign/VBoxContainer/PlayerSlots/Slot/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot" method="_on_card_detector_area_entered"]

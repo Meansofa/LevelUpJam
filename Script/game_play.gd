@@ -161,11 +161,18 @@ func player_move():
 #DAMAGE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #Damage happens when either opponent or player's pieces reaches the other side's edge
 func damage_player(): #If the opponent's pieces reaches the player's edge
-	%Player.take_damage()
+	var health = %Player.take_damage()
+	if health <= 0:
+		opponent_scene.round_win()
 
 func damage_opponent():#If the player's pieces reaches the opponent's edge
-	opponent_scene.take_damage()
+	var health = opponent_scene.take_damage()
+	if health <= 0:
+		%Player.round_win()
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+func round_won():
+	pass
 
 func move_forward(x : int, y: int, square : piece):
 	#if not on edge move forward

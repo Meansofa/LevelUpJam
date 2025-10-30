@@ -218,6 +218,7 @@ anchors_preset = 0
 offset_right = 720.0
 offset_bottom = 1280.0
 mouse_filter = 2
+theme = ExtResource("1_pxgx6")
 
 [node name="Player" type="Control" parent="Control"]
 layout_mode = 1
@@ -332,5 +333,29 @@ unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_govgu")
 }
+
+[node name="Round" type="PanelContainer" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_bottom = 231.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="round_label" type="RichTextLabel" parent="Control/Round"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/bold_font_size = 32
+bbcode_enabled = true
+text = "[b][center]Round 1 Lost"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
 
 [connection signal="value_changed" from="Control/Player/HealthBar" to="Control/Player/HealthBar" method="_on_value_changed"]

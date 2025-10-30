@@ -142,9 +142,11 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Slot"):
 		slots.append(area)
 		in_slot = true
+		print("1in_slot: ", in_slot)
 
 func _on_area_exited(area: Area2D) -> void:
 	if area.is_in_group("Slot"):
 		slots.erase(area)
 		if slots.size() <= 0:
 			in_slot = false
+		print("2in_slot: ", in_slot)
