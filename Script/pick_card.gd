@@ -1,8 +1,6 @@
 extends Area2D
 
-@onready var spawn_position = self.position
-
-@export var elixer_texture : CompressedTexture2D
+@onready var spawn_position : Vector2 = self.position
 
 var dragging := false #if the card is getting dragged
 var in_area := false #if mouse is hovering in the card
@@ -12,34 +10,38 @@ var in_slot : bool #if the card is released on top of a slot
 var slots := [] #area2d of the slot
 var nearest_slot : Area2D
 
-@export var cards: Array[piece]
-var card : piece
+var card : piece = null
 
 func _ready() -> void:
+	spawn_position = self.position
 	start()
-	
-	card = cards[randi_range(0, cards.size() - 1)]
-	update_visual()
+
+func new_round():
+	start()
 
 func start():
+	_request_card_from_player_stash()
 	%AnimationPlayer.play("return")
 	await %AnimationPlayer.animation_finished
 	draggable = true
 
-func update_visual():
-	%health_label.text = "[b]" + str(card.health)
-	%card_label.text = "[center]" + card.name
-	%damage_label.text = "[b]" + str(card.damage)
-	$%pawn_texture.texture_normal = card.pawn_texture
-	for elixer in range(card.elixer):
-		var textureRect = TextureRect.new()
-		textureRect.texture = elixer_texture
-		%elixer.add_child(textureRect)
+func _request_card_from_player_stash():
+	%CardStash.request_card(self) #After this it should return to the function give_card
+
+#CALLED FROM card_stash.gd >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+func give_card(new_card : piece):
+	if new_card == null:
+		print(name, ": new_card is null")
+	card = new_card
+	%card_design.update_visuals(card)
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and draggable:
 			if event.pressed and in_area: #if player's mouse is in the collision of this area and player is holding left click 
+				if spawn_position == Vector2.ZERO:
+					spawn_position = self.position
 				dragging = true
 			else: #if player released the left click
 				if dragging == true:
@@ -61,28 +63,34 @@ func _release_card():
 	scale.y = 1
 	z_index = 0
 	
+	if card == null:
+		return
 	if in_slot == false or %Elixer.enough_elixer(card.elixer) == false: #if the card was released and is not near a slot return to hand
 		print("in_slot ==", in_slot)
 		position = spawn_position
 	else: #Place the card in the slot ------------------------------------------
-		place_card()
+		if in_slot == true and %Elixer.enough_elixer(card.elixer) == true:
+			%Elixer.pawn_for_elixer(card.elixer)
+			place_card()
 
+#Place a card in a slot
 func place_card():
 	if nearest_slot == null:
 		return
 	nearest_slot.get_parent().place_card(card) #call the function inside the slot script
 	print("card place at: ", nearest_slot.get_parent().name)
 	self.global_position = nearest_slot.global_position
-	disable_monitoring()
 	
+	disable_monitoring()#Dissallow clicking
 	%AnimationPlayer.play("dissolve")
 	await %AnimationPlayer.animation_finished
 	
+	%CardStash.request_card(self) #pass self too so the card stash knows what pick_card needs to be replaced
 	position = spawn_position
 	
 	%AnimationPlayer.play("return")
 	await %AnimationPlayer.animation_finished
-	enable_monitoring()
+	enable_monitoring()#Allow clicking
 
 func disable_monitoring():
 	in_area = false
@@ -112,17 +120,22 @@ func _process(_delta):
 
 func _on_mouse_entered() -> void:
 	in_area = true
+	Input.set_custom_mouse_cursor(load("res://Art/Pieces/cursor_pointer.png"))
 
 func _on_mouse_exited() -> void:
 	in_area = false
+	Input.set_custom_mouse_cursor(load("res://Art/Pieces/cursor_arrow.png"))
+
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Slot"):
 		slots.append(area)
 		in_slot = true
+		print("1in_slot: ", in_slot)
 
 func _on_area_exited(area: Area2D) -> void:
 	if area.is_in_group("Slot"):
 		slots.erase(area)
 		if slots.size() <= 0:
 			in_slot = false
+		print("2in_slot: ", in_slot)

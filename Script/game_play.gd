@@ -1,11 +1,59 @@
 extends Node2D
 
+var curr_round := 1
+
+var opponent_scene : Node2D
 const rows := 6
 const cols := 4
 
 var board : Array = []
 
 var player_cards = []
+
+var player_name : String
+var enemy_name : String
+
+func next_round():
+	curr_round += 1
+	%round_label.text = "[b][center]Round " + str(curr_round) +  " Go!!!"
+	%round_label2.visible = false
+	
+	new_round()
+	await get_tree().create_timer(2).timeout
+	%Round.visible = false
+
+func new_round():
+	%Choices.new_round()
+	%CardStash.new_round()
+	%Player.new_round()
+	opponent_scene.new_round()
+	%PickCards.visible = true
+	%PickCards.new_round()
+
+func round_won(winner : piece.teams):
+	%BlockInputs.visible = true
+	%Round.visible = true
+	if winner == piece.teams.player:
+		%round_label.text = "[b][center]Round " + str(curr_round) +  " Win"
+	else:
+		%round_label.text = "[b][center]Round " + str(curr_round) +  " Lost"
+	await get_tree().create_timer(3).timeout
+	next_round()
+
+#Called when pressing restart by main.gd
+func restart():
+	get_tree().reload_current_scene()
+
+#Called from main.gd after instantiating this scene to transfer name entered, etc.
+@rpc("any_peer")
+func transfer_data(new_name : String, player_id):
+	if multiplayer.get_unique_id() == player_id:
+		player_name = new_name
+		print("player_name = ", new_name)
+		%Player.player_tag(player_name) #changes the player tag
+	else:
+		enemy_name = new_name
+		print("enemy_name = ", new_name)
 
 #called from slot.gd >>>>>>>>>>>>>>>>>>>>>>>>>>>>
 func place_piece(slot_number : int, card_name : String):
@@ -14,7 +62,7 @@ func place_piece(slot_number : int, card_name : String):
 	who_placed_piece(slot_number, card_name, player_id)
 	rpc("who_placed_piece", slot_number, card_name, player_id) #This updates for the other players
 
-#rpc doesn't allow object passed from a function
+#rpc doesn't allow object passed from a function like passing a pawn/piece that's why we have to get it insied a function
 func get_card_with_name(card_name : String) -> piece:
 	for card in %AllCards.cards:
 		if card_name == card.name:
@@ -42,33 +90,44 @@ func who_placed_piece(slot_number : int, card_name : String, player_id):
 func calculate_index(x:int, y:int) -> int:
 	return (x*cols) + y
 
-func attack():
+func simulate_attack():
 	for x in range(rows):
 		for y in range(cols):
 			var pawn = board[x][y]
-			
-			var front_piece = null
-			var front_square : Area2D
 			if pawn is piece:
+				var square : Area2D = %Board.get_node("Square" + str(calculate_index(x, y))) #the node in game corresponding to an index in the board
+				var front_piece = null #piece in front of the pawn
+				var front_square : Area2D #square in front of the pawn
 				if pawn.team  == piece.teams.player:
-					front_piece = board[x - pawn.attack_direction][y]
-					front_square = %Board.get_node("Square" + str(calculate_index(x - pawn.attack_direction, y))) #the node in game corresponding to an index in the board
+					if x - pawn.attack_direction >= 0:
+						front_piece = board[x - pawn.attack_direction][y]
+					if front_piece is piece: #This makes sure to only get piece while not needing to check if it is on edge
+						front_square = %Board.get_node("Square" + str(calculate_index(x - pawn.attack_direction, y))) #the node in game corresponding to an index in the board
+						if front_piece.team == piece.teams.opponent:
+							await attack(pawn, square, front_piece, front_square)
 				elif pawn.team  == piece.teams.opponent:
-					front_piece = board[x + pawn.attack_direction][y]
-					front_square = %Board.get_node("Square" + str(calculate_index(x + pawn.attack_direction, y))) #the node in game corresponding to an index in the board
-				else:
-					pawn.attack_mode = false
-
-			var square : Area2D = %Board.get_node("Square" + str(calculate_index(x, y))) #the node in game corresponding to an index in the board
-			if front_piece is piece:
-				if pawn.attack_mode:
-					front_piece.health -= pawn.damage
-					square.attack_pawn(front_square, front_piece) #IMPORTANT using await, only this function will wait, other functions will keep on going, so this will get delayed
-					print("front_piece.health: ", front_piece.health)
-				else:
-					pawn.attack_mode = true
-			
+					if x + pawn.attack_direction < rows:
+						front_piece = board[x + pawn.attack_direction][y]
+					if front_piece is piece: #This makes sure to only get piece while not needing to check if it is on edge
+						front_square = %Board.get_node("Square" + str(calculate_index(x + pawn.attack_direction, y))) #the node in game corresponding to an index in the board
+						if front_piece.team == piece.teams.player:
+							await attack(pawn, square, front_piece, front_square)
 	print(name, "> attack phase finished")
+
+	#ATTACK------------------------------------------------------------
+func attack(pawn : piece, square : Area2D, front_piece : piece, front_square : Area2D):
+	if pawn.attack_mode:
+		front_piece.health -= pawn.damage
+		await square.attack_pawn(front_square, front_piece) #IMPORTANT using await, only this function will wait, other functions will keep on going, so this will get delayed
+		print("front_piece.health: ", front_piece.health)
+		if front_piece.health <= 0: #if pawn killed it's opponent disable attack_mode
+			pawn.attack_mode = false
+			square.attack_mode(false)
+			front_square.attack_mode(false)
+	else:
+		pawn.attack_mode = true
+		square.attack_mode(true)
+		front_square.attack_mode(true)
 
 #IMPORTANT-only runs if end turn is pressed---------------------------------------------
 func simulate():
@@ -78,74 +137,114 @@ func simulate():
 
 @rpc("any_peer")#even if you're not using player_id, 
 func who_clicked_end_turn(player_id): #you still need to put it as a parameter of the function
+	%EndTurn.disabled = true
 	if multiplayer.get_unique_id() == player_id: #If you clicked end turn
+		await simulate_order() #Simulate first before ebabling end turn
 		%EndTurn.disabled = true  #disable your end turn so opponent can use end turn
-		#print(player_id, ": clicked: ", " %EndTurn.disabled: ", %EndTurn.disabled)
 	else: #If the player id was the opponent
+		await simulate_order()
 		%EndTurn.disabled = false #if opponent clicked end turn it's your turn to click it
-		#print(player_id, ": clicked: ", " %EndTurn.disabled: ", %EndTurn.disabled)
+
+func simulate_order():
+	await simulate_attack() #simulate attacks
 	player_move() #move the player first
 	opponent_move() #move the opponent's pieces
-	attack() #simulate attacks
-	update_simulation() #change animation
+	print("WUHHHHHHH")
+	await update_simulation() #change animation
 	view_board()
 #IMPORTANT----------------------------------------------
 
 @rpc("any_peer")
 func update_simulation():
-	for x in range(rows):
-		for y in range(cols):
+	for y in range(cols):
+		for x in range(rows):
 			var pawn = board[x][y]
-			var index := (x*cols) + y
+			var index := calculate_index(x, y)
 			var square : Area2D = %Board.get_node("Square" + str(index)) #the node in game corresponding to an index in the board
 			if pawn is piece:
 				square.visible = true #show the pawn
-				if square.is_pawn_dead(pawn): #run animiation pawn dead if true
-					board[x][y] = calculate_index(x, y) #replace the cell with index
+				if await square.is_pawn_dead(pawn): #run animiation pawn dead if true
+					board[x][y] = index #replace the cell with index
+					square.visible = false
 				else: #if false 
 					square.update_visuals(pawn)
 			else:
 				square.visible = false
+
 @rpc("any_peer")
 func player_move():
+	print("player_move")
 	for x in range(rows):
 		for y in range(cols):
 			if board[x][y] is piece and board[x][y].team == piece.teams.player:
 				var player_piece = board[x][y]
-				
+				if x - 1 < 0: #check if on edge
+					board[x][y] = calculate_index(x, y)#return the index number
+					damage_opponent()
+					continue
 				if board[x - 1][y] is piece: #check if forward is a piece(this will decide if pawn will move forward)
 					continue #skip the next lines of code and move to the next loop
 				
-				move_forward(x , y, player_piece)
+				#there's a logical problem where opponent and player has to share 1 square, and always the player side takes that place because player_move() is run before opponent_move()
+				#this negates it by prioritizing the pawn that is closest to the other player's end
+				if board[x - 2][y] is piece and board[x-2][y].team == piece.teams.opponent: #check 2 piece in front
+					if x <= cols -1:
+						move_forward(x , y, player_piece)
+				else:
+					move_forward(x , y, player_piece)
 
-func move_forward(x : int, y: int, square : piece):
-	board[x][y] = (x * cols) + y #return the index number
-	if x - 1 < 0: #if piece is at the edge
-		board[x][y] = "Q"
-	else: #if not on edge move forward
-		board[x - 1][y] = square #move up by reducing x axis
+#DAMAGE the player directly not between pawns>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#Damage happens when either opponent or player's pieces reaches the other side's edge
+func damage_opponent():#If the player's pieces reaches the opponent's edge
+	var health = opponent_scene.take_damage()
+	if health <= 0:
+		round_won(piece.teams.player)
+		%Player.round_win() 
+		%BlockInputs.visible = true
+		if %Player.get_crown() >= 3:
+			%OverallWin.visible = true
+			%winner_label.text = "[b][center]YOU WON!👑"
+
+func damage_player(): #If the opponent's pieces reaches the player's edge
+	var health = %Player.take_damage()
+	if health <= 0:
+		round_won(piece.teams.opponent)
+		opponent_scene.round_win()
+		%BlockInputs.visible = true
+		if opponent_scene.get_crown() >= 3:
+			%OverallWin.visible = true
+			%winner_label.text = "[b][center]YOU LOST!😒"
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+func move_forward(x : int, y: int, pawn : piece):
+	#if not on edge move forward
+	board[x][y] = calculate_index(x, y)#return the index number
+	board[x - 1][y] = pawn #move up by reducing x axis
+
 @rpc("any_peer")
 func opponent_move():
+	print("opponent_move")
 	#since the 0 index is at the top and last index is at the bottom, if the piece goes down it will keep on going down 
 	#we gotta start from the last index to the top to not counter this logical bug
 	for x in range(rows):
 		for y in range(cols):
 			var reverse_x = rows - (x + 1) #first index(0) becomes last index(23)
 			var reverse_y = cols - (y + 1) #first index(0) becomes last index(23)
-			var player_id = multiplayer.get_unique_id()
 			if board[reverse_x][reverse_y] is piece and board[reverse_x][reverse_y].team == piece.teams.opponent:
 				var opponent_piece = board[reverse_x][reverse_y]
+				if reverse_x + 1 >= rows: #check if on edge
+					board[reverse_x][reverse_y] = calculate_index(reverse_x, reverse_y)#return the index number
+					damage_player()
+					continue 
 				if board[reverse_x + 1][reverse_y] is piece: #check if forward is a piece 
 					continue #skip the next lines of code and move to the next loop
 				#Move if possible
 				move_downward(reverse_x, reverse_y, opponent_piece) 
 
-func move_downward(x:int, y:int, square:piece):
-	board[x][y] = (x * cols) + y #return the index number
-	if x + 1 >= rows - 1 :
-		board[x + 1][y] = "B"
-	else:
-		board[x + 1][y] = square #move down by reducing x axis
+func move_downward(x:int, y:int, pawn : piece):
+	#if not on edge move forward
+	board[x][y] = calculate_index(x, y)#return the index number
+	board[x + 1][y] = pawn #move down by reducing x axis
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -160,15 +259,48 @@ func instantiate_board():
 		board.append(row)
 
 func view_board():
-	print(">>>>>>>>>>>>>>>>>>>>>>>>>>")
+	pass
+	#print(">>>>>>>>>>>>>>>>>>>>>>>>>>")
+	#var player_id = multiplayer.get_unique_id()
+	#print(" view_board() player_id: ", player_id)
+	#for x in range(rows):
+		#var line := ""
+		#for y in range(cols):
+			#if board[x][y]is piece:
+				#line += str(board[x][y].team) + str(board[x][y].name) + " "
+			#else:
+				#line += str(board[x][y]) + " "
+		#print(line)
+	#print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+
+#Called from RockPaperScissors.gd after determining who gets to go first by rock paper scissors
+func who_goes_first(player_id):
+	first_move(player_id)
+	rpc("first_move", player_id)
+
+@rpc("any_peer")
+func first_move(player_id):
+	print(name, "FIRST MOVE: ", player_id)
+	%FirstTurn.visible = true
+	
+	if player_id == multiplayer.get_unique_id():
+		%EndTurn.disabled = false
+		%FirstTurn.first_turn_name(player_name)
+	else:
+		%EndTurn.disabled = true
+		%FirstTurn.enemy_first_turn()
+
+	await get_tree().create_timer(3).timeout
+	%FirstTurn.visible = false
+
+func opponent_joined(the_opponent_scene : Node2D):
+	opponent_scene = the_opponent_scene
+	
 	var player_id = multiplayer.get_unique_id()
-	print(" view_board() player_id: ", player_id)
-	for x in range(rows):
-		var line := ""
-		for y in range(cols):
-			if board[x][y]is piece:
-				line += str(board[x][y].team) + str(board[x][y].name) + " "
-			else:
-				line += str(board[x][y]) + " "
-		print(line)
-	print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+	
+	if player_id == 1:
+		opponent_scene.change_player_frame("host")
+		%Player.change_player_frame("join")
+	else:
+		opponent_scene.change_player_frame("join")
+		%Player.change_player_frame("host")

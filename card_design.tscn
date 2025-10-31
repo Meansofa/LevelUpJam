@@ -1,0 +1,261 @@
+[gd_scene load_steps=14 format=3 uid="uid://dks4nyrtnaal0"]
+
+[ext_resource type="Script" uid="uid://bj5jkxpxddn51" path="res://Script/card_design.gd" id="1_2vhfb"]
+[ext_resource type="Texture2D" uid="uid://b7p6t2p2k55ny" path="res://Art/Pieces/PawnOutline.png" id="1_58uta"]
+[ext_resource type="Theme" uid="uid://buamt54f6ol74" path="res://Themes/main.tres" id="2_2vhfb"]
+[ext_resource type="Texture2D" uid="uid://cqcjqxj2r8q3q" path="res://Art/Pieces/elixer.png" id="2_ii8ol"]
+[ext_resource type="Texture2D" uid="uid://bnw64uj26d4r6" path="res://Art/Pieces/heart.png" id="3_ii8ol"]
+[ext_resource type="Texture2D" uid="uid://jtgyxukmqidc" path="res://Art/Pieces/sword.png" id="4_bbnrs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_efxa6"]
+bg_color = Color(0.2784314, 0, 0.33333334, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.6784314, 0.3882353, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4c57u"]
+bg_color = Color(0.1882353, 0, 0.33333334, 1)
+border_width_left = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8156863, 0.34117648, 0, 1)
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_5vw27"]
+
+[sub_resource type="Animation" id="Animation_bbnrs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_4bwht"]
+resource_name = "enter"
+length = 0.5
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.017527955, 0.26666668, 0.36458147, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.3, 0.3), Vector2(0.6272727, 0.6272727), Vector2(1.5, 1.5), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ii8ol"]
+resource_name = "selected"
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8343307, 0.96666664, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.97),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4bwht"]
+_data = {
+&"RESET": SubResource("Animation_bbnrs"),
+&"enter": SubResource("Animation_4bwht"),
+&"selected": SubResource("Animation_ii8ol")
+}
+
+[node name="card_design" type="CanvasGroup"]
+script = ExtResource("1_2vhfb")
+elixer_texture = ExtResource("2_ii8ol")
+
+[node name="Button1" type="Panel" parent="."]
+custom_minimum_size = Vector2(48, 96)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -61.0
+offset_top = -98.0
+offset_right = 67.0
+offset_bottom = 94.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(63, 185)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_efxa6")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -61.0
+offset_top = 6.0
+offset_right = -61.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4c57u")
+metadata/_edit_lock_ = true
+
+[node name="pawn_texture" type="TextureButton" parent="."]
+unique_name_in_owner = true
+offset_left = -61.0
+offset_top = -99.0
+offset_right = 67.0
+offset_bottom = 93.0
+mouse_filter = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_5vw27")
+texture_normal = ExtResource("1_58uta")
+stretch_mode = 5
+metadata/_edit_lock_ = true
+
+[node name="card_label" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -85.0
+offset_top = -98.0
+offset_right = 91.0
+offset_bottom = -34.0
+grow_horizontal = 2
+mouse_filter = 2
+theme = ExtResource("2_2vhfb")
+theme_override_colors/default_color = Color(1, 0.6784314, 0.3882353, 1)
+theme_override_colors/font_outline_color = Color(0.22745098, 0.15686275, 0.007843138, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[center]Pawn"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="elixer" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -121.0
+offset_right = 68.999985
+offset_bottom = -89.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = -16
+alignment = 1
+
+[node name="heart" type="Sprite2D" parent="."]
+position = Vector2(-45, 62)
+scale = Vector2(3, 3)
+texture = ExtResource("3_ii8ol")
+metadata/_edit_lock_ = true
+
+[node name="health_label" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+offset_left = -56.0
+offset_top = 44.0
+offset_right = 14.0
+offset_bottom = 89.0
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0.5137255, 0.19215687, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/bold_font_size = 32
+bbcode_enabled = true
+text = "[b]3"
+fit_content = true
+scroll_active = false
+
+[node name="sword" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(48, 64)
+scale = Vector2(3, 3)
+texture = ExtResource("4_bbnrs")
+
+[node name="Sprite2D5" type="Sprite2D" parent="sword"]
+texture = ExtResource("4_bbnrs")
+flip_h = true
+
+[node name="damage_label" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+offset_left = 35.0
+offset_top = 42.0
+offset_right = 75.0
+offset_bottom = 87.0
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0.22745098, 0.15686275, 0.007843138, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/bold_font_size = 32
+bbcode_enabled = true
+text = "[b]2"
+fit_content = true
+scroll_active = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_4bwht")
+}
+autoplay = "enter"

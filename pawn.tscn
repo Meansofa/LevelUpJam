@@ -1,0 +1,448 @@
+[gd_scene load_steps=13 format=3 uid="uid://q3epd7gwh8wv"]
+
+[ext_resource type="Script" uid="uid://x6qjxb1tisg2" path="res://Script/pawn.gd" id="1_e484p"]
+[ext_resource type="Texture2D" uid="uid://b7p6t2p2k55ny" path="res://Art/Pieces/PawnOutline.png" id="2_1i5pp"]
+[ext_resource type="Texture2D" uid="uid://ergh4s78jpdj" path="res://Art/Pieces/Player_Pawn.png" id="2_fpac0"]
+[ext_resource type="Texture2D" uid="uid://bnw64uj26d4r6" path="res://Art/Pieces/heart.png" id="4_b4rk6"]
+[ext_resource type="Texture2D" uid="uid://jtgyxukmqidc" path="res://Art/Pieces/sword.png" id="5_6lcat"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_efxa6"]
+size = Vector2(128, 193)
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_5vw27"]
+
+[sub_resource type="Animation" id="Animation_fpac0"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pawn:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pawn:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pawn/Damage:position:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(40, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("pawn/Damage:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(64, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("pawn/Damage/Sprite2D5:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("pawn/Damage/Sprite2D4:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("pawn/Damage/Sprite2D5:position:x")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/8/type = "bezier"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("pawn/Damage/Sprite2D5:position:y")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/9/type = "bezier"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("pawn/Damage/Sprite2D4:position:x")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/10/type = "bezier"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("pawn/Damage/Sprite2D4:position:y")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("pawn/Heart:scale")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("pawn/Heart:modulate")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_e484p"]
+resource_name = "attack"
+length = 0.8
+step = 0.0333333
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pawn/Damage:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(40, 0, 0, 0.083333336, 0, 31.758953, -0.023333333, 1.8666667, 0.060000002, -4.8, 0, -0.083333336, 6.666667, 0, 0, 0, -0.061111115, -4.478827, 0.01111111, 0.8143321, 31.758953, -0.023333333, 1.8666667, 0.060000002, -4.8, 40, 0, 0, 0.083333336, 0),
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.7, 0.76666665, 0.8)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pawn/Damage:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(64, 0, 0, 0.083333336, 0, 44.22149, -0.023333333, 4.48, 0.060000002, -11.52, -32, -0.083333336, 16, 0, 0, -32, -0.061111115, -10.749185, 0.01111111, 1.954397, 44.22149, -0.023333333, 4.48, 0.060000002, -11.52, 64, 0, 0, 0.083333336, 0),
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.7, 0.76666665, 0.8)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pawn/Damage/Sprite2D5:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.58956206, -0.05666667, -0.09826034, 0, 0, 1.5714695, -0.015000001, -0.16365124, 0, 0, -0.33870015, -0.011666666, 0.08223261, 0.031666666, -0.22320281, 0, -0.050000004, -0.056450028, 0, 0),
+"times": PackedFloat32Array(0, 0.34, 0.43, 0.5, 0.8)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("pawn/Damage/Sprite2D4:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2, 2, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -0.35527506, -0.061111115, 0.059212513, 0, 0, 0.5732895, -0.0055555603, -0.15476076, 0, 0, 0.2005761, -0.02222222, 0.062118903, 0, 0, 0, -0.04444444, 0.03342935, 0, 0),
+"times": PackedFloat32Array(0, 0.36666667, 0.40000004, 0.53333336, 0.8)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("pawn/Damage/Sprite2D5:position:x")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 40.58781, -0.058333334, -6.764635, 0, 0, -14.194524, -0.025000002, 9.130389, 0, 0, 0, -0.050000004, -2.3657541, 0, 0),
+"times": PackedFloat32Array(0, 0.35, 0.5, 0.8)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("pawn/Damage/Sprite2D5:position:y")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1.41075, -0.058333334, -0.23512502, 0, 0, -3.666851, -0.025000002, 0.8462668, 0, 0, 0, -0.050000004, -0.61114186, 0, 0),
+"times": PackedFloat32Array(0, 0.35, 0.5, 0.8)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("pawn/Damage/Sprite2D4:position:x")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2, 2, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -39.412186, -0.058333334, 6.568698, 0, 0, -14.912708, -0.00833334, -4.083246, 0, 0, 1.6138954, -0.01111111, -0.41424188, 0.055555552, 2.0712094, 0, -0.055555552, -9.06435, 0, 0),
+"times": PackedFloat32Array(0, 0.35, 0.40000004, 0.4666667, 0.8)
+}
+tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("pawn/Damage/Sprite2D4:position:y")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2, 2, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1.4107513, -0.058333334, -0.23512524, 0, 0, 2.6095114, -0.00833334, -0.19979335, 0, 0, -4.1266546, -0.01111111, 0.07248643, 0.055555552, -0.36243215, 0, -0.055555552, 1.9788907, 0, 0),
+"times": PackedFloat32Array(0, 0.35, 0.40000004, 0.4666667, 0.8)
+}
+
+[sub_resource type="Animation" id="Animation_1i5pp"]
+resource_name = "death"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pawn:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.14366055, 0.6333333, 0.7333333, 0.76666665),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.60784316, 0.60784316, 1), Color(1, 0, 0, 0.3882353), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.7310286),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_pjytt"]
+resource_name = "take_damage"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pawn/Heart:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.116666675, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.5, 1.5), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pawn/Heart:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.5921569, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1i5pp"]
+_data = {
+&"RESET": SubResource("Animation_fpac0"),
+&"attack": SubResource("Animation_e484p"),
+&"death": SubResource("Animation_1i5pp"),
+&"take_damage": SubResource("Animation_pjytt")
+}
+
+[node name="Pawn" type="Area2D" groups=["Card"]]
+monitoring = false
+monitorable = false
+script = ExtResource("1_e484p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(2, -2.5)
+shape = SubResource("RectangleShape2D_efxa6")
+
+[node name="pawn" type="CanvasGroup" parent="."]
+unique_name_in_owner = true
+
+[node name="pawn_texture" type="TextureButton" parent="pawn"]
+unique_name_in_owner = true
+offset_left = -61.0
+offset_top = -99.0
+offset_right = 67.0
+offset_bottom = 93.0
+mouse_filter = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_5vw27")
+texture_normal = ExtResource("2_fpac0")
+stretch_mode = 5
+metadata/_edit_lock_ = true
+
+[node name="Heart" type="Node2D" parent="pawn"]
+position = Vector2(-32, 56)
+
+[node name="heart" type="Sprite2D" parent="pawn/Heart"]
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("4_b4rk6")
+
+[node name="health_label" type="RichTextLabel" parent="pawn/Heart"]
+unique_name_in_owner = true
+clip_contents = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -22.5
+offset_right = 24.0
+offset_bottom = 22.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0.5137255, 0.19215687, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/bold_font_size = 32
+bbcode_enabled = true
+text = "[b]3"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="Damage" type="Node2D" parent="pawn"]
+unique_name_in_owner = true
+position = Vector2(40, 64)
+
+[node name="Sprite2D5" type="Sprite2D" parent="pawn/Damage"]
+scale = Vector2(3, 3)
+texture = ExtResource("5_6lcat")
+flip_h = true
+
+[node name="Sprite2D4" type="Sprite2D" parent="pawn/Damage"]
+scale = Vector2(3, 3)
+texture = ExtResource("5_6lcat")
+
+[node name="damage_label" type="RichTextLabel" parent="pawn/Damage"]
+unique_name_in_owner = true
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -24.0
+offset_right = 28.0
+offset_bottom = 21.0
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0.22745098, 0.15686275, 0.007843138, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/bold_font_size = 32
+bbcode_enabled = true
+text = "[b]2"
+fit_content = true
+scroll_active = false
+
+[node name="CanvasGroup2" type="CanvasGroup" parent="."]
+visible = false
+modulate = Color(1, 0, 0, 0.43137255)
+position = Vector2(0, 160)
+
+[node name="TextureButton" type="TextureButton" parent="CanvasGroup2"]
+offset_left = -61.0
+offset_top = -99.0
+offset_right = 67.0
+offset_bottom = 93.0
+mouse_filter = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_5vw27")
+texture_normal = ExtResource("2_1i5pp")
+stretch_mode = 5
+metadata/_edit_lock_ = true
+
+[node name="CanvasGroup3" type="CanvasGroup" parent="."]
+visible = false
+modulate = Color(1, 0, 0, 0.43137255)
+position = Vector2(0, -160)
+
+[node name="TextureButton" type="TextureButton" parent="CanvasGroup3"]
+offset_left = -61.0
+offset_top = -99.0
+offset_right = 67.0
+offset_bottom = 93.0
+mouse_filter = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_5vw27")
+texture_normal = ExtResource("2_1i5pp")
+stretch_mode = 5
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_1i5pp")
+}

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="piece" load_steps=4 format=3 uid="uid://b1th3lii1yuxd"]
+
+[ext_resource type="Script" uid="uid://b857rlbbl7w2n" path="res://Pieces/base_piece.gd" id="1_bisik"]
+[ext_resource type="Texture2D" uid="uid://cfuwltc33h5o1" path="res://Art/Pieces/Knight.png" id="1_sc7tx"]
+[ext_resource type="Texture2D" uid="uid://ds8lej8l5dxh7" path="res://Art/Pieces/Player_Knight.png" id="2_roxja"]
+
+[resource]
+script = ExtResource("1_bisik")
+name = "Knight"
+player_pawn_texture = ExtResource("2_roxja")
+opponent_pawn_texture = ExtResource("1_sc7tx")
+health = 3
+damage = 2
+elixer = 2
+metadata/_custom_type_script = "uid://b857rlbbl7w2n"
