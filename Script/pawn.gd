@@ -26,20 +26,23 @@ func attack_mode(yes : bool):
 func is_pawn_dead(pawn : piece) -> bool:
 	if pawn.health <= 0:
 		change_health(pawn.health) #just to make sure before animation they know their pawn is dead
-		print(pawn.team, pawn, ": dead")
+		animation_player.play("take_damage")
 		if animation_player.is_playing():
 			animation_player.queue("death")
 		else:
 			animation_player.play("death")
 		await animation_player.animation_finished
 		return true
-	#print(pawn.name, ": health: ", pawn.health)
 	return false
 
 func change_health(value: int):
 	%health_label.text = "[b]" + str(value)
 
 func change_damage(value: int):
+	if value <= 0:
+		%Damage.visible = false
+	else:
+		%Damage.visible = true
 	%damage_label.text = "[b]" + str(value)
 
 func change_texture(value : CompressedTexture2D):

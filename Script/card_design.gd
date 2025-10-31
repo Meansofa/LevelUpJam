@@ -3,6 +3,13 @@ extends CanvasGroup
 @export var elixer_texture : CompressedTexture2D
 
 func update_visuals(card : piece):
+	if card.damage <= 0:
+		%damage_label.visible = false
+		%sword.visible = false
+		
+	else:
+		%damage_label.visible = true
+		%sword.visible = true
 	%health_label.text = "[b]" + str(card.health)
 	%card_label.text = "[center]" + card.name
 	%damage_label.text = "[b]" + str(card.damage)

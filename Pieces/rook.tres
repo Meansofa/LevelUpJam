@@ -10,5 +10,6 @@ name = "Rook"
 player_pawn_texture = ExtResource("2_0adeq")
 opponent_pawn_texture = ExtResource("1_4ajs3")
 health = 5
+damage = 0
 elixer = 2
 metadata/_custom_type_script = "uid://b857rlbbl7w2n"

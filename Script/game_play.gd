@@ -108,7 +108,7 @@ func simulate_attack():
 						front_piece = board[x + pawn.attack_direction][y]
 					if front_piece is piece: #This makes sure to only get piece while not needing to check if it is on edge
 						front_square = %Board.get_node("Square" + str(calculate_index(x + pawn.attack_direction, y))) #the node in game corresponding to an index in the board
-						if front_piece is piece and front_piece.team == piece.teams.player:
+						if front_piece.team == piece.teams.player:
 							attack(pawn, square, front_piece, front_square)
 
 	#ATTACK------------------------------------------------------------
@@ -135,16 +135,19 @@ func simulate():
 
 @rpc("any_peer")#even if you're not using player_id, 
 func who_clicked_end_turn(player_id): #you still need to put it as a parameter of the function
+	%EndTurn.disabled = true
 	if multiplayer.get_unique_id() == player_id: #If you clicked end turn
+		await simulate_order() #Simulate first before ebabling end turn
 		%EndTurn.disabled = true  #disable your end turn so opponent can use end turn
-		#print(player_id, ": clicked: ", " %EndTurn.disabled: ", %EndTurn.disabled)
 	else: #If the player id was the opponent
+		await simulate_order()
 		%EndTurn.disabled = false #if opponent clicked end turn it's your turn to click it
-		#print(player_id, ": clicked: ", " %EndTurn.disabled: ", %EndTurn.disabled)
+
+func simulate_order():
 	player_move() #move the player first
 	opponent_move() #move the opponent's pieces
 	simulate_attack() #simulate attacks
-	update_simulation() #change animation
+	await update_simulation() #change animation
 	view_board()
 #IMPORTANT----------------------------------------------
 
@@ -264,6 +267,7 @@ func who_goes_first(player_id):
 
 @rpc("any_peer")
 func first_move(player_id):
+	print(name, "FIRST MOVE: ", player_id)
 	%FirstTurn.visible = true
 	
 	if player_id == multiplayer.get_unique_id():

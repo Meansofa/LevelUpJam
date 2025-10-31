@@ -28,7 +28,7 @@ corner_radius_bottom_left = 10
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_5vw27"]
 
-[node name="card" type="CanvasGroup"]
+[node name="card_design" type="CanvasGroup"]
 
 [node name="Button1" type="Panel" parent="."]
 custom_minimum_size = Vector2(48, 96)
@@ -135,6 +135,7 @@ fit_content = true
 scroll_active = false
 
 [node name="sword" type="Sprite2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(48, 64)
 scale = Vector2(3, 3)
 texture = ExtResource("4_bbnrs")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://cv50k8ineexkg"]
+[gd_scene load_steps=38 format=3 uid="uid://cv50k8ineexkg"]
 
 [ext_resource type="Script" uid="uid://r10i8cnvrsr1" path="res://Script/game_play.gd" id="1_0mbhd"]
 [ext_resource type="Texture2D" uid="uid://clgoqclmfrrg2" path="res://Art/Pieces/chair.png" id="2_a1b81"]
@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://y82d36rfxdrd" path="res://Script/slot.gd" id="5_xjpow"]
 [ext_resource type="PackedScene" uid="uid://b4x0sflvtqalj" path="res://pick_card.tscn" id="6_fvbcm"]
 [ext_resource type="Script" uid="uid://bd3kqdjnuomn3" path="res://Script/board.gd" id="7_kgpdb"]
-[ext_resource type="PackedScene" uid="uid://q3epd7gwh8wv" path="res://card.tscn" id="8_a1b81"]
+[ext_resource type="PackedScene" uid="uid://q3epd7gwh8wv" path="res://pawn.tscn" id="8_a1b81"]
 [ext_resource type="Script" uid="uid://453o1y0takwh" path="res://Script/elixer.gd" id="9_htgex"]
 [ext_resource type="Script" uid="uid://ehuqivrlrvic" path="res://Script/card_stash.gd" id="9_xjpow"]
 [ext_resource type="Texture2D" uid="uid://cqcjqxj2r8q3q" path="res://Art/Pieces/elixer.png" id="10_3ux7j"]
@@ -307,9 +307,49 @@ func enemy_first_turn():
 	$FirstTurnLabel.text = \"[b][center] Opponent Goes first!\"
 "
 
+[sub_resource type="Animation" id="Animation_3ux7j"]
+resource_name = "camera_intro"
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(3, 3), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_2txuh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c5ldg"]
+_data = {
+&"RESET": SubResource("Animation_2txuh"),
+&"camera_intro": SubResource("Animation_3ux7j")
+}
+
 [node name="GamePlay" type="Node2D"]
 script = ExtResource("1_0mbhd")
 metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(360, 640)
 
 [node name="Background" type="CanvasGroup" parent="."]
 
@@ -1045,7 +1085,6 @@ offset_bottom = 976.0
 text = "[b][center]Player 792347"
 
 [node name="PickACard" type="Control" parent="."]
-visible = false
 z_index = 100
 custom_minimum_size = Vector2(720, 1280)
 layout_mode = 3
@@ -1074,6 +1113,15 @@ text = "[b]
  PICK A CARD"
 fit_content = true
 autowrap_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PickACard/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="OutsideAnimations" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_c5ldg")
+}
+autoplay = "camera_intro"
 
 [connection signal="pressed" from="BoardDesign/VBoxContainer/PlayerSlots/Slot" to="BoardDesign/VBoxContainer/PlayerSlots/Slot" method="_on_pressed"]
 [connection signal="area_entered" from="BoardDesign/VBoxContainer/PlayerSlots/Slot/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot" method="_on_card_detector_area_entered"]

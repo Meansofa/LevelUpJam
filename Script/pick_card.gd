@@ -1,8 +1,6 @@
 extends Area2D
 
-@onready var spawn_position = self.position
-
-
+@onready var spawn_position : Vector2 = self.position
 
 var dragging := false #if the card is getting dragged
 var in_area := false #if mouse is hovering in the card
@@ -35,14 +33,15 @@ func give_card(new_card : piece):
 	if new_card == null:
 		print(name, ": new_card is null")
 	card = new_card
-	%card.update_visuals(card)
+	%card_design.update_visuals(card)
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and draggable:
 			if event.pressed and in_area: #if player's mouse is in the collision of this area and player is holding left click 
-				spawn_position = self.position
+				if spawn_position == Vector2.ZERO:
+					spawn_position = self.position
 				dragging = true
 			else: #if player released the left click
 				if dragging == true:
@@ -70,7 +69,9 @@ func _release_card():
 		print("in_slot ==", in_slot)
 		position = spawn_position
 	else: #Place the card in the slot ------------------------------------------
-		place_card()
+		if in_slot == true and %Elixer.enough_elixer(card.elixer) == true:
+			%Elixer.pawn_for_elixer(card.elixer)
+			place_card()
 
 #Place a card in a slot
 func place_card():
@@ -80,12 +81,11 @@ func place_card():
 	print("card place at: ", nearest_slot.get_parent().name)
 	self.global_position = nearest_slot.global_position
 	
-	%CardStash.request_card(self) #pass self too so the card stash knows what pick_card needs to be replaced
-	
 	disable_monitoring()#Dissallow clicking
 	%AnimationPlayer.play("dissolve")
 	await %AnimationPlayer.animation_finished
 	
+	%CardStash.request_card(self) #pass self too so the card stash knows what pick_card needs to be replaced
 	position = spawn_position
 	
 	%AnimationPlayer.play("return")

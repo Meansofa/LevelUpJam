@@ -45,10 +45,12 @@ func create_new_elixer(elixer_count : int):
 #called in pick_card.gd after trying to put a card to a slot, 
 func enough_elixer(elixer_cost : int) -> bool:
 	if elixers_parent.get_child_count() >= elixer_cost: #if elixer count has more than or equal to the elixer cost of the pawn
-		for elixer in range(elixer_cost):
-			elixers_parent.remove_child(elixers_parent.get_children()[randi_range(0, elixers_parent.get_child_count() - 1)]) #remove 1 a random elixer child
 		return true 
 	
 	#Not enough elixer
 	animation_player.play("not_enough_elixer")
 	return false
+
+func pawn_for_elixer(elixer_cost : int):
+	for elixer in range(elixer_cost):
+		elixers_parent.remove_child(elixers_parent.get_children()[randi_range(0, elixers_parent.get_child_count() - 1)]) #remove 1 a random elixer child

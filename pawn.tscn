@@ -1,6 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://q3epd7gwh8wv"]
+[gd_scene load_steps=13 format=3 uid="uid://q3epd7gwh8wv"]
 
-[ext_resource type="Script" uid="uid://x6qjxb1tisg2" path="res://Script/card.gd" id="1_e484p"]
+[ext_resource type="Script" uid="uid://x6qjxb1tisg2" path="res://Script/pawn.gd" id="1_e484p"]
 [ext_resource type="Texture2D" uid="uid://b7p6t2p2k55ny" path="res://Art/Pieces/PawnOutline.png" id="2_1i5pp"]
 [ext_resource type="Texture2D" uid="uid://ergh4s78jpdj" path="res://Art/Pieces/Player_Pawn.png" id="2_fpac0"]
 [ext_resource type="Texture2D" uid="uid://bnw64uj26d4r6" path="res://Art/Pieces/heart.png" id="4_b4rk6"]
@@ -136,6 +136,30 @@ tracks/10/keys = {
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("pawn/Heart:scale")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("pawn/Heart:modulate")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_e484p"]
 resource_name = "attack"
@@ -258,14 +282,43 @@ tracks/1/keys = {
 "values": [true, false]
 }
 
+[sub_resource type="Animation" id="Animation_pjytt"]
+resource_name = "take_damage"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pawn/Heart:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.116666675, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.5, 1.5), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pawn/Heart:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.5921569, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1i5pp"]
 _data = {
 &"RESET": SubResource("Animation_fpac0"),
 &"attack": SubResource("Animation_e484p"),
-&"death": SubResource("Animation_1i5pp")
+&"death": SubResource("Animation_1i5pp"),
+&"take_damage": SubResource("Animation_pjytt")
 }
 
-[node name="Card" type="Area2D" groups=["Card"]]
+[node name="Pawn" type="Area2D" groups=["Card"]]
 monitoring = false
 monitorable = false
 script = ExtResource("1_e484p")
@@ -291,18 +344,27 @@ texture_normal = ExtResource("2_fpac0")
 stretch_mode = 5
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D3" type="Sprite2D" parent="pawn"]
-position = Vector2(-45, 62)
+[node name="Heart" type="Node2D" parent="pawn"]
+position = Vector2(-32, 56)
+
+[node name="heart" type="Sprite2D" parent="pawn/Heart"]
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("4_b4rk6")
-metadata/_edit_lock_ = true
 
-[node name="health_label" type="RichTextLabel" parent="pawn"]
+[node name="health_label" type="RichTextLabel" parent="pawn/Heart"]
 unique_name_in_owner = true
-offset_left = -56.0
-offset_top = 44.0
-offset_right = 14.0
-offset_bottom = 89.0
+clip_contents = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -22.5
+offset_right = 24.0
+offset_bottom = 22.5
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0.5137255, 0.19215687, 0, 1)
 theme_override_constants/outline_size = 8
@@ -311,6 +373,7 @@ bbcode_enabled = true
 text = "[b]3"
 fit_content = true
 scroll_active = false
+horizontal_alignment = 1
 
 [node name="Damage" type="Node2D" parent="pawn"]
 unique_name_in_owner = true
