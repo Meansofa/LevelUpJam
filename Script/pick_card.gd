@@ -120,9 +120,12 @@ func _process(_delta):
 
 func _on_mouse_entered() -> void:
 	in_area = true
+	Input.set_custom_mouse_cursor(load("res://Art/Pieces/cursor_pointer.png"))
 
 func _on_mouse_exited() -> void:
 	in_area = false
+	Input.set_custom_mouse_cursor(load("res://Art/Pieces/cursor_arrow.png"))
+
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Slot"):

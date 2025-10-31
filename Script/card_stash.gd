@@ -28,7 +28,8 @@ func display_card(pick_card : Area2D):
 func _get_random_card_from_stash() -> piece:
 	if player_cards.is_empty(): #if can't spare anymore cards
 		_reroll_player_cards()
-		
+	
+	print("player_cards.is_empty(): ", player_cards.is_empty())
 	var card = player_cards[randi_range(0, player_cards.size() - 1)]
 	player_cards.erase(card) #discard the card
 	return card
@@ -36,10 +37,9 @@ func _get_random_card_from_stash() -> piece:
 #reroll player's cards
 func _reroll_player_cards()-> bool: #returns true if cards have been rerolled
 	if card_stash.is_empty(): #When card stash is empty possibly because the game just started
-		card_stash = starting_cards
-
+		card_stash.assign(starting_cards)
 	if player_cards.is_empty(): #When all cards have been placed
-		player_cards = card_stash
+		player_cards.assign(card_stash)
 	else:
 		return false
 	

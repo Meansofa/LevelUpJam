@@ -27,6 +27,7 @@ func is_pawn_dead(pawn : piece) -> bool:
 	if pawn.health <= 0:
 		change_health(pawn.health) #just to make sure before animation they know their pawn is dead
 		animation_player.play("take_damage")
+		await animation_player.animation_finished
 		if animation_player.is_playing():
 			animation_player.queue("death")
 		else:
