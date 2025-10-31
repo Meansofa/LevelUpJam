@@ -1044,6 +1044,37 @@ offset_bottom = 976.0
 [node name="playertag" parent="Player/Control/Player" index="1"]
 text = "[b][center]Player 792347"
 
+[node name="PickACard" type="Control" parent="."]
+visible = false
+z_index = 100
+custom_minimum_size = Vector2(720, 1280)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="PickACard"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PickACard/PanelContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PickACard/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/bold_font_size = 32
+bbcode_enabled = true
+text = "[b]
+ PICK A CARD"
+fit_content = true
+autowrap_mode = 0
+
 [connection signal="pressed" from="BoardDesign/VBoxContainer/PlayerSlots/Slot" to="BoardDesign/VBoxContainer/PlayerSlots/Slot" method="_on_pressed"]
 [connection signal="area_entered" from="BoardDesign/VBoxContainer/PlayerSlots/Slot/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot" method="_on_card_detector_area_entered"]
 [connection signal="area_exited" from="BoardDesign/VBoxContainer/PlayerSlots/Slot/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot" method="_on_card_detector_area_exited"]
