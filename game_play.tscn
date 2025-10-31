@@ -332,6 +332,7 @@ var card : piece
 func _ready() -> void:
 	connect(\"pressed\", add_pawn_to_player_stash)
 
+#Called from PickCards node
 func get_random_card():
 	card = %AllCards.cards[randi_range(0, %AllCards.cards.size() - 1)]
 	$card_design.update_visuals(card)
@@ -342,8 +343,15 @@ func add_pawn_to_player_stash():
 	cards_picked += 1
 	%CardStash.add_card_to_stash(card)
 	disable_all_options()
-	print(\"cards_picked: \", cards_picked)
+	_count_cards_picked()
 	visible = true #after disable_all_options meaning it made all option not visible including this button, so turn it visible
+
+func _count_cards_picked():
+	print(\"cards_picked: \", cards_picked)
+	if cards_picked >= 3:
+		cards_picked = 0
+		await get_tree().create_timer(2).timeout
+		%PickCards.visible = false
 
 func disable_all_options():
 	for option in  get_parent().get_children():
@@ -353,7 +361,7 @@ func disable_all_options():
 func enable_all_options():
 	for option in  get_parent().get_children():
 		option.disabled = false
-		
+		option.visible = true
 "
 
 [sub_resource type="Animation" id="Animation_2txuh"]
@@ -977,6 +985,7 @@ grow_vertical = 0
 mouse_filter = 2
 script = ExtResource("9_htgex")
 elixer_texture = ExtResource("10_3ux7j")
+end_turn_elixer_count = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Elixer"]
 layout_mode = 0
