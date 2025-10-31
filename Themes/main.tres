@@ -1,8 +1,9 @@
-[gd_resource type="Theme" load_steps=10 format=3 uid="uid://buamt54f6ol74"]
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://buamt54f6ol74"]
 
 [ext_resource type="FontFile" uid="uid://c3pf1wrqtqwal" path="res://Themes/Fonts/SimpleHandmade.otf" id="1_apm7t"]
 [ext_resource type="FontFile" uid="uid://bke4uhr2sqeg2" path="res://Themes/Fonts/Daydream DEMO.otf" id="1_dn4vi"]
 [ext_resource type="FontFile" uid="uid://ckvailqr3qsxt" path="res://Themes/Fonts/GrapeSoda.ttf" id="2_dn4vi"]
+[ext_resource type="FontFile" uid="uid://dfm5marj1iqb6" path="res://Themes/Fonts/Cakecafe.ttf" id="3_1lsov"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1lsov"]
 bg_color = Color(0.11372549, 0.11764706, 0.29803923, 0.47843137)
@@ -59,4 +60,5 @@ RichTextLabel/constants/outline_size = 3
 RichTextLabel/font_sizes/bold_font_size = 12
 RichTextLabel/font_sizes/normal_font_size = 16
 RichTextLabel/fonts/bold_font = ExtResource("1_dn4vi")
+RichTextLabel/fonts/italics_font = ExtResource("3_1lsov")
 RichTextLabel/fonts/normal_font = ExtResource("2_dn4vi")

@@ -23,3 +23,9 @@ func change_player_frame(operator : String):
 		%playerframe.texture = player_1_texture
 	else:
 		%playerframe.texture = player_2_texture
+
+func round_win():
+	%Crown.add_crown()
+
+func get_crown() -> int:
+	return %Crown.curr_crown

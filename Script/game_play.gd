@@ -27,6 +27,8 @@ func new_round():
 	%CardStash.new_round()
 	%Player.new_round()
 	opponent_scene.new_round()
+	%PickCards.visible = true
+	%PickCards.new_round()
 
 func round_won(winner : piece.teams):
 	%BlockInputs.visible = true
@@ -191,17 +193,27 @@ func player_move():
 				else:
 					move_forward(x , y, player_piece)
 
-#DAMAGE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#DAMAGE the player directly not between pawns>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #Damage happens when either opponent or player's pieces reaches the other side's edge
 func damage_opponent():#If the player's pieces reaches the opponent's edge
 	var health = opponent_scene.take_damage()
 	if health <= 0:
 		round_won(piece.teams.player)
+		%Player.round_win() 
+		%BlockInputs.visible = true
+		if %Player.get_crown() >= 3:
+			%OverallWin.visible = true
+			%winner_label.text = "[b][center]YOU WON!👑"
 
 func damage_player(): #If the opponent's pieces reaches the player's edge
 	var health = %Player.take_damage()
 	if health <= 0:
 		round_won(piece.teams.opponent)
+		opponent_scene.round_win()
+		%BlockInputs.visible = true
+		if opponent_scene.get_crown() >= 3:
+			%OverallWin.visible = true
+			%winner_label.text = "[b][center]YOU LOST!😒"
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 func move_forward(x : int, y: int, pawn : piece):

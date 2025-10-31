@@ -5,6 +5,7 @@ extends PanelContainer
 func _ready() -> void:
 	%FirstTurn.connect("hidden", enable_inputs)
 	%Round.connect("hidden", enable_inputs)
+	%OverallWin.connect("hidden", enable_inputs)
 
 func enable_inputs():
 	self.visible = false

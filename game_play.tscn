@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://cv50k8ineexkg"]
+[gd_scene load_steps=46 format=3 uid="uid://cv50k8ineexkg"]
 
 [ext_resource type="Script" uid="uid://r10i8cnvrsr1" path="res://Script/game_play.gd" id="1_0mbhd"]
 [ext_resource type="Texture2D" uid="uid://clgoqclmfrrg2" path="res://Art/Pieces/chair.png" id="2_a1b81"]
@@ -16,8 +16,13 @@
 [ext_resource type="Script" uid="uid://b857rlbbl7w2n" path="res://Pieces/base_piece.gd" id="12_x2ujm"]
 [ext_resource type="Resource" uid="uid://bp7sx5327bjvn" path="res://Pieces/pawn.tres" id="13_xjpow"]
 [ext_resource type="Script" uid="uid://cml44y27vephb" path="res://Script/block_inputs.gd" id="16_a1b81"]
+[ext_resource type="Resource" uid="uid://b4tpjoik1hyk5" path="res://Pieces/duck.tres" id="16_aai1n"]
 [ext_resource type="PackedScene" uid="uid://c0qpjsiu58e47" path="res://opponent_scene.tscn" id="16_kgpdb"]
+[ext_resource type="Resource" uid="uid://dbilktsd43xih" path="res://Pieces/wolf.tres" id="17_p31n6"]
 [ext_resource type="PackedScene" uid="uid://dks4nyrtnaal0" path="res://card_design.tscn" id="18_htgex"]
+[ext_resource type="Resource" uid="uid://b1th3lii1yuxd" path="res://Pieces/horse.tres" id="18_v2hr5"]
+[ext_resource type="Resource" uid="uid://cy23wl0xvyy0n" path="res://Pieces/hamster.tres" id="19_jtsxe"]
+[ext_resource type="Script" uid="uid://7p38mv8u5r1q" path="res://Script/pick_cards.gd" id="22_p31n6"]
 
 [sub_resource type="Gradient" id="Gradient_htgex"]
 offsets = PackedFloat32Array(1)
@@ -306,6 +311,49 @@ func first_turn_name(player_name : String):
 
 func enemy_first_turn():
 	$FirstTurnLabel.text = \"[b][center] Opponent Goes first!\"
+"
+
+[sub_resource type="GDScript" id="GDScript_3ux7j"]
+resource_name = "restart_after_win"
+script/source = "extends Button
+
+func _on_pressed() -> void:
+	get_parent().restart()
+"
+
+[sub_resource type="GDScript" id="GDScript_2txuh"]
+resource_name = "option"
+script/source = "extends Button
+
+static var cards_picked := 0
+var card : piece
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	connect(\"pressed\", add_pawn_to_player_stash)
+
+func get_random_card():
+	card = %AllCards.cards[randi_range(0, %AllCards.cards.size() - 1)]
+	$card_design.update_visuals(card)
+	print(\"RANDOM CARD: \", card)
+	enable_all_options()
+
+func add_pawn_to_player_stash():
+	cards_picked += 1
+	%CardStash.add_card_to_stash(card)
+	disable_all_options()
+	print(\"cards_picked: \", cards_picked)
+	visible = true #after disable_all_options meaning it made all option not visible including this button, so turn it visible
+
+func disable_all_options():
+	for option in  get_parent().get_children():
+		option.disabled = true
+		option.visible = false
+
+func enable_all_options():
+	for option in  get_parent().get_children():
+		option.disabled = false
+		
 "
 
 [sub_resource type="Animation" id="Animation_2txuh"]
@@ -980,7 +1028,7 @@ expand_mode = 5
 [node name="AllCards" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("11_uycrd")
-cards = Array[ExtResource("12_x2ujm")]([ExtResource("13_xjpow"), ExtResource("2_uycrd"), ExtResource("3_7bf21")])
+cards = Array[ExtResource("12_x2ujm")]([ExtResource("13_xjpow"), ExtResource("2_uycrd"), ExtResource("3_7bf21"), ExtResource("16_aai1n"), ExtResource("17_p31n6"), ExtResource("18_v2hr5"), ExtResource("19_jtsxe")])
 
 [node name="Displays" type="Control" parent="."]
 layout_mode = 3
@@ -996,6 +1044,7 @@ theme = ExtResource("4_x2ujm")
 
 [node name="BlockInputs" type="PanelContainer" parent="Displays"]
 unique_name_in_owner = true
+visible = false
 z_index = 100
 layout_mode = 1
 anchors_preset = 15
@@ -1075,6 +1124,50 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
+[node name="OverallWin" type="PanelContainer" parent="Displays"]
+unique_name_in_owner = true
+visible = false
+z_index = 100
+custom_minimum_size = Vector2(720, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Displays/OverallWin"]
+layout_mode = 2
+alignment = 1
+
+[node name="winner_label" type="RichTextLabel" parent="Displays/OverallWin/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/bold_font_size = 32
+bbcode_enabled = true
+text = "[b][center]YOU WON!👑"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="restart" type="Button" parent="Displays/OverallWin/VBoxContainer"]
+layout_mode = 2
+text = "REMATCH😎"
+script = SubResource("GDScript_3ux7j")
+
+[node name="next_opponent" type="Button" parent="Displays/OverallWin/VBoxContainer"]
+layout_mode = 2
+text = "NEXT OPPONENT🤗"
+script = SubResource("GDScript_3ux7j")
+
+[node name="exit" type="Button" parent="Displays/OverallWin/VBoxContainer"]
+layout_mode = 2
+text = "EXIT😶‍🌫️"
+script = SubResource("GDScript_3ux7j")
+
 [node name="Player" parent="." instance=ExtResource("16_kgpdb")]
 unique_name_in_owner = true
 
@@ -1085,8 +1178,13 @@ offset_bottom = 976.0
 [node name="playertag" parent="Player/Control/Player" index="1"]
 text = "[b][center]Player 792347"
 
-[node name="PickACard" type="Control" parent="."]
-visible = false
+[node name="Crown" parent="Player/Control/Player" index="4"]
+offset_left = 32.0
+offset_top = -88.0
+offset_right = 72.0
+offset_bottom = -48.0
+
+[node name="AfterRounds" type="Control" parent="."]
 z_index = 100
 custom_minimum_size = Vector2(720, 1280)
 layout_mode = 3
@@ -1094,8 +1192,11 @@ anchors_preset = 0
 offset_right = 720.0
 offset_bottom = 1280.0
 mouse_filter = 2
+theme = ExtResource("4_x2ujm")
 
-[node name="PanelContainer" type="PanelContainer" parent="PickACard"]
+[node name="PickCards" type="PanelContainer" parent="AfterRounds"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1103,70 +1204,201 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("22_p31n6")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PickACard/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="AfterRounds/PickCards"]
 layout_mode = 2
+theme_override_constants/separation = 32
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PickACard/PanelContainer/VBoxContainer"]
+[node name="RichTextLabel4" type="RichTextLabel" parent="AfterRounds/PickCards/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/italics_font_size = 24
+bbcode_enabled = true
+text = "[i]
+PICK A CARD TO ADD TO YOUR DECK..."
+fit_content = true
+autowrap_mode = 2
+horizontal_alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="AfterRounds/PickCards/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/bold_font_size = 32
 bbcode_enabled = true
 text = "[b]
- PICK A CARD"
+Choose 1 card"
 fit_content = true
 autowrap_mode = 0
+horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PickACard/PanelContainer/VBoxContainer"]
+[node name="Options" type="HBoxContainer" parent="AfterRounds/PickCards/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 32
 alignment = 1
 
-[node name="option0" type="Button" parent="PickACard/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="option0" type="Button" parent="AfterRounds/PickCards/VBoxContainer/Options" groups=["option"]]
 custom_minimum_size = Vector2(128, 192)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+focus_mode = 0
+script = SubResource("GDScript_2txuh")
 
-[node name="card_design" parent="PickACard/PanelContainer/VBoxContainer/HBoxContainer/option0" instance=ExtResource("18_htgex")]
+[node name="card_design" parent="AfterRounds/PickCards/VBoxContainer/Options/option0" instance=ExtResource("18_htgex")]
 position = Vector2(61, 98)
 
-[node name="option1" type="Button" parent="PickACard/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="option1" type="Button" parent="AfterRounds/PickCards/VBoxContainer/Options" groups=["option"]]
 custom_minimum_size = Vector2(128, 192)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+focus_mode = 0
+script = SubResource("GDScript_2txuh")
 
-[node name="card_design" parent="PickACard/PanelContainer/VBoxContainer/HBoxContainer/option1" instance=ExtResource("18_htgex")]
+[node name="card_design" parent="AfterRounds/PickCards/VBoxContainer/Options/option1" instance=ExtResource("18_htgex")]
 position = Vector2(61, 98)
 
-[node name="option2" type="Button" parent="PickACard/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="option2" type="Button" parent="AfterRounds/PickCards/VBoxContainer/Options" groups=["option"]]
 custom_minimum_size = Vector2(128, 192)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+focus_mode = 0
+script = SubResource("GDScript_2txuh")
 
-[node name="card_design" parent="PickACard/PanelContainer/VBoxContainer/HBoxContainer/option2" instance=ExtResource("18_htgex")]
+[node name="card_design" parent="AfterRounds/PickCards/VBoxContainer/Options/option2" instance=ExtResource("18_htgex")]
 position = Vector2(61, 98)
 
-[node name="option3" type="Button" parent="PickACard/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="option3" type="Button" parent="AfterRounds/PickCards/VBoxContainer/Options" groups=["option"]]
 custom_minimum_size = Vector2(128, 192)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+focus_mode = 0
+script = SubResource("GDScript_2txuh")
 
-[node name="card_design" parent="PickACard/PanelContainer/VBoxContainer/HBoxContainer/option3" instance=ExtResource("18_htgex")]
+[node name="card_design" parent="AfterRounds/PickCards/VBoxContainer/Options/option3" instance=ExtResource("18_htgex")]
 position = Vector2(61, 98)
 
-[node name="option4" type="Button" parent="PickACard/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="RichTextLabel2" type="RichTextLabel" parent="AfterRounds/PickCards/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/bold_font_size = 32
+bbcode_enabled = true
+text = "[b]
+Choose 1 card"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+
+[node name="Options2" type="HBoxContainer" parent="AfterRounds/PickCards/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="option0" type="Button" parent="AfterRounds/PickCards/VBoxContainer/Options2" groups=["option"]]
 custom_minimum_size = Vector2(128, 192)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+focus_mode = 0
+script = SubResource("GDScript_2txuh")
 
-[node name="card_design" parent="PickACard/PanelContainer/VBoxContainer/HBoxContainer/option4" instance=ExtResource("18_htgex")]
+[node name="card_design" parent="AfterRounds/PickCards/VBoxContainer/Options2/option0" instance=ExtResource("18_htgex")]
+position = Vector2(61, 98)
+
+[node name="option1" type="Button" parent="AfterRounds/PickCards/VBoxContainer/Options2" groups=["option"]]
+custom_minimum_size = Vector2(128, 192)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 0
+script = SubResource("GDScript_2txuh")
+
+[node name="card_design" parent="AfterRounds/PickCards/VBoxContainer/Options2/option1" instance=ExtResource("18_htgex")]
+position = Vector2(61, 98)
+
+[node name="option2" type="Button" parent="AfterRounds/PickCards/VBoxContainer/Options2" groups=["option"]]
+custom_minimum_size = Vector2(128, 192)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 0
+script = SubResource("GDScript_2txuh")
+
+[node name="card_design" parent="AfterRounds/PickCards/VBoxContainer/Options2/option2" instance=ExtResource("18_htgex")]
+position = Vector2(61, 98)
+
+[node name="option3" type="Button" parent="AfterRounds/PickCards/VBoxContainer/Options2" groups=["option"]]
+custom_minimum_size = Vector2(128, 192)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 0
+script = SubResource("GDScript_2txuh")
+
+[node name="card_design" parent="AfterRounds/PickCards/VBoxContainer/Options2/option3" instance=ExtResource("18_htgex")]
+position = Vector2(61, 98)
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="AfterRounds/PickCards/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/bold_font_size = 32
+bbcode_enabled = true
+text = "[b]
+Choose 1 card"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+
+[node name="Options3" type="HBoxContainer" parent="AfterRounds/PickCards/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="option0" type="Button" parent="AfterRounds/PickCards/VBoxContainer/Options3" groups=["option"]]
+custom_minimum_size = Vector2(128, 192)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 0
+script = SubResource("GDScript_2txuh")
+
+[node name="card_design" parent="AfterRounds/PickCards/VBoxContainer/Options3/option0" instance=ExtResource("18_htgex")]
+position = Vector2(61, 98)
+
+[node name="option1" type="Button" parent="AfterRounds/PickCards/VBoxContainer/Options3" groups=["option"]]
+custom_minimum_size = Vector2(128, 192)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 0
+script = SubResource("GDScript_2txuh")
+
+[node name="card_design" parent="AfterRounds/PickCards/VBoxContainer/Options3/option1" instance=ExtResource("18_htgex")]
+position = Vector2(61, 98)
+
+[node name="option2" type="Button" parent="AfterRounds/PickCards/VBoxContainer/Options3" groups=["option"]]
+custom_minimum_size = Vector2(128, 192)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 0
+script = SubResource("GDScript_2txuh")
+
+[node name="card_design" parent="AfterRounds/PickCards/VBoxContainer/Options3/option2" instance=ExtResource("18_htgex")]
+position = Vector2(61, 98)
+
+[node name="option3" type="Button" parent="AfterRounds/PickCards/VBoxContainer/Options3" groups=["option"]]
+custom_minimum_size = Vector2(128, 192)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 0
+script = SubResource("GDScript_2txuh")
+
+[node name="card_design" parent="AfterRounds/PickCards/VBoxContainer/Options3/option3" instance=ExtResource("18_htgex")]
 position = Vector2(61, 98)
 
 [node name="OutsideAnimations" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_c5ldg")
 }
@@ -1184,5 +1416,8 @@ autoplay = "camera_intro"
 [connection signal="pressed" from="BoardDesign/VBoxContainer/PlayerSlots/Slot4" to="BoardDesign/VBoxContainer/PlayerSlots/Slot4" method="_on_pressed"]
 [connection signal="area_entered" from="BoardDesign/VBoxContainer/PlayerSlots/Slot4/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot4" method="_on_card_detector_area_entered"]
 [connection signal="area_exited" from="BoardDesign/VBoxContainer/PlayerSlots/Slot4/card_detector" to="BoardDesign/VBoxContainer/PlayerSlots/Slot4" method="_on_card_detector_area_exited"]
+[connection signal="pressed" from="Displays/OverallWin/VBoxContainer/restart" to="Displays/OverallWin/VBoxContainer/restart" method="_on_pressed"]
+[connection signal="pressed" from="Displays/OverallWin/VBoxContainer/next_opponent" to="Displays/OverallWin/VBoxContainer/next_opponent" method="_on_pressed"]
+[connection signal="pressed" from="Displays/OverallWin/VBoxContainer/exit" to="Displays/OverallWin/VBoxContainer/exit" method="_on_pressed"]
 
 [editable path="Player"]

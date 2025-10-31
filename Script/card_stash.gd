@@ -15,6 +15,10 @@ func new_round():
 func _ready() -> void:
 	_reroll_player_cards()
 
+func add_card_to_stash(card : piece):
+	card_stash.append(card)
+	_reroll_player_cards()
+
 #called after a pick_card places a card in a slot
 func request_card(pick_card : Area2D):
 	display_card(pick_card) #gives a card to the requester
@@ -35,17 +39,13 @@ func _get_random_card_from_stash() -> piece:
 	return card
 
 #reroll player's cards
-func _reroll_player_cards()-> bool: #returns true if cards have been rerolled
+func _reroll_player_cards()-> void: #returns true if cards have been rerolled
 	if card_stash.is_empty(): #When card stash is empty possibly because the game just started
 		card_stash.assign(starting_cards)
-	if player_cards.is_empty(): #When all cards have been placed
-		player_cards.assign(card_stash)
-	else:
-		return false
+	player_cards.assign(card_stash)
 	
 	print(name, ": cards rerolled")
 	update_cards_amount_label()
-	return true
 
 func update_cards_amount_label():
 	if cards_amount_label == null: #when cards_amount_label didnt load yet and is already called

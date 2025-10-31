@@ -33,6 +33,7 @@ enabled=PackedStringArray("res://addons/nodetunnel/plugin.cfg")
 
 Card=""
 Slot=""
+option=""
 
 [rendering]
 

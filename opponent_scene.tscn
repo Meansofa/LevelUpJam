@@ -1,10 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://c0qpjsiu58e47"]
+[gd_scene load_steps=14 format=3 uid="uid://c0qpjsiu58e47"]
 
 [ext_resource type="Script" uid="uid://cyj18wtmqcne2" path="res://opponent_scene.gd" id="1_cisev"]
 [ext_resource type="Theme" uid="uid://buamt54f6ol74" path="res://Themes/main.tres" id="1_pxgx6"]
 [ext_resource type="Texture2D" uid="uid://brb72kigbbfpy" path="res://Art/Pieces/characterFrames.png" id="2_k3w36"]
 [ext_resource type="Texture2D" uid="uid://dspshohqjbty8" path="res://Art/Pieces/characterFrames3.png" id="2_pxgx6"]
 [ext_resource type="Script" uid="uid://ds2co40nx6snr" path="res://Script/health_bar.gd" id="3_cisev"]
+[ext_resource type="Texture2D" uid="uid://kvwi7srao77o" path="res://Art/Pieces/crown.png" id="6_pml1f"]
+[ext_resource type="Script" uid="uid://ddbysuqetsuua" path="res://Script/crown.gd" id="7_lm56y"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_k3w36"]
 load_path = "res://.godot/imported/characterFrames3.png-c9688eea42f8ba9b6767142675bbfaf8.ctex"
@@ -108,6 +110,34 @@ tracks/7/keys = {
 "points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("%Crown:scale")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2, 2)]
+}
+
+[sub_resource type="Animation" id="Animation_pml1f"]
+resource_name = "add_crown"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%Crown:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(2, 2), Vector2(3.5, 3.5), Vector2(2, 2)]
+}
 
 [sub_resource type="Animation" id="Animation_cisev"]
 resource_name = "take_damage"
@@ -204,6 +234,7 @@ tracks/7/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_govgu"]
 _data = {
 &"RESET": SubResource("Animation_k3w36"),
+&"add_crown": SubResource("Animation_pml1f"),
 &"take_damage": SubResource("Animation_cisev")
 }
 
@@ -325,6 +356,32 @@ text = "[b][center]100"
 fit_content = true
 scroll_active = false
 autowrap_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Crown" type="TextureRect" parent="Control/Player" node_paths=PackedStringArray("crown_amount_label")]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 34.0
+offset_top = 168.0
+offset_right = 74.0
+offset_bottom = 208.0
+scale = Vector2(2, 2)
+pivot_offset = Vector2(19, 20)
+theme = ExtResource("1_pxgx6")
+texture = ExtResource("6_pml1f")
+script = ExtResource("7_lm56y")
+crown_amount_label = NodePath("crown_amount_label")
+
+[node name="crown_amount_label" type="RichTextLabel" parent="Control/Player/Crown"]
+layout_mode = 0
+offset_top = 8.0
+offset_right = 40.0
+offset_bottom = 48.0
+bbcode_enabled = true
+text = "[b]32"
+scroll_active = false
+autowrap_mode = 0
 horizontal_alignment = 1
 vertical_alignment = 2
 
