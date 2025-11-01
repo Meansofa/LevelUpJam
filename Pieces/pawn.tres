@@ -9,4 +9,5 @@ script = ExtResource("1_070ro")
 name = "Pawn"
 player_pawn_texture = ExtResource("2_p7raj")
 opponent_pawn_texture = ExtResource("1_0qtca")
+special_skill = 1
 metadata/_custom_type_script = "uid://b857rlbbl7w2n"

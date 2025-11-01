@@ -30,10 +30,7 @@ func is_pawn_dead(pawn : piece) -> bool:
 		change_health(pawn.health) #just to make sure before animation they know their pawn is dead
 		animation_player.play("take_damage")
 		await animation_player.animation_finished
-		if animation_player.is_playing():
-			animation_player.queue("death")
-		else:
-			animation_player.play("death")
+		animation_player.queue("death")
 		GlobalAudioPlayer.add_sfx(death_sfx)
 		await animation_player.animation_finished
 		return true
@@ -59,6 +56,31 @@ func attack_pawn(square : Area2D, pawn : piece) -> bool:
 		animation_player.play("attack_down")
 	else:
 		animation_player.play("attack")
+	await animation_player.animation_finished
+	z_index = 0
+	
+	square.update_visuals(pawn) #update the health value
+	
+	return true
+
+func attack_adjacent_pawn(square : Area2D, pawn : piece, direction: piece.side_directions) -> bool:
+	z_index = 100
+	
+	if pawn.team == pawn.teams.player:
+		if direction == piece.side_directions.left:
+			animation_player.queue("attack_down_left")
+			print("attack_down_left")
+		elif direction == piece.side_directions.right:
+			animation_player.queue("attack_down_right")
+			print("attack_down_right")
+	else:
+		if direction == piece.side_directions.left:
+			animation_player.queue("attack_front_left")
+			print("attack_front_left")
+		elif direction == piece.side_directions.right:
+			animation_player.queue("attack_front_right")
+			print("attack_front_right")
+		
 	await animation_player.animation_finished
 	z_index = 0
 	

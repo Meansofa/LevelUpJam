@@ -11,7 +11,10 @@ enum teams {player, opponent}
 @export var damage := 1
 @export var elixer := 1
 
-#enum directions {forward, down, left, right}
+enum side_directions {nothing, left, right} #used for adjacent attackers
 #@export var attack_direction: directions = directions.forward
 @export_flags("forward:1", "far_forward:2") var attack_direction = 1
 @export var attack_mode : bool
+
+enum special_skills {nothing, attack_adjacent, attack_strike}
+@export var special_skill : special_skills = special_skills.nothing

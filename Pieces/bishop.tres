@@ -12,4 +12,5 @@ opponent_pawn_texture = ExtResource("1_yl517")
 health = 2
 damage = 3
 elixer = 2
+special_skill = 1
 metadata/_custom_type_script = "uid://b857rlbbl7w2n"

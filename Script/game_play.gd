@@ -98,36 +98,77 @@ func simulate_attack():
 				var square : Area2D = %Board.get_node("Square" + str(calculate_index(x, y))) #the node in game corresponding to an index in the board
 				var front_piece = null #piece in front of the pawn
 				var front_square : Area2D #square in front of the pawn
-				if pawn.team  == piece.teams.player:
-					if x - pawn.attack_direction >= 0:
-						front_piece = board[x - pawn.attack_direction][y]
+				if pawn.team == piece.teams.player:
+					if x - pawn.attack_direction >= 0: #If not on edge
+						front_piece = board[x - pawn.attack_direction][y] #assign a var to the piece/square infront of this pawn 
+						if pawn.special_skill == piece.special_skills.attack_adjacent:
+							var front_left_piece = null
+							var front_right_piece = null
+							var front_left_square : Area2D
+							var front_right_square : Area2D
+							if y - 1 >= 0:
+								front_left_piece = board[x - pawn.attack_direction][y - 1]
+								if front_left_piece is piece and front_left_piece.team == piece.teams.opponent:
+									front_left_square = %Board.get_node("Square" + str(calculate_index(x - pawn.attack_direction, y - 1)))
+									await attack(pawn, square, front_left_piece, front_left_square, piece.side_directions.left)
+							if y + 1 < cols:
+								front_right_piece = board[x - pawn.attack_direction][y + 1]
+								if front_right_piece is piece and front_right_piece.team == piece.teams.opponent:
+									front_right_square = %Board.get_node("Square" + str(calculate_index(x - pawn.attack_direction, y + 1)))
+									await attack(pawn, square, front_right_piece, front_right_square, piece.side_directions.right)
+							continue
+
+
 					if front_piece is piece: #This makes sure to only get piece while not needing to check if it is on edge
 						front_square = %Board.get_node("Square" + str(calculate_index(x - pawn.attack_direction, y))) #the node in game corresponding to an index in the board
 						if front_piece.team == piece.teams.opponent:
-							await attack(pawn, square, front_piece, front_square)
-				elif pawn.team  == piece.teams.opponent:
-					if x + pawn.attack_direction < rows:
-						front_piece = board[x + pawn.attack_direction][y]
+							await attack(pawn, square, front_piece, front_square, piece.side_directions.nothing)
+				elif pawn.team == piece.teams.opponent:
+					if x + pawn.attack_direction < rows: #If not on edge
+						front_piece = board[x + pawn.attack_direction][y] #assign a var to the piece/square infront of this pawn
+						if pawn.special_skill == piece.special_skills.attack_adjacent:
+							var front_left_piece = null
+							var front_right_piece = null
+							var front_left_square : Area2D
+							var front_right_square : Area2D
+							if y - 1 >= 0:
+								front_left_piece = board[x + pawn.attack_direction][y - 1]
+								if front_left_piece is piece and front_left_piece.team == piece.teams.player:
+									front_left_square = %Board.get_node("Square" + str(calculate_index(x - pawn.attack_direction, y - 1)))
+									await attack(pawn, square, front_left_piece, front_left_square, piece.side_directions.left)
+							if y + 1 < cols:
+								front_right_piece = board[x + pawn.attack_direction][y + 1]
+								if front_right_piece is piece and front_right_piece.team == piece.teams.player:
+									front_right_square = %Board.get_node("Square" + str(calculate_index(x - pawn.attack_direction, y + 1)))
+									await attack(pawn, square, front_right_piece, front_right_square, piece.side_directions.right)
+							continue
+
+
 					if front_piece is piece: #This makes sure to only get piece while not needing to check if it is on edge
 						front_square = %Board.get_node("Square" + str(calculate_index(x + pawn.attack_direction, y))) #the node in game corresponding to an index in the board
 						if front_piece.team == piece.teams.player:
-							await attack(pawn, square, front_piece, front_square)
+							await attack(pawn, square, front_piece, front_square, piece.side_directions.nothing)
 	print(name, "> attack phase finished")
 
 	#ATTACK------------------------------------------------------------
-func attack(pawn : piece, square : Area2D, front_piece : piece, front_square : Area2D):
+func attack(pawn : piece, square : Area2D, front_piece : piece, front_square : Area2D, side_direction : piece.side_directions):
+	pawn.attack_mode = true
+	square.attack_mode(true)
+	front_square.attack_mode(true)
+	if pawn.damage <= 0:
+		return
 	if pawn.attack_mode:
 		front_piece.health -= pawn.damage
-		await square.attack_pawn(front_square, front_piece) #IMPORTANT using await, only this function will wait, other functions will keep on going, so this will get delayed
+		if pawn.special_skill == piece.special_skills.attack_adjacent:
+			await square.attack_adjacent_pawn(front_square, front_piece, side_direction)
+		else:
+			await square.attack_pawn(front_square, front_piece) #IMPORTANT using await, only this function will wait, other functions will keep on going, so this will get delayed
 		print("front_piece.health: ", front_piece.health)
 		if front_piece.health <= 0: #if pawn killed it's opponent disable attack_mode
 			pawn.attack_mode = false
 			square.attack_mode(false)
 			front_square.attack_mode(false)
-	else:
-		pawn.attack_mode = true
-		square.attack_mode(true)
-		front_square.attack_mode(true)
+
 
 #IMPORTANT-only runs if end turn is pressed---------------------------------------------
 func simulate():
@@ -149,7 +190,6 @@ func simulate_order():
 	await simulate_attack() #simulate attacks
 	player_move() #move the player first
 	opponent_move() #move the opponent's pieces
-	print("WUHHHHHHH")
 	await update_simulation() #change animation
 	view_board()
 #IMPORTANT----------------------------------------------
