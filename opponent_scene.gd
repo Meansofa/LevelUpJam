@@ -1,5 +1,6 @@
 extends Node2D
 
+@export var win_sfx : AudioStreamWAV
 @onready var animation_player : AnimationPlayer = %AnimationPlayer
 @export var player_1_texture : CompressedTexture2D
 @export var player_2_texture : CompressedTexture2D
@@ -26,6 +27,7 @@ func change_player_frame(operator : String):
 
 func round_win():
 	%Crown.add_crown()
+	GlobalAudioPlayer.add_sfx(win_sfx)
 
 func get_crown() -> int:
 	return %Crown.curr_crown

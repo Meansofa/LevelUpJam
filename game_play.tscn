@@ -1,7 +1,6 @@
-[gd_scene load_steps=46 format=3 uid="uid://cv50k8ineexkg"]
+[gd_scene load_steps=42 format=3 uid="uid://cv50k8ineexkg"]
 
 [ext_resource type="Script" uid="uid://r10i8cnvrsr1" path="res://Script/game_play.gd" id="1_0mbhd"]
-[ext_resource type="Texture2D" uid="uid://clgoqclmfrrg2" path="res://Art/Pieces/chair.png" id="2_a1b81"]
 [ext_resource type="Resource" uid="uid://bg0scmb60ole" path="res://Pieces/rook.tres" id="2_uycrd"]
 [ext_resource type="Resource" uid="uid://ccijcv8lt06pm" path="res://Pieces/bishop.tres" id="3_7bf21"]
 [ext_resource type="Theme" uid="uid://buamt54f6ol74" path="res://Themes/main.tres" id="4_x2ujm"]
@@ -13,6 +12,7 @@
 [ext_resource type="Script" uid="uid://ehuqivrlrvic" path="res://Script/card_stash.gd" id="9_xjpow"]
 [ext_resource type="Texture2D" uid="uid://cqcjqxj2r8q3q" path="res://Art/Pieces/elixer.png" id="10_3ux7j"]
 [ext_resource type="Script" uid="uid://b1kol4jahgr23" path="res://Script/all_cards.gd" id="11_uycrd"]
+[ext_resource type="Script" uid="uid://c347pdmmh3acp" path="res://base_button.gd" id="12_p31n6"]
 [ext_resource type="Script" uid="uid://b857rlbbl7w2n" path="res://Pieces/base_piece.gd" id="12_x2ujm"]
 [ext_resource type="Resource" uid="uid://bp7sx5327bjvn" path="res://Pieces/pawn.tres" id="13_xjpow"]
 [ext_resource type="Script" uid="uid://cml44y27vephb" path="res://Script/block_inputs.gd" id="16_a1b81"]
@@ -23,23 +23,6 @@
 [ext_resource type="Resource" uid="uid://b1th3lii1yuxd" path="res://Pieces/horse.tres" id="18_v2hr5"]
 [ext_resource type="Resource" uid="uid://cy23wl0xvyy0n" path="res://Pieces/hamster.tres" id="19_jtsxe"]
 [ext_resource type="Script" uid="uid://7p38mv8u5r1q" path="res://Script/pick_cards.gd" id="22_p31n6"]
-
-[sub_resource type="Gradient" id="Gradient_htgex"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(0.26666668, 0.8745098, 0.6117647, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_3ux7j"]
-gradient = SubResource("Gradient_htgex")
-
-[sub_resource type="Gradient" id="Gradient_a1b81"]
-interpolation_mode = 2
-colors = PackedColorArray(0, 0, 1, 0.25882354, 1, 0, 0, 0.6627451)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_a1b81"]
-gradient = SubResource("Gradient_a1b81")
-width = 40
-height = 16
-fill_from = Vector2(1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vivmo"]
 bg_color = Color(0.9490196, 0.5764706, 0.14901961, 1)
@@ -325,6 +308,8 @@ func _on_pressed() -> void:
 resource_name = "option"
 script/source = "extends Button
 
+@onready var click_sfx : AudioStreamWAV = load(\"res://Art/Music/click.wav\")
+
 static var cards_picked := 0
 var card : piece
 
@@ -340,6 +325,8 @@ func get_random_card():
 	enable_all_options()
 
 func add_pawn_to_player_stash():
+	GlobalAudioPlayer.add_sfx(click_sfx)
+
 	cards_picked += 1
 	%CardStash.add_card_to_stash(card)
 	disable_all_options()
@@ -407,37 +394,6 @@ metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(360, 640)
-
-[node name="Background" type="CanvasGroup" parent="."]
-
-[node name="Background2" type="TextureRect" parent="Background"]
-z_index = -100
-offset_top = 24.0
-offset_right = 720.0
-offset_bottom = 1280.0
-texture = SubResource("GradientTexture2D_3ux7j")
-
-[node name="Background" type="TextureRect" parent="Background"]
-self_modulate = Color(0.5882353, 0.84705883, 1, 1)
-z_index = -100
-offset_right = 720.0
-offset_bottom = 1280.0
-texture = ExtResource("2_a1b81")
-
-[node name="Background3" type="TextureRect" parent="Background"]
-modulate = Color(0.74509805, 0, 1, 0.59607846)
-z_index = -100
-offset_top = 1088.0
-offset_right = 720.0
-offset_bottom = 1280.0
-texture = SubResource("GradientTexture2D_3ux7j")
-
-[node name="GradientColor" type="TextureRect" parent="Background"]
-unique_name_in_owner = true
-z_index = -100
-offset_right = 720.0
-offset_bottom = 1080.0
-texture = SubResource("GradientTexture2D_a1b81")
 
 [node name="CardStash" type="Control" parent="."]
 unique_name_in_owner = true
@@ -970,6 +926,7 @@ offset_bottom = 1055.0
 focus_mode = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_htgex")
 text = "End Turn"
+script = ExtResource("12_p31n6")
 
 [node name="Elixer" type="Control" parent="."]
 unique_name_in_owner = true
@@ -1050,6 +1007,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("4_x2ujm")
+metadata/_edit_lock_ = true
 
 [node name="BlockInputs" type="PanelContainer" parent="Displays"]
 unique_name_in_owner = true
@@ -1180,6 +1138,9 @@ script = SubResource("GDScript_3ux7j")
 [node name="Player" parent="." instance=ExtResource("16_kgpdb")]
 unique_name_in_owner = true
 
+[node name="Control" parent="Player" index="0"]
+metadata/_edit_lock_ = true
+
 [node name="Player" parent="Player/Control" index="0"]
 offset_top = 848.0
 offset_bottom = 976.0
@@ -1194,6 +1155,7 @@ offset_right = 72.0
 offset_bottom = -48.0
 
 [node name="AfterRounds" type="Control" parent="."]
+unique_name_in_owner = true
 z_index = 100
 custom_minimum_size = Vector2(720, 1280)
 layout_mode = 3
@@ -1202,6 +1164,7 @@ offset_right = 720.0
 offset_bottom = 1280.0
 mouse_filter = 2
 theme = ExtResource("4_x2ujm")
+metadata/_edit_lock_ = true
 
 [node name="PickCards" type="PanelContainer" parent="AfterRounds"]
 unique_name_in_owner = true

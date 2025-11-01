@@ -1,6 +1,8 @@
 extends Area2D
 
 @onready var animation_player : AnimationPlayer = %AnimationPlayer
+@export var damage_sfx : AudioStreamWAV
+@export var death_sfx : AudioStreamWAV
 
 func update_visuals(pawn : piece):
 	change_health(pawn.health)
@@ -32,6 +34,7 @@ func is_pawn_dead(pawn : piece) -> bool:
 			animation_player.queue("death")
 		else:
 			animation_player.play("death")
+		GlobalAudioPlayer.add_sfx(death_sfx)
 		await animation_player.animation_finished
 		return true
 	return false
@@ -52,10 +55,16 @@ func change_texture(value : CompressedTexture2D):
 func attack_pawn(square : Area2D, pawn : piece) -> bool:
 	z_index = 100
 	
-	animation_player.play("attack")
+	if pawn.team == pawn.teams.player:
+		animation_player.play("attack_down")
+	else:
+		animation_player.play("attack")
 	await animation_player.animation_finished
 	z_index = 0
 	
 	square.update_visuals(pawn) #update the health value
 	
 	return true
+
+func play_attack():
+	GlobalAudioPlayer.add_sfx(damage_sfx)

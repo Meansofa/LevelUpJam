@@ -27,8 +27,8 @@ func new_round():
 	%CardStash.new_round()
 	%Player.new_round()
 	opponent_scene.new_round()
-	%PickCards.visible = true
-	%PickCards.new_round()
+	%AfterRounds.visible = true
+	%AfterRounds.new_round()
 
 func round_won(winner : piece.teams):
 	%BlockInputs.visible = true
@@ -203,6 +203,8 @@ func damage_opponent():#If the player's pieces reaches the opponent's edge
 		%BlockInputs.visible = true
 		if %Player.get_crown() >= 3:
 			%OverallWin.visible = true
+			%Round.visible = false
+			%AfterRounds.visible = false
 			%winner_label.text = "[b][center]YOU WON!👑"
 
 func damage_player(): #If the opponent's pieces reaches the player's edge
@@ -213,6 +215,8 @@ func damage_player(): #If the opponent's pieces reaches the player's edge
 		%BlockInputs.visible = true
 		if opponent_scene.get_crown() >= 3:
 			%OverallWin.visible = true
+			%Round.visible = false
+			%AfterRounds.visible = false
 			%winner_label.text = "[b][center]YOU LOST!😒"
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
