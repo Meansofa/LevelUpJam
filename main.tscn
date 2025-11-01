@@ -1,6 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://1ii02qh8q237"]
+[gd_scene load_steps=30 format=3 uid="uid://1ii02qh8q237"]
 
 [ext_resource type="Script" uid="uid://cnxb5wywldhy3" path="res://main.gd" id="1_0xm2m"]
+[ext_resource type="AudioStream" uid="uid://b5wvefsffnfuo" path="res://Art/Music/the-world-of-8-bit-games-301273.mp3" id="2_4c57u"]
+[ext_resource type="AudioStream" uid="uid://8cl8je7sl1r7" path="res://Art/Music/so-happy-with-my-8-bit-game-301275.mp3" id="2_efxa6"]
 [ext_resource type="PackedScene" uid="uid://c0qpjsiu58e47" path="res://opponent_scene.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://cv50k8ineexkg" path="res://game_play.tscn" id="4_1bvp3"]
 [ext_resource type="Theme" uid="uid://cvxfg8jiluc8k" path="res://Themes/MainMenu.tres" id="4_7mycd"]
@@ -9,6 +11,45 @@
 [ext_resource type="Theme" uid="uid://buamt54f6ol74" path="res://Themes/main.tres" id="5_lquwl"]
 [ext_resource type="Script" uid="uid://c347pdmmh3acp" path="res://base_button.gd" id="6_kek77"]
 [ext_resource type="Texture2D" uid="uid://clgoqclmfrrg2" path="res://Art/Pieces/chair.png" id="8_5vw27"]
+
+[sub_resource type="Animation" id="Animation_efxa6"]
+resource_name = "Title"
+length = 4.0
+loop_mode = 2
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Menu/Ttitle:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": ["[center][b]Card Chess", "[center][b]cArd cHess", "[center][b]caRd chEss", "[center][b]carD cheSs", "[center][b]card chesS", "[center][b]Card Chess"]
+}
+
+[sub_resource type="Animation" id="Animation_dg77c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Menu/Ttitle:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["[center][b]Card Chess"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ycdy4"]
+_data = {
+&"RESET": SubResource("Animation_dg77c"),
+&"Title": SubResource("Animation_efxa6")
+}
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7mycd"]
 
@@ -20,6 +61,23 @@ script/source = "extends CheckButton
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	toggled.emit(button_pressed)
+"
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dg77c"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_efxa6"]
+
+[sub_resource type="GDScript" id="GDScript_efxa6"]
+resource_name = "Mute"
+script/source = "extends Button
+
+func _on_pressed() -> void:
+	if AudioServer.is_bus_mute(1):
+		AudioServer.set_bus_mute(1, false)
+		text = \"🔊\"
+	else:
+		AudioServer.set_bus_mute(1, true)
+		text = \"🔇\"
 "
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7mycd"]
@@ -67,6 +125,7 @@ fill_from = Vector2(1, 1)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_0xm2m")
+in_game_music = ExtResource("2_efxa6")
 player_packed_scene = ExtResource("4_1bvp3")
 opponent_packed_scene = ExtResource("3_h2yge")
 rock_paper_scissors_scene = ExtResource("4_272bh")
@@ -88,13 +147,20 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("4_7mycd")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Menu"]
+[node name="Ttitle" type="RichTextLabel" parent="CanvasLayer/Menu"]
 layout_mode = 2
 bbcode_enabled = true
 text = "[center][b]Card Chess"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
+
+[node name="MenuAnimation" type="AnimationPlayer" parent="CanvasLayer/Menu/Ttitle"]
+root_node = NodePath("../../../..")
+libraries = {
+&"": SubResource("AnimationLibrary_ycdy4")
+}
+autoplay = "Title"
 
 [node name="VSeparator" type="VSeparator" parent="CanvasLayer/Menu"]
 custom_minimum_size = Vector2(0, 32)
@@ -211,12 +277,28 @@ script = ExtResource("6_kek77")
 
 [node name="Settings" type="Button" parent="CanvasLayer/Settings"]
 z_index = 100
+texture_filter = 2
 layout_mode = 0
 offset_top = 40.0
 offset_right = 32.0
 offset_bottom = 71.0
 focus_mode = 0
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxEmpty_dg77c")
 text = "⚙️"
+
+[node name="Mute" type="Button" parent="CanvasLayer/Settings"]
+z_index = 100
+texture_filter = 2
+layout_mode = 0
+offset_top = 80.0
+offset_right = 32.0
+offset_bottom = 112.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxEmpty_efxa6")
+text = "🔊"
+script = SubResource("GDScript_efxa6")
 
 [node name="Loading" type="PanelContainer" parent="CanvasLayer/Settings"]
 unique_name_in_owner = true
@@ -459,9 +541,33 @@ offset_bottom = 1080.0
 texture = SubResource("GradientTexture2D_4c57u")
 metadata/_edit_lock_ = true
 
+[node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("2_4c57u")
+volume_db = -14.733
+autoplay = true
+bus = &"Background"
+
+[node name="Credits" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+clip_contents = false
+offset_left = 8.0
+offset_top = 848.0
+offset_right = 248.0
+offset_bottom = 1072.0
+bbcode_enabled = true
+text = "Credits:
+Menu music: DJARTMUSIC
+In-game music: DJARTMUSIC
+"
+fit_content = true
+autowrap_mode = 2
+vertical_alignment = 2
+
 [connection signal="pressed" from="CanvasLayer/Menu/local_checkbox" to="." method="_on_check_button_pressed"]
 [connection signal="toggled" from="CanvasLayer/Menu/local_checkbox" to="." method="_on_check_button_toggled"]
 [connection signal="pressed" from="CanvasLayer/Menu/HBoxContainer/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/Menu/HBoxContainer/Join" to="." method="_on_join_pressed"]
 [connection signal="pressed" from="CanvasLayer/Settings/Restart" to="CanvasLayer/Settings" method="_on_restart_pressed"]
 [connection signal="pressed" from="CanvasLayer/Settings/Settings" to="CanvasLayer/Settings" method="_on_restart_pressed"]
+[connection signal="pressed" from="CanvasLayer/Settings/Mute" to="CanvasLayer/Settings/Mute" method="_on_pressed"]

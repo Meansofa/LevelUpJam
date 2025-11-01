@@ -23,10 +23,10 @@ GlobalAudioPlayer="*res://Script/GlobalAudioPlayer.gd"
 
 window/size/viewport_width=720
 window/size/viewport_height=1280
-window/size/borderless=true
 window/size/window_width_override=360
 window/size/window_height_override=640
 window/stretch/mode="viewport"
+window/handheld/orientation=1
 mouse_cursor/custom_image="uid://cdmb2er64lvkl"
 
 [editor_plugins]

@@ -7,7 +7,7 @@ extends Control
 @export var elixer_texture : CompressedTexture2D
 @export var start_elixer_count := 3
 @export var max_elixer := 10
-@export var end_turn_elixer_count := 1 #how much elixer is generated after pressing end turn
+@export var end_turn_elixer_count := 2 #how much elixer is generated after pressing end turn
 
 func _ready() -> void:
 	%EndTurn.connect("pressed", end_turn_elixer) #after pressing end turn generate elixer

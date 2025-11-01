@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="piece" load_steps=5 format=3 uid="uid://c2ehyvkwld1ml"]
+
+[ext_resource type="Script" uid="uid://b857rlbbl7w2n" path="res://Pieces/base_piece.gd" id="1_c7tyg"]
+[ext_resource type="Texture2D" uid="uid://wvc67lpo0pve" path="res://Art/Pieces/Queen.png" id="1_k7ppc"]
+[ext_resource type="Texture2D" uid="uid://cy5cxg8of1db5" path="res://Art/Pieces/Player_Queen.png" id="2_w6i7k"]
+[ext_resource type="Texture2D" uid="uid://djcnqi2ve3pcy" path="res://Art/skills/attack_adjacent.png" id="4_ymlf5"]
+
+[resource]
+script = ExtResource("1_c7tyg")
+name = "Queen"
+player_pawn_texture = ExtResource("2_w6i7k")
+opponent_pawn_texture = ExtResource("1_k7ppc")
+skill_texture = ExtResource("4_ymlf5")
+health = 5
+damage = 5
+elixer = 3
+special_skill = 1
+metadata/_custom_type_script = "uid://b857rlbbl7w2n"

@@ -7,6 +7,7 @@ extends Area2D
 func update_visuals(pawn : piece):
 	change_health(pawn.health)
 	change_damage(pawn.damage)
+	change_skill(pawn.skill_texture)
 	var player_id = multiplayer.get_unique_id()
 	if player_id == 1: #IF host
 		if pawn.team == piece.teams.player:
@@ -48,6 +49,10 @@ func change_damage(value: int):
 
 func change_texture(value : CompressedTexture2D):
 	%pawn_texture.texture_normal = value
+
+func change_skill(value : CompressedTexture2D):
+	%skill.texture = value
+
 
 func attack_pawn(square : Area2D, pawn : piece) -> bool:
 	z_index = 100

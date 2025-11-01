@@ -6,6 +6,7 @@ enum teams {player, opponent}
 @export var team : teams = teams.player
 @export var player_pawn_texture : CompressedTexture2D
 @export var opponent_pawn_texture : CompressedTexture2D
+@export var skill_texture : CompressedTexture2D
 
 @export var health := 1
 @export var damage := 1
@@ -16,5 +17,5 @@ enum side_directions {nothing, left, right} #used for adjacent attackers
 @export_flags("forward:1", "far_forward:2") var attack_direction = 1
 @export var attack_mode : bool
 
-enum special_skills {nothing, attack_adjacent, attack_strike}
+enum special_skills {nothing, attack_adjacent, attack_strike, instant_kill}
 @export var special_skill : special_skills = special_skills.nothing

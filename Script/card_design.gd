@@ -13,6 +13,7 @@ func update_visuals(card : piece):
 	%health_label.text = "[b]" + str(card.health)
 	%card_label.text = "[center]" + card.name
 	%damage_label.text = "[b]" + str(card.damage)
+	%Skill.texture = card.skill_texture
 	var player_id = multiplayer.get_unique_id()
 	if player_id == 1:
 		$%pawn_texture.texture_normal = card.player_pawn_texture

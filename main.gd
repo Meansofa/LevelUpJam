@@ -1,5 +1,7 @@
 extends Node2D
 
+@export var in_game_music : AudioStreamMP3
+
 @export var player_packed_scene : PackedScene
 @export var opponent_packed_scene : PackedScene
 
@@ -77,6 +79,8 @@ func _on_join_pressed() -> void:
 
 #If you pressed join and you got connected
 func _on_connected_to_server():
+	%BackgroundMusic.stream = in_game_music
+	%BackgroundMusic.play()
 	var player_scene = player_packed_scene.instantiate()
 	add_child(player_scene)
 	
@@ -104,6 +108,8 @@ func transfer_data(player_scene : Node2D):
 #This only shows if you're the host
 func _on_peer_connected(peer_id):
 	print("Player: ", peer_id, " joined!")
+	%BackgroundMusic.stream = in_game_music
+	%BackgroundMusic.play()
 	%WaitingForPlayer.visible = false
 	
 	var rock_paper_scissors = rock_paper_scissors_scene.instantiate()
@@ -131,6 +137,7 @@ func _disable_buttons():
 	%OnlineID.visible = false
 	%JoinID.visible = false
 	%local_checkbox.visible = false
+	%Credits.visible = false
 
 func _enable_buttons():
 	%Menu.visible = true
@@ -141,6 +148,7 @@ func _enable_buttons():
 	%OnlineID.visible = true
 	%JoinID.visible = true
 	%local_checkbox.visible = true
+	%Credits.visible = true
 
 func restart():
 	get_tree().reload_current_scene()

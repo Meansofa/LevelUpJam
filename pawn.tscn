@@ -459,60 +459,240 @@ tracks/10/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_1i5pp"]
-resource_name = "death"
-length = 0.8
-tracks/0/type = "value"
+[sub_resource type="Animation" id="Animation_g7qeg"]
+resource_name = "attack_down_left"
+step = 0.0333333
+tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("pawn:modulate")
+tracks/0/path = NodePath("pawn/Damage:position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.14366055, 0.6333333, 0.7333333, 0.76666665),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 0.60784316, 0.60784316, 1), Color(1, 0, 0, 0.3882353), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"handle_modes": PackedInt32Array(2, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(40, 0, 0, 0.083333336, 0, 31.758953, -0.023333333, 1.8666667, 0.060000002, -4.8, 0, -0.083333336, 6.666667, 0, 0, 0, -0.061111115, -4.478827, 0.01111111, 0.8143321, 31.758953, -0.023333333, 1.8666667, 0.060000002, -4.8, 40, 0, 0, 0.083333336, 0),
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.7, 0.76666665, 0.8)
 }
-tracks/1/type = "value"
+tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:visible")
+tracks/1/path = NodePath("pawn/Damage:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.7310286),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
+"handle_modes": PackedInt32Array(2, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(64, 0, 0, 0.083333336, 0, 44.22149, -0.023333333, 4.48, 0.060000002, -11.52, -32, -0.083333336, 16, 0, 0, -32, -0.061111115, -10.749185, 0.01111111, 1.954397, 44.22149, -0.023333333, 4.48, 0.060000002, -11.52, 64, 0, 0, 0.083333336, 0),
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.7, 0.76666665, 0.8)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pawn/Damage/Sprite2D5:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.58956206, -0.05666667, -0.09826034, 0, 0, 1.5714695, -0.015000001, -0.16365124, 0, 0, -0.33870015, -0.011666666, 0.08223261, 0.031666666, -0.22320281, 0, -0.050000004, -0.056450028, 0, 0),
+"times": PackedFloat32Array(0, 0.34, 0.43, 0.5, 0.8)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("pawn/Damage/Sprite2D4:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2, 2, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -0.35527506, -0.061111115, 0.059212513, 0, 0, 0.5732895, -0.0055555603, -0.15476076, 0, 0, 0.2005761, -0.02222222, 0.062118903, 0, 0, 0, -0.04444444, 0.03342935, 0, 0),
+"times": PackedFloat32Array(0, 0.36666667, 0.40000004, 0.53333336, 0.8)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("pawn/Damage/Sprite2D5:position:x")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 40.58781, -0.058333334, -6.764635, 0, 0, -14.194524, -0.025000002, 9.130389, 0, 0, 0, -0.050000004, -2.3657541, 0, 0),
+"times": PackedFloat32Array(0, 0.35, 0.5, 0.8)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("pawn/Damage/Sprite2D5:position:y")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1.41075, -0.058333334, -0.23512502, 0, 0, -3.666851, -0.025000002, 0.8462668, 0, 0, 0, -0.050000004, -0.61114186, 0, 0),
+"times": PackedFloat32Array(0, 0.35, 0.5, 0.8)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("pawn/Damage/Sprite2D4:position:x")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2, 2, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -39.412186, -0.058333334, 6.568698, 0, 0, -14.912708, -0.00833334, -4.083246, 0, 0, 1.6138954, -0.01111111, -0.41424188, 0.055555552, 2.0712094, 0, -0.055555552, -9.06435, 0, 0),
+"times": PackedFloat32Array(0, 0.35, 0.40000004, 0.4666667, 0.8)
+}
+tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("pawn/Damage/Sprite2D4:position:y")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2, 2, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1.4107513, -0.058333334, -0.23512524, 0, 0, 2.6095114, -0.00833334, -0.19979335, 0, 0, -4.1266546, -0.01111111, 0.07248643, 0.055555552, -0.36243215, 0, -0.055555552, 1.9788907, 0, 0),
+"times": PackedFloat32Array(0, 0.35, 0.40000004, 0.4666667, 0.8)
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("pawn:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.56666666, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 32), Vector2(-132, 144), Vector2(0, 0)]
+}
+tracks/9/type = "method"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath(".")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0.73333335),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_attack"
+}]
 }
 
-[sub_resource type="Animation" id="Animation_pjytt"]
-resource_name = "take_damage"
-length = 0.3
-tracks/0/type = "value"
+[sub_resource type="Animation" id="Animation_scsyy"]
+resource_name = "attack_down_right"
+step = 0.0333333
+tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("pawn/Heart:scale")
+tracks/0/path = NodePath("pawn/Damage:position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.116666675, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(1.5, 1.5), Vector2(1, 1)]
+"handle_modes": PackedInt32Array(2, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(40, 0, 0, 0.083333336, 0, 31.758953, -0.023333333, 1.8666667, 0.060000002, -4.8, 0, -0.083333336, 6.666667, 0, 0, 0, -0.061111115, -4.478827, 0.01111111, 0.8143321, 31.758953, -0.023333333, 1.8666667, 0.060000002, -4.8, 40, 0, 0, 0.083333336, 0),
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.7, 0.76666665, 0.8)
 }
-tracks/1/type = "value"
+tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("pawn/Heart:modulate")
+tracks/1/path = NodePath("pawn/Damage:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.16666667, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1),
+"handle_modes": PackedInt32Array(2, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(64, 0, 0, 0.083333336, 0, 44.22149, -0.023333333, 4.48, 0.060000002, -11.52, -32, -0.083333336, 16, 0, 0, -32, -0.061111115, -10.749185, 0.01111111, 1.954397, 44.22149, -0.023333333, 4.48, 0.060000002, -11.52, 64, 0, 0, 0.083333336, 0),
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.7, 0.76666665, 0.8)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pawn/Damage/Sprite2D5:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.58956206, -0.05666667, -0.09826034, 0, 0, 1.5714695, -0.015000001, -0.16365124, 0, 0, -0.33870015, -0.011666666, 0.08223261, 0.031666666, -0.22320281, 0, -0.050000004, -0.056450028, 0, 0),
+"times": PackedFloat32Array(0, 0.34, 0.43, 0.5, 0.8)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("pawn/Damage/Sprite2D4:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2, 2, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -0.35527506, -0.061111115, 0.059212513, 0, 0, 0.5732895, -0.0055555603, -0.15476076, 0, 0, 0.2005761, -0.02222222, 0.062118903, 0, 0, 0, -0.04444444, 0.03342935, 0, 0),
+"times": PackedFloat32Array(0, 0.36666667, 0.40000004, 0.53333336, 0.8)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("pawn/Damage/Sprite2D5:position:x")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 40.58781, -0.058333334, -6.764635, 0, 0, -14.194524, -0.025000002, 9.130389, 0, 0, 0, -0.050000004, -2.3657541, 0, 0),
+"times": PackedFloat32Array(0, 0.35, 0.5, 0.8)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("pawn/Damage/Sprite2D5:position:y")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1.41075, -0.058333334, -0.23512502, 0, 0, -3.666851, -0.025000002, 0.8462668, 0, 0, 0, -0.050000004, -0.61114186, 0, 0),
+"times": PackedFloat32Array(0, 0.35, 0.5, 0.8)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("pawn/Damage/Sprite2D4:position:x")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2, 2, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -39.412186, -0.058333334, 6.568698, 0, 0, -14.912708, -0.00833334, -4.083246, 0, 0, 1.6138954, -0.01111111, -0.41424188, 0.055555552, 2.0712094, 0, -0.055555552, -9.06435, 0, 0),
+"times": PackedFloat32Array(0, 0.35, 0.40000004, 0.4666667, 0.8)
+}
+tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("pawn/Damage/Sprite2D4:position:y")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2, 2, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1.4107513, -0.058333334, -0.23512524, 0, 0, 2.6095114, -0.00833334, -0.19979335, 0, 0, -4.1266546, -0.01111111, 0.07248643, 0.055555552, -0.36243215, 0, -0.055555552, 1.9788907, 0, 0),
+"times": PackedFloat32Array(0, 0.35, 0.40000004, 0.4666667, 0.8)
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("pawn:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.56666666, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(0.5921569, 0, 0, 1), Color(1, 1, 1, 1)]
+"values": [Vector2(0, 0), Vector2(0, 32), Vector2(132, 144), Vector2(0, 0)]
+}
+tracks/9/type = "method"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath(".")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0.73333335),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_attack"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_4c16a"]
@@ -751,240 +931,60 @@ tracks/9/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_scsyy"]
-resource_name = "attack_down_right"
-step = 0.0333333
-tracks/0/type = "bezier"
+[sub_resource type="Animation" id="Animation_1i5pp"]
+resource_name = "death"
+length = 0.8
+tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("pawn/Damage:position:x")
+tracks/0/path = NodePath("pawn:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(2, 0, 0, 0, 0, 0),
-"points": PackedFloat32Array(40, 0, 0, 0.083333336, 0, 31.758953, -0.023333333, 1.8666667, 0.060000002, -4.8, 0, -0.083333336, 6.666667, 0, 0, 0, -0.061111115, -4.478827, 0.01111111, 0.8143321, 31.758953, -0.023333333, 1.8666667, 0.060000002, -4.8, 40, 0, 0, 0.083333336, 0),
-"times": PackedFloat32Array(0, 0.2, 0.3, 0.7, 0.76666665, 0.8)
+"times": PackedFloat32Array(0, 0.14366055, 0.6333333, 0.7333333, 0.76666665),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.60784316, 0.60784316, 1), Color(1, 0, 0, 0.3882353), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
-tracks/1/type = "bezier"
+tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("pawn/Damage:position:y")
+tracks/1/path = NodePath(".:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"handle_modes": PackedInt32Array(2, 0, 0, 0, 0, 0),
-"points": PackedFloat32Array(64, 0, 0, 0.083333336, 0, 44.22149, -0.023333333, 4.48, 0.060000002, -11.52, -32, -0.083333336, 16, 0, 0, -32, -0.061111115, -10.749185, 0.01111111, 1.954397, 44.22149, -0.023333333, 4.48, 0.060000002, -11.52, 64, 0, 0, 0.083333336, 0),
-"times": PackedFloat32Array(0, 0.2, 0.3, 0.7, 0.76666665, 0.8)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("pawn/Damage/Sprite2D5:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0, 2),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.58956206, -0.05666667, -0.09826034, 0, 0, 1.5714695, -0.015000001, -0.16365124, 0, 0, -0.33870015, -0.011666666, 0.08223261, 0.031666666, -0.22320281, 0, -0.050000004, -0.056450028, 0, 0),
-"times": PackedFloat32Array(0, 0.34, 0.43, 0.5, 0.8)
-}
-tracks/3/type = "bezier"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("pawn/Damage/Sprite2D4:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2, 2, 2),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -0.35527506, -0.061111115, 0.059212513, 0, 0, 0.5732895, -0.0055555603, -0.15476076, 0, 0, 0.2005761, -0.02222222, 0.062118903, 0, 0, 0, -0.04444444, 0.03342935, 0, 0),
-"times": PackedFloat32Array(0, 0.36666667, 0.40000004, 0.53333336, 0.8)
-}
-tracks/4/type = "bezier"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("pawn/Damage/Sprite2D5:position:x")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2, 2),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 40.58781, -0.058333334, -6.764635, 0, 0, -14.194524, -0.025000002, 9.130389, 0, 0, 0, -0.050000004, -2.3657541, 0, 0),
-"times": PackedFloat32Array(0, 0.35, 0.5, 0.8)
-}
-tracks/5/type = "bezier"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("pawn/Damage/Sprite2D5:position:y")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2, 2),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1.41075, -0.058333334, -0.23512502, 0, 0, -3.666851, -0.025000002, 0.8462668, 0, 0, 0, -0.050000004, -0.61114186, 0, 0),
-"times": PackedFloat32Array(0, 0.35, 0.5, 0.8)
-}
-tracks/6/type = "bezier"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("pawn/Damage/Sprite2D4:position:x")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2, 2, 2),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -39.412186, -0.058333334, 6.568698, 0, 0, -14.912708, -0.00833334, -4.083246, 0, 0, 1.6138954, -0.01111111, -0.41424188, 0.055555552, 2.0712094, 0, -0.055555552, -9.06435, 0, 0),
-"times": PackedFloat32Array(0, 0.35, 0.40000004, 0.4666667, 0.8)
-}
-tracks/7/type = "bezier"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("pawn/Damage/Sprite2D4:position:y")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2, 2, 2),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1.4107513, -0.058333334, -0.23512524, 0, 0, 2.6095114, -0.00833334, -0.19979335, 0, 0, -4.1266546, -0.01111111, 0.07248643, 0.055555552, -0.36243215, 0, -0.055555552, 1.9788907, 0, 0),
-"times": PackedFloat32Array(0, 0.35, 0.40000004, 0.4666667, 0.8)
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("pawn:position")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.56666666, 0.8, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 32), Vector2(132, 144), Vector2(0, 0)]
-}
-tracks/9/type = "method"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath(".")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(0.73333335),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"play_attack"
-}]
+"times": PackedFloat32Array(0, 0.7310286),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
-[sub_resource type="Animation" id="Animation_g7qeg"]
-resource_name = "attack_down_left"
-step = 0.0333333
-tracks/0/type = "bezier"
+[sub_resource type="Animation" id="Animation_pjytt"]
+resource_name = "take_damage"
+length = 0.3
+tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("pawn/Damage:position:x")
+tracks/0/path = NodePath("pawn/Heart:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(2, 0, 0, 0, 0, 0),
-"points": PackedFloat32Array(40, 0, 0, 0.083333336, 0, 31.758953, -0.023333333, 1.8666667, 0.060000002, -4.8, 0, -0.083333336, 6.666667, 0, 0, 0, -0.061111115, -4.478827, 0.01111111, 0.8143321, 31.758953, -0.023333333, 1.8666667, 0.060000002, -4.8, 40, 0, 0, 0.083333336, 0),
-"times": PackedFloat32Array(0, 0.2, 0.3, 0.7, 0.76666665, 0.8)
+"times": PackedFloat32Array(0, 0.116666675, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.5, 1.5), Vector2(1, 1)]
 }
-tracks/1/type = "bezier"
+tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("pawn/Damage:position:y")
+tracks/1/path = NodePath("pawn/Heart:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"handle_modes": PackedInt32Array(2, 0, 0, 0, 0, 0),
-"points": PackedFloat32Array(64, 0, 0, 0.083333336, 0, 44.22149, -0.023333333, 4.48, 0.060000002, -11.52, -32, -0.083333336, 16, 0, 0, -32, -0.061111115, -10.749185, 0.01111111, 1.954397, 44.22149, -0.023333333, 4.48, 0.060000002, -11.52, 64, 0, 0, 0.083333336, 0),
-"times": PackedFloat32Array(0, 0.2, 0.3, 0.7, 0.76666665, 0.8)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("pawn/Damage/Sprite2D5:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0, 2),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.58956206, -0.05666667, -0.09826034, 0, 0, 1.5714695, -0.015000001, -0.16365124, 0, 0, -0.33870015, -0.011666666, 0.08223261, 0.031666666, -0.22320281, 0, -0.050000004, -0.056450028, 0, 0),
-"times": PackedFloat32Array(0, 0.34, 0.43, 0.5, 0.8)
-}
-tracks/3/type = "bezier"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("pawn/Damage/Sprite2D4:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2, 2, 2),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -0.35527506, -0.061111115, 0.059212513, 0, 0, 0.5732895, -0.0055555603, -0.15476076, 0, 0, 0.2005761, -0.02222222, 0.062118903, 0, 0, 0, -0.04444444, 0.03342935, 0, 0),
-"times": PackedFloat32Array(0, 0.36666667, 0.40000004, 0.53333336, 0.8)
-}
-tracks/4/type = "bezier"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("pawn/Damage/Sprite2D5:position:x")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2, 2),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 40.58781, -0.058333334, -6.764635, 0, 0, -14.194524, -0.025000002, 9.130389, 0, 0, 0, -0.050000004, -2.3657541, 0, 0),
-"times": PackedFloat32Array(0, 0.35, 0.5, 0.8)
-}
-tracks/5/type = "bezier"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("pawn/Damage/Sprite2D5:position:y")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2, 2),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1.41075, -0.058333334, -0.23512502, 0, 0, -3.666851, -0.025000002, 0.8462668, 0, 0, 0, -0.050000004, -0.61114186, 0, 0),
-"times": PackedFloat32Array(0, 0.35, 0.5, 0.8)
-}
-tracks/6/type = "bezier"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("pawn/Damage/Sprite2D4:position:x")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2, 2, 2),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -39.412186, -0.058333334, 6.568698, 0, 0, -14.912708, -0.00833334, -4.083246, 0, 0, 1.6138954, -0.01111111, -0.41424188, 0.055555552, 2.0712094, 0, -0.055555552, -9.06435, 0, 0),
-"times": PackedFloat32Array(0, 0.35, 0.40000004, 0.4666667, 0.8)
-}
-tracks/7/type = "bezier"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("pawn/Damage/Sprite2D4:position:y")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2, 2, 2),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1.4107513, -0.058333334, -0.23512524, 0, 0, 2.6095114, -0.00833334, -0.19979335, 0, 0, -4.1266546, -0.01111111, 0.07248643, 0.055555552, -0.36243215, 0, -0.055555552, 1.9788907, 0, 0),
-"times": PackedFloat32Array(0, 0.35, 0.40000004, 0.4666667, 0.8)
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("pawn:position")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.56666666, 0.8, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.16666667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(0, 32), Vector2(-132, 144), Vector2(0, 0)]
-}
-tracks/9/type = "method"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath(".")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(0.73333335),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"play_attack"
-}]
+"values": [Color(1, 1, 1, 1), Color(0.5921569, 0, 0, 1), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1i5pp"]
@@ -1090,6 +1090,11 @@ bbcode_enabled = true
 text = "[b]2"
 fit_content = true
 scroll_active = false
+
+[node name="skill" type="Sprite2D" parent="pawn"]
+unique_name_in_owner = true
+position = Vector2(2, 72)
+scale = Vector2(2, 2)
 
 [node name="CanvasGroup4" type="CanvasGroup" parent="."]
 visible = false

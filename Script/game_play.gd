@@ -27,8 +27,8 @@ func new_round():
 	%CardStash.new_round()
 	%Player.new_round()
 	opponent_scene.new_round()
-	%AfterRounds.visible = true
-	%AfterRounds.new_round()
+	%PickCards.visible = true
+	%PickCards.new_round()
 
 func round_won(winner : piece.teams):
 	%BlockInputs.visible = true
@@ -158,7 +158,10 @@ func attack(pawn : piece, square : Area2D, front_piece : piece, front_square : A
 	if pawn.damage <= 0:
 		return
 	if pawn.attack_mode:
-		front_piece.health -= pawn.damage
+		if pawn.special_skill == piece.special_skills.instant_kill:
+			front_piece.health -= 25
+		else:
+			front_piece.health -= pawn.damage
 		if pawn.special_skill == piece.special_skills.attack_adjacent:
 			await square.attack_adjacent_pawn(front_square, front_piece, side_direction)
 		else:
@@ -263,6 +266,8 @@ func damage_player(): #If the opponent's pieces reaches the player's edge
 func move_forward(x : int, y: int, pawn : piece):
 	#if not on edge move forward
 	board[x][y] = calculate_index(x, y)#return the index number
+	if pawn.health <= 0:
+		return
 	board[x - 1][y] = pawn #move up by reducing x axis
 
 @rpc("any_peer")
@@ -288,6 +293,8 @@ func opponent_move():
 func move_downward(x:int, y:int, pawn : piece):
 	#if not on edge move forward
 	board[x][y] = calculate_index(x, y)#return the index number
+	if pawn.health <= 0:
+		return
 	board[x + 1][y] = pawn #move down by reducing x axis
 
 # Called when the node enters the scene tree for the first time.

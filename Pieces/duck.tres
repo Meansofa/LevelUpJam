@@ -1,13 +1,16 @@
-[gd_resource type="Resource" script_class="piece" load_steps=4 format=3 uid="uid://b4tpjoik1hyk5"]
+[gd_resource type="Resource" script_class="piece" load_steps=5 format=3 uid="uid://b4tpjoik1hyk5"]
 
 [ext_resource type="Script" uid="uid://b857rlbbl7w2n" path="res://Pieces/base_piece.gd" id="1_45a6c"]
 [ext_resource type="Texture2D" uid="uid://7rpur7mkhys4" path="res://Art/Pieces/Duck.png" id="1_j6q3b"]
 [ext_resource type="Texture2D" uid="uid://db64psndt3bda" path="res://Art/Pieces/Player_Duck.png" id="2_id8ok"]
+[ext_resource type="Texture2D" uid="uid://cndgmwwn5y23l" path="res://Art/skills/instant_kill.png" id="4_id8ok"]
 
 [resource]
 script = ExtResource("1_45a6c")
 name = "Duck"
 player_pawn_texture = ExtResource("2_id8ok")
 opponent_pawn_texture = ExtResource("1_j6q3b")
+skill_texture = ExtResource("4_id8ok")
 health = 3
+special_skill = 3
 metadata/_custom_type_script = "uid://b857rlbbl7w2n"

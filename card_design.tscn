@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dks4nyrtnaal0"]
+[gd_scene load_steps=15 format=3 uid="uid://dks4nyrtnaal0"]
 
 [ext_resource type="Script" uid="uid://bj5jkxpxddn51" path="res://Script/card_design.gd" id="1_2vhfb"]
 [ext_resource type="Texture2D" uid="uid://b7p6t2p2k55ny" path="res://Art/Pieces/PawnOutline.png" id="1_58uta"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cqcjqxj2r8q3q" path="res://Art/Pieces/elixer.png" id="2_ii8ol"]
 [ext_resource type="Texture2D" uid="uid://bnw64uj26d4r6" path="res://Art/Pieces/heart.png" id="3_ii8ol"]
 [ext_resource type="Texture2D" uid="uid://jtgyxukmqidc" path="res://Art/Pieces/sword.png" id="4_bbnrs"]
+[ext_resource type="Texture2D" uid="uid://djcnqi2ve3pcy" path="res://Art/skills/attack_adjacent.png" id="7_bbnrs"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_efxa6"]
 bg_color = Color(0.2784314, 0, 0.33333334, 1)
@@ -259,3 +260,9 @@ libraries = {
 &"": SubResource("AnimationLibrary_4bwht")
 }
 autoplay = "enter"
+
+[node name="Skill" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(4, 82)
+scale = Vector2(2, 2)
+texture = ExtResource("7_bbnrs")
