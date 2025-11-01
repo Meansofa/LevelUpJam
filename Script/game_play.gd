@@ -181,13 +181,23 @@ func simulate():
 
 @rpc("any_peer")#even if you're not using player_id, 
 func who_clicked_end_turn(player_id): #you still need to put it as a parameter of the function
+	if %TutorialTurns.visible:
+		%TutorialTurns.visible = false
 	%EndTurn.disabled = true
 	if multiplayer.get_unique_id() == player_id: #If you clicked end turn
 		await simulate_order() #Simulate first before ebabling end turn
 		%EndTurn.disabled = true  #disable your end turn so opponent can use end turn
+		%PickCard.disable_monitoring()
+		%PickCard2.disable_monitoring()
+		%PickCard3.disable_monitoring()
+		%PickCard4.disable_monitoring()
 	else: #If the player id was the opponent
 		await simulate_order()
 		%EndTurn.disabled = false #if opponent clicked end turn it's your turn to click it
+		%PickCard.enable_monitoring()
+		%PickCard2.enable_monitoring()
+		%PickCard3.enable_monitoring()
+		%PickCard4.enable_monitoring()
 
 func simulate_order():
 	await simulate_attack() #simulate attacks
@@ -333,13 +343,22 @@ func who_goes_first(player_id):
 func first_move(player_id):
 	print(name, "FIRST MOVE: ", player_id)
 	%FirstTurn.visible = true
+	%TutorialTurns.visible = true
 	
 	if player_id == multiplayer.get_unique_id():
 		%EndTurn.disabled = false
 		%FirstTurn.first_turn_name(player_name)
+		%PickCard.enable_monitoring()
+		%PickCard2.enable_monitoring()
+		%PickCard3.enable_monitoring()
+		%PickCard4.enable_monitoring()
 	else:
 		%EndTurn.disabled = true
 		%FirstTurn.enemy_first_turn()
+		%PickCard.disable_monitoring()
+		%PickCard2.disable_monitoring()
+		%PickCard3.disable_monitoring()
+		%PickCard4.disable_monitoring()
 
 	await get_tree().create_timer(3).timeout
 	%FirstTurn.visible = false

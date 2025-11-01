@@ -942,7 +942,6 @@ grow_vertical = 0
 mouse_filter = 2
 script = ExtResource("9_htgex")
 elixer_texture = ExtResource("10_3ux7j")
-end_turn_elixer_count = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Elixer"]
 layout_mode = 0
@@ -1044,6 +1043,33 @@ theme_override_font_sizes/bold_font_size = 24
 bbcode_enabled = true
 text = "[b][center]PLAYER 1 
 Goes first!"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="TutorialTurns" type="PanelContainer" parent="Displays"]
+unique_name_in_owner = true
+visible = false
+z_index = 100
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 248.0
+offset_bottom = 365.0
+grow_horizontal = 2
+mouse_filter = 2
+script = SubResource("GDScript_a1b81")
+
+[node name="FirstTurnLabel" type="RichTextLabel" parent="Displays/TutorialTurns"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/bold_font_size = 24
+bbcode_enabled = true
+text = "[b][center]
+When It is your turn, you can 
+drag the cards to the slot.
+"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
