@@ -1155,6 +1155,7 @@ offset_right = 72.0
 offset_bottom = -48.0
 
 [node name="AfterRounds" type="Control" parent="."]
+unique_name_in_owner = true
 z_index = 100
 custom_minimum_size = Vector2(720, 1280)
 layout_mode = 3
