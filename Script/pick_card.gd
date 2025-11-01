@@ -1,6 +1,7 @@
 extends Area2D
 
 @onready var spawn_position : Vector2 = self.position
+@onready var click_sfx : AudioStreamWAV = load("res://Art/Music/click.wav")
 
 var dragging := false #if the card is getting dragged
 var in_area := false #if mouse is hovering in the card
@@ -83,6 +84,7 @@ func place_card():
 	
 	disable_monitoring()#Dissallow clicking
 	%AnimationPlayer.play("dissolve")
+	GlobalAudioPlayer.add_sfx(click_sfx)
 	await %AnimationPlayer.animation_finished
 	
 	%CardStash.request_card(self) #pass self too so the card stash knows what pick_card needs to be replaced

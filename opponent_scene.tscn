@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://c0qpjsiu58e47"]
+[gd_scene load_steps=15 format=3 uid="uid://c0qpjsiu58e47"]
 
 [ext_resource type="Script" uid="uid://cyj18wtmqcne2" path="res://opponent_scene.gd" id="1_cisev"]
 [ext_resource type="Theme" uid="uid://buamt54f6ol74" path="res://Themes/main.tres" id="1_pxgx6"]
 [ext_resource type="Texture2D" uid="uid://brb72kigbbfpy" path="res://Art/Pieces/characterFrames.png" id="2_k3w36"]
+[ext_resource type="AudioStream" uid="uid://j6eiqpbhnbc6" path="res://Art/Music/win.wav" id="2_lm56y"]
 [ext_resource type="Texture2D" uid="uid://dspshohqjbty8" path="res://Art/Pieces/characterFrames3.png" id="2_pxgx6"]
 [ext_resource type="Script" uid="uid://ds2co40nx6snr" path="res://Script/health_bar.gd" id="3_cisev"]
 [ext_resource type="Texture2D" uid="uid://kvwi7srao77o" path="res://Art/Pieces/crown.png" id="6_pml1f"]
@@ -240,6 +241,7 @@ _data = {
 
 [node name="OpponentScene" type="Node2D"]
 script = ExtResource("1_cisev")
+win_sfx = ExtResource("2_lm56y")
 player_1_texture = ExtResource("2_k3w36")
 player_2_texture = ExtResource("2_pxgx6")
 

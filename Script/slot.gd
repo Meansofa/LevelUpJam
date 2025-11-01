@@ -3,6 +3,7 @@ extends Button
 @onready var gameplay : Node2D = $"../../../.."
 @onready var card_detector :Area2D = $card_detector
 @export_range(0, 3) var slot_number : int #what slot_number is this button starts at 0 index
+@onready var click_sfx : AudioStreamWAV = load("res://Art/Music/click.wav")
 
 func _ready() -> void:
 	%EndTurn.connect("pressed", _who_pressed_end_turn)
@@ -35,3 +36,5 @@ func enable_detection(player_id):
 
 func _on_pressed() -> void:
 	%Warning.play("DragACard")
+	GlobalAudioPlayer.add_sfx(click_sfx)
+	

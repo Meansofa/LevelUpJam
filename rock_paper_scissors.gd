@@ -2,8 +2,10 @@ extends Control
 
 var player_chose := ""
 var opponent_chose  := ""
+@onready var click_sfx : AudioStreamWAV = load("res://Art/Music/click.wav")
 
 func get_pressed_button(chosen : String):
+	GlobalAudioPlayer.add_sfx(click_sfx)
 	var player_id = multiplayer.get_unique_id()
 	
 	rock_paper_scissors(player_id, chosen)
